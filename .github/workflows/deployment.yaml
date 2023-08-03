@@ -31,21 +31,8 @@ jobs:
           repository: clubcedille/algoets.etsmtl.ca
           releases-only: true
         id: octokit
-
-      - name: Check for tag
-        id: check_tag
-        run: |
-          if [[ -z "${{ steps.octokit.outputs.tag }}" ]]; then
-            echo "No tag found, stopping workflow."
-            echo "::set-output name=stop::true"
-          else
-            echo "Tag found: ${{ steps.octokit.outputs.tag }}"
-            echo "::set-output name=stop::false"
-          fi
-        shell: bash
       
       - name: Increment Version
-        if: steps.check_tag.outputs.stop == 'false'
         id: new_tag
         run: |
           LATEST_TAG=${{ steps.octokit.outputs.tag }}
