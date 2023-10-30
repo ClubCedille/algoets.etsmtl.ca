@@ -1266,10 +1266,6 @@ h3.quote::before {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.footer-socials li a {
-  margin-left: 15px;
-}
-
 .scroll-to-top {
   position: fixed;
   bottom: 30px;
