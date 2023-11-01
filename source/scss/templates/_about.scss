@@ -1,4 +1,10 @@
-// About Setcion
+// About Section
+
+.diagonalEdge-about{
+	@extend .diagonalEdge;
+	border-top: 50px solid #C1BFB3;
+	border-right: 100vw solid #fff;
+}
 
 .bg-about{
   	position: absolute;
@@ -11,6 +17,10 @@
   	background-size: cover;
 }
 
+.subtitle{
+	margin: -50px 0;
+	text-align: right;
+}
 
 .about-content{
 	padding: 20px 0px 0px 80px;

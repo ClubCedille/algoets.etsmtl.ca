@@ -1,4 +1,12 @@
 
+.diagonalEdge{
+	position: relative;
+	top: -25px;
+	margin-bottom: -50px;
+	width: 0;
+	height: 0;
+}
+
 .navbar-toggle .icon-bar {
   background: $primary-color;
 }
@@ -156,7 +164,7 @@ input[type="email"],input[type="password"],input[type="text"],input[type="tel"]{
 }
 
 .section-title {
-  margin-bottom: 70px;
+  margin-bottom: 20px;
  
  .title{
   font-size: 50px;

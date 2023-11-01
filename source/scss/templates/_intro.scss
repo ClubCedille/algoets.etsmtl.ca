@@ -1,5 +1,22 @@
 // Intro Section
 
+.diagonalEdge-intro {
+	@extend .diagonalEdge;
+	top: -50px;
+	border-top: 50px solid transparent;
+	border-right: 100vw solid #fff;
+}
+
+.diagonalEdge-objectives{
+	@extend .diagonalEdge;
+	border-top: 50px solid #fff;
+	border-left: 100vw solid #C1BFB3;
+}
+
+.objectives{
+	background-color: #C1BFB3;
+}
+
 .intro-item{
 
 	i{
