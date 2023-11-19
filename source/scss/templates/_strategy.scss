@@ -8,6 +8,12 @@
     background-color: #E4E4E4;
 }
 
+@media (max-width: 767px) {
+	.strategy .content-title {
+		text-align: center;
+	}
+}
+
 .strategy-item.title{
     padding-bottom: 30px;
 }

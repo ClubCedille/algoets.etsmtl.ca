@@ -3,10 +3,16 @@
 .diagonalEdge-sponsors{
 	@extend .diagonalEdge;
 	border-top: 50px solid #E4E4E4;
-	border-right: 100vw solid #fff;
+	border-right: 100vw solid #C1BFB3;
+    z-index: 1;
 }
 
 .sponsors {
+    background-color: #C1BFB3;
+}
+
+/* .sponsors {
+   
     --sponsor-item-size: 380px;
     --sponsors-quantity: 7;
     position: relative;
@@ -31,7 +37,7 @@
     &:hover {
         animation-play-state: paused;
     }
-}
+}  */
 
 .sponsor-item {
     position: relative;
@@ -40,11 +46,12 @@
     flex-shrink: 0;
     flex-basis: var(--sponsor-item-size);
     i{
+        color: rgb(247, 87, 87);
         position: absolute;
         left: 5px;
         top: 5px;
         font-size: 50px;
-        opacity: .4;
+        // opacity: .4;
     }
 }
 

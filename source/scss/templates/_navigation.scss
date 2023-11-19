@@ -66,6 +66,9 @@
     a{
       margin-left: 35px;
       color: #919194;
+      &:hover, &:focus {
+        color: $primary-color;
+      }
     }
   }
 }
