@@ -1,0 +1,23 @@
+.diagonalEdge-strategy{
+	@extend .diagonalEdge;
+	border-top: 50px solid #fff;
+	border-left: 100vw solid #E4E4E4;
+}
+
+.strategy{
+    background-color: #E4E4E4;
+}
+
+@media (max-width: 767px) {
+	.strategy .content-title {
+		text-align: center;
+	}
+}
+
+.strategy-item.title{
+    padding-bottom: 30px;
+}
+
+.strategy .content-title{
+    color: #EC4149;
+}

@@ -1,8 +1,9 @@
 .slider{
-  background: url("../images/bg/home-1.jpg") no-repeat;
+  background: url("../images/bg/home-7.jpg") no-repeat;
   background-size: cover;
   background-position: 10% 0%;
-  padding:200px 0;
+  background-attachment: fixed;
+  padding:100px 0 125px 0;
   position: relative;
   @include tablet {
     padding:150px 0;

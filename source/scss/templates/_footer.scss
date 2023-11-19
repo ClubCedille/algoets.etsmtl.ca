@@ -1,5 +1,33 @@
+.diagonalEdge-footer {
+	@extend .diagonalEdge;
+	border-top: 50px solid #fff;
+	border-left: 100vw solid #E4E4E4;
+}
+
+
+
 .footer {
+  background-color: rgba(34,35,40,1);
   padding-bottom: 10px;
+  color: white;
+
+  h3, h4 {
+    color: rgb(247, 87, 87);
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  a:focus, a:hover {
+    color: $primary-color;
+    text-decoration: none;
+  }
+  
+  a:focus {
+    outline: none;
+  }
 
   .copyright {
     a {
