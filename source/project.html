@@ -1,6 +1,7 @@
+
 @@include('header.htm')
 
-@@include('blocks/navigation.htm',{"project":"active"})
+@@include('blocks/navigation.htm', {"project":"active"})
 
 @@include('blocks/page-title.htm', { "page-name": "Latest works", "title": "Portfolio" })
 
@@ -19,22 +20,44 @@
 		<!-- GitHub Projects -->
 		<div class="row">
 			<h3>Our GitHub Projects</h3>
-			<ul>
-				<li><a href="https://github.com/AlgoETS/AINewsTracker">AINewsTracker</a>: Leveraging AI to analyze financial news.</li>
-				<li><a href="https://github.com/AlgoETS/BatchBacktesting">BatchBacktesting</a>: A Python tool for running backtests on multiple stocks and strategies.</li>
-				<li>Salary_2023: Salary Exploration for 2023</li>
-				<li>MovingAverage Private: Moving-Average-Strategy</li>
-				<li><a href="https://github.com/AlgoETS/BullETS">BullETS</a>: A Python library for developing algorithmic trading strategies.</li>
-			</ul>
-		</div>
-
-		<!-- Image Portfolio -->
-		<div class="container-fluid">
-			<div class="row portfolio-gallery">
-				<!-- [Place your image portfolio items here] -->
+			<div id="projects-container" class="project-container">
+				<!-- JavaScript will insert project cards here -->
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
+<!-- section portfolio END -->
+
+@@include('blocks/footer.htm')
+
+@@include('footer.htm')
+
+<script>
+	const projectsInfo = {
+		"AINewsTracker": "https://api.github.com/repos/AlgoETS/AINewsTracker",
+		"BatchBacktesting": "https://api.github.com/repos/AlgoETS/BatchBacktesting",
+		// Add other projects' API URLs
+	};
+
+	Object.keys(projectsInfo).forEach(projectKey => {
+		fetch(projectsInfo[projectKey])
+		.then(response => response.json())
+		.then(projectData => {
+			const projectCard = document.createElement('div');
+			projectCard.className = 'project-card';
+			projectCard.innerHTML = `
+				<div class="project-title">${projectData.name}</div>
+				<div class="project-description">${projectData.description}</div>
+				<a href="${projectData.html_url}" target="_blank" class="project-link">View on GitHub</a>
+				<div class="project-stars">Stars: ${projectData.stargazers_count}</div>
+			`;
+
+			document.getElementById('projects-container').appendChild(projectCard);
+		})
+		.catch(error => console.error(`Error fetching data for ${projectKey}:`, error));
+	});
+</script>
+
 <!-- section portfolio END -->
 
 @@include('blocks/footer.htm')
