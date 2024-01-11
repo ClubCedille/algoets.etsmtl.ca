@@ -16,7 +16,7 @@
     "gulp-header-comment": "^0.10.0",
     "gulp-rimraf": "^1.0.0",
     "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-sourcemaps": "^3.0.0",
     "particles.js": "^2.0.0",
     "postcss": "^8.4.12",
     "react": "^18.2.0",
