@@ -1,0 +1,110 @@
+{
+    "Workshop1": {
+        "name": "Workshop1",
+        "description": "Workshop 1",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo"
+    },
+    "AINewsTracker": {
+        "name": "AINewsTracker",
+        "description": "Leveraging AI to analyse financial news",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo"
+    },
+    "BatchBacktesting": {
+        "name": "BatchBacktesting",
+        "description": "BatchBacktesting",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo"
+    },
+    "Salary": {
+        "name": "Salary",
+        "description": "Salary",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo"
+    },
+    "Marketwatch": {
+        "name": "Marketwatch",
+        "description": "Marketwatch",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo",
+    },
+    "BullETS": {
+        "name": "BullETS",
+        "description": "BullETS",
+        "language": "Python",
+        "forks_count": 10,
+        "stargazers_count": 15,
+        "open_issues_count": 5,
+        "updated_at": "2024-01-01",
+        "created_at": "2023-01-01",
+        "topics": [
+            "ai",
+            "news",
+            "python",
+            "stock-market"
+        ],
+        "html_url": "https://github.com/AlgoETS/AINewsTracker",
+        "homepage": "https://example.com/AINewsTrackerDemo"
+    }
+}

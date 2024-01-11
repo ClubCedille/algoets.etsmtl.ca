@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .navbar-toggle .icon-bar {
   background: $primary-color;

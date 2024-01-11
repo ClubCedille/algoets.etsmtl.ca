@@ -91,3 +91,17 @@
 	color: #ffa500;
 	font-size: 14px;
 }
+
+.project-card:hover .project-link {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+.project-link {
+	transform: translateY(10px);
+	transition: all 0.3s ease;
+}
+.icon {
+	display: inline-block;
+	margin-right: 5px;
+}
