@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="zxx">
 <head>
 
@@ -26,6 +18,7 @@
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
   <!-- Icon Font Css -->
   <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
   <link rel="stylesheet" href="plugins/fontawesome/css/all.min.css">
@@ -89,16 +82,17 @@
                 <li class="nav-item @@home">
                   <a class="nav-link" href="index.html">Accueil</a>
                 </li>
-                <li class="nav-item @@company">
-                  <a class="nav-link" href="">Notre Club</a>
-                </li>
-                <li class="nav-item @@service">
-                  <a class="nav-link" href="team.html">Notre Équipe</a>
                 <li class="nav-item @@about">
-                  <a class="nav-link" href="about.html">Projets</a>
+                  <a class="nav-link" href="about.html">Notre Club</a>
+                </li>
+                <li class="nav-item @@team">
+                  <a class="nav-link" href="team.html">Notre Équipe</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="project.html">Projets</a>
                 </li>
                 <li class="nav-item @@pricing">
-                <a class="nav-link" href="pricing.html">Partenaires</a>
+                  <a class="nav-link" href="pricing.html">Partenaires</a>
                 </li>
                 <li class="nav-item @@contact">
                   <a class="nav-link" href="contact.html">Contact</a>
@@ -142,7 +136,7 @@
   </div>
 </header>
 <!-- Header Close -->
-<section class="page-title" style="background-image: url('@@background-image-url');">
+<section class="page-title" style="background-image: url('images/competition/concentration.jpg');">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -161,14 +155,14 @@
 </section>
 
 <!-- section portfolio start -->
-<section class="section portfolio pb-0">
-    <div class="container mx-auto">
-        <div class="row justify-center">
+<section class="section service border-top pb-5">
+    <div class="container">
+        <div class="row justify-content-center">
             <div class="col-lg-7 text-center">
                 <div class="section-title">
-                    <span class="h6 text-color text-sm font-medium">Our works</span>
+                    <span class="h6 text-color text-sm font-medium">Nos résultat</span>
                     <h2 class="mt-3 content-title text-2xl font-semibold">
-                        We have done lots of works, let's check some
+                        Projets récents
                     </h2>
                 </div>
             </div>
@@ -176,7 +170,6 @@
 
         <!-- GitHub Projects -->
         <div class="row mt-8">
-            <h3 class="text-xl font-semibold">Our GitHub Projects</h3>
             <div id="projects-container" class="project-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- JavaScript will insert project cards here -->
             </div>
@@ -228,7 +221,6 @@
           <div class="copyright">
             Copyright &copy; 2023, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
             <br>
-            Copyright &copy; 2020, Conçue et développée par <a href="https://themefisher.com/">Themefisher</a>
           </div>
         </div>
       </div>
@@ -241,6 +233,7 @@
   <span class="icon fa fa-angle-up"></span>
 </div>
  
+
 <!-- 
 Essential Scripts
 =====================================-->
@@ -268,47 +261,149 @@ Essential Scripts
 
 <script>
     const projectsInfo = {
+        Workshop1: "https://api.github.com/repos/AlgoETS/Workshop1",
         AINewsTracker: "https://api.github.com/repos/AlgoETS/AINewsTracker",
         BatchBacktesting: "https://api.github.com/repos/AlgoETS/BatchBacktesting",
-        Workshop1: "https://api.github.com/repos/AlgoETS/Workshop1",
-        ComETS: "https://api.github.com/repos/AlgoETS/ComETS",
         Salary: "https://api.github.com/repos/AlgoETS/Salary",
+        Marketwatch: "https://api.github.com/repos/antoinebou12/Marketwatch",
         BullETS: "https://api.github.com/repos/AlgoETS/BullETS",
     };
 
+    const cachedProjectInfo = {
+        Workshop1: {
+            name: "Workshop1",
+            description: "Workshop 1",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+        AINewsTracker: {
+            name: "AINewsTracker",
+            description: "Leveraging AI to analyse financial news",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+        BatchBacktesting: {
+            name: "BatchBacktesting",
+            description: "BatchBacktesting",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+        Salary: {
+            name: "Salary",
+            description: "Salary",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+        Marketwatch: {
+            name: "Marketwatch",
+            description: "Marketwatch",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+        BullETS: {
+            name: "BullETS",
+            description: "BullETS",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2024-01-01",
+            created_at: "2023-01-01",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://example.com/AINewsTrackerDemo",
+        },
+    };
+
+    function createProjectCard(projectData) {
+        if (!projectData) return;
+        const projectCard = document.createElement("div");
+        projectCard.className =
+            "project-card bg-white shadow-md rounded-lg overflow-hidden p-4 hover:shadow-lg transition-shadow duration-300";
+        let topicsHtml = '';
+        if (projectData !== undefined && Array.isArray(projectData.topics || "")) {
+            topicsHtml = `<div class="project-topics text-blue-500 text-xs mb-4">Tags: ${projectData.topics.join(", ")}</div>`;
+        }
+
+        projectCard.innerHTML = `
+            <h4 class="project-title font-semibold text-lg mb-2">${projectData.name || ""
+            }</h4>
+            <p class="project-description text-gray-600 text-sm mb-4">${projectData.description || ""
+            }</p>
+            <div class="project-details text-sm text-gray-500 mb-4">
+                <span>Language: ${projectData.language || ""}</span><br>
+                <span>Stars <span class="icon">⭐</span> : ${projectData.stargazers_count || ""
+            }</span><br>
+                <span>Last Updated: ${new Date(
+                projectData.updated_at
+            ).toLocaleDateString() || ""}</span>
+                <span>Created At: ${new Date(
+                projectData.created_at
+            ).toLocaleDateString() || ""}</span>
+            </div>
+            ${topicsHtml}
+            <a href="${projectData.html_url
+            }" target="_blank" class="project-link py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-300 text-sm font-medium inline-block">View on GitHub</a>
+            ${projectData.homepage
+                ? `<a href="${projectData.homepage}" target="_blank" class="project-link py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-300 text-sm font-medium inline-block">Live Demo</a>`
+                : ""
+            }
+        `;
+        document.getElementById("projects-container").appendChild(projectCard);
+    }
+
     Object.keys(projectsInfo).forEach((projectKey) => {
         fetch(projectsInfo[projectKey])
-            .then((response) => response.json())
-            .then((projectData) => {
-                const projectCard = document.createElement("div");
-                projectCard.className =
-                    "project-card bg-white shadow-lg rounded-lg overflow-hidden p-4";
-                projectCard.innerHTML = `
-                <h4 class="project-title font-semibold text-lg mb-2">${projectData.name
-                    }</h4>
-                <p class="project-description text-gray-600 text-sm">${projectData.description
-                    }</p>
-                <div class="project-details text-sm mt-4">
-                    <span>Language: ${projectData.language}</span><br>
-                    <span>Forks: ${projectData.forks_count}</span><br>
-                    <span>Stars: ${projectData.stargazers_count}</span><br>
-                    <span>Open Issues: ${projectData.open_issues_count
-                    }</span><br>
-                    <span>Last Updated: ${new Date(
-                        projectData.updated_at
-                    ).toLocaleDateString()}</span>
-                </div>
-                <div class="project-topics text-blue-500 text-xs mt-2">${projectData.topics.join(
-                        ", "
-                    )}</div>
-                <a href="${projectData.html_url
-                    }" target="_blank" class="project-link mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">View on GitHub</a>
-            `;
-
-                document.getElementById("projects-container").appendChild(projectCard);
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    if (cachedProjectInfo[projectKey] !== undefined) {
+                        createProjectCard(cachedProjectInfo[projectKey]);
+                    }
+                }
             })
-            .catch((error) =>
-                console.error(`Error fetching data for ${projectKey}:`, error)
-            );
+            .then((projectData) => {
+                createProjectCard(projectData);
+            })
+            .catch((error) => {
+                console.error(`Error fetching data for ${projectKey}:`, error);
+
+            });
     });
 </script>

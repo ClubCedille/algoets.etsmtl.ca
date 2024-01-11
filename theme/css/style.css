@@ -1,10 +1,3 @@
-/**
- * WEBSITE: https://themefisher.com
- * TWITTER: https://twitter.com/themefisher
- * FACEBOOK: https://www.facebook.com/themefisher
- * GITHUB: https://github.com/themefisher/
- */
-
 /*=== MEDIA QUERY ===*/
 @import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap");
 html {
@@ -56,6 +49,9 @@ p {
   line-height: 30px;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .navbar-toggle .icon-bar {
   background: rgb(247, 87, 87);
 }
@@ -874,6 +870,22 @@ ul.dropdown-menu li {
 .project-stars {
   color: #ffa500;
   font-size: 14px;
+}
+
+.project-card:hover .project-link {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.project-link {
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .contact-form-wrap .form-group {

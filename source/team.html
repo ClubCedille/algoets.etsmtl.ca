@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <!-- Meta Tags, CSS links, etc. -->
-    <title>Notre Équipe - AlgoÉTS</title>
-    <!-- Add your stylesheet links and other head elements here -->
-</head>
-<body>
-
 <!-- Include header and navigation -->
 @@include('header.htm')
 @@include('blocks/navigation.htm', {"about":"active", "company":"active"})
 
 <!-- Page title section -->
 @@include('blocks/page-title.htm', { "page-name": "Équipe", "title": "Notre Équipe" })
+
 
 <!-- Section Équipe Start -->
 <section class="section team">
@@ -21,7 +13,7 @@
             <div class="col-lg-7 text-center">
                 <div class="section-title">
                     <span class="h6 text-color">Notre Équipe</span>
-                    <h2 class="mt-3 content-title">Membres experts pour le meilleur service</h2>
+                    <h2 class="mt-3 content-title">Membres</h2>
                 </div>
             </div>
         </div>
@@ -29,35 +21,12 @@
         <!-- Team Members -->
         <div class="row justify-content-center">
             <!-- Team Member 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="team-item-wrap mb-5">
-                    <div class="team-item position-relative">
-                        <img loading="lazy" src="images/team/team-1.png" alt="Raphael Leblanc" class="img-fluid w-100">
-                        <div class="team-img-hover">
-                            <ul class="team-social list-inline">
-                                <!-- Social Media Links -->
-                                <li class="list-inline-item">
-                                    <a href="https://www.facebook.com/raphael" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <!-- Add other social media links here -->
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="team-item-content">
-                        <h4 class="mt-3 mb-0 text-capitalize">Raphael Leblanc</h4>
-                        <p>Co-Capitaine</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Team Member 2 -->
-            <!-- Copy and paste the structure from Team Member 1 and update the details -->
-
-            <!-- Team Member 3 -->
-            <!-- Copy and paste the structure from Team Member 1 and update the details -->
-
-            <!-- Add more team members as needed -->
-
+            @@include('team-member-template.htm', {"name": "Raphael Leblanc", "position": "Capitaine", "imageUrl": "images/team/team-1.png", "facebookUrl": "https://www.facebook.com/Raphael"})
+            @@include('team-member-template.htm', {"name": "Momhahed Illas", "position": "Co-Capitaine", "imageUrl": "images/team/team-2.png", "facebookUrl": "https://www.facebook.com/Momhahed"})
+            @@include('team-member-template.htm', {"name": "Antoine Boucher", "position": "Co-Capitaine", "imageUrl": "images/team/team-3.png", "facebookUrl": "https://www.facebook.com/antoine"})
+            @@include('team-member-template.htm', {"name": "Salim", "position": "Co-Capitaine", "imageUrl": "images/team/team-4.png", "facebookUrl": "https://www.facebook.com/Salim"})
+            @@include('team-member-template.htm', {"name": "Micheal", "position": "Co-Capitaine", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal"})
+            @@include('team-member-template.htm', {"name": "Souri", "position": "Co-Capitaine", "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri"})
         </div>
     </div>
 </section>
@@ -66,6 +35,3 @@
 <!-- Include footer -->
 @@include('blocks/footer.htm')
 @@include('footer.htm')
-
-</body>
-</html>
