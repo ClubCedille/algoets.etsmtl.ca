@@ -33,29 +33,39 @@
 @@include('footer.htm')
 
 <script>
-	const projectsInfo = {
-		"AINewsTracker": "https://api.github.com/repos/AlgoETS/AINewsTracker",
-		"BatchBacktesting": "https://api.github.com/repos/AlgoETS/BatchBacktesting",
-		// Add other projects' API URLs
-	};
+    const projectsInfo = {
+        "AINewsTracker": "https://api.github.com/repos/AlgoETS/AINewsTracker",
+        "BatchBacktesting": "https://api.github.com/repos/AlgoETS/BatchBacktesting",
+        "Workshop1": "https://api.github.com/repos/AlgoETS/Workshop1",
+        "ComETS": "https://api.github.com/repos/AlgoETS/ComETS",
+        "Salary": "https://api.github.com/repos/AlgoETS/Salary",
+        "BullETS": "https://api.github.com/repos/AlgoETS/BullETS",
+    };
 
-	Object.keys(projectsInfo).forEach(projectKey => {
-		fetch(projectsInfo[projectKey])
-		.then(response => response.json())
-		.then(projectData => {
-			const projectCard = document.createElement('div');
-			projectCard.className = 'project-card';
-			projectCard.innerHTML = `
-				<div class="project-title">${projectData.name}</div>
-				<div class="project-description">${projectData.description}</div>
-				<a href="${projectData.html_url}" target="_blank" class="project-link">View on GitHub</a>
-				<div class="project-stars">Stars: ${projectData.stargazers_count}</div>
-			`;
+    Object.keys(projectsInfo).forEach(projectKey => {
+        fetch(projectsInfo[projectKey])
+        .then(response => response.json())
+        .then(projectData => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.innerHTML = `
+                <div class="project-title">${projectData.name}</div>
+                <div class="project-description">${projectData.description}</div>
+                <div class="project-details">
+                    <div>Language: ${projectData.language}</div>
+                    <div>Forks: ${projectData.forks_count}</div>
+                    <div>Stars: ${projectData.stargazers_count}</div>
+                    <div>Open Issues: ${projectData.open_issues_count}</div>
+                    <div>Last Updated: ${new Date(projectData.updated_at).toLocaleDateString()}</div>
+                </div>
+                <div class="project-topics">${projectData.topics.join(', ')}</div>
+                <a href="${projectData.html_url}" target="_blank" class="project-link">View on GitHub</a>
+            `;
 
-			document.getElementById('projects-container').appendChild(projectCard);
-		})
-		.catch(error => console.error(`Error fetching data for ${projectKey}:`, error));
-	});
+            document.getElementById('projects-container').appendChild(projectCard);
+        })
+        .catch(error => console.error(`Error fetching data for ${projectKey}:`, error));
+    });
 </script>
 
 <!-- section portfolio END -->
