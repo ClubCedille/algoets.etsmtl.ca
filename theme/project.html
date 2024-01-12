@@ -233,7 +233,6 @@
   <span class="icon fa fa-angle-up"></span>
 </div>
  
-
 <!-- 
 Essential Scripts
 =====================================-->
@@ -272,81 +271,96 @@ Essential Scripts
     const cachedProjectInfo = {
         Workshop1: {
             name: "Workshop1",
-            description: "Workshop 1",
-            language: "Python",
+            description:
+                "Bienvenue dans le dépôt de l'Atelier Python AlgoETS ! Ici, vous trouverez une collection de cahiers Jupyter et de guides en Markdown conçus pour améliorer vos compétences en Python, notamment en science des données et en génie logiciel.",
+            language: "Jupyter Notebook",
             forks_count: 10,
-            stargazers_count: 15,
+            stargazers_count: 2,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
-            topics: ["ai", "news", "python", "stock-market"],
-            html_url: "https://github.com/AlgoETS/AINewsTracker",
-            homepage: "https://example.com/AINewsTrackerDemo",
+            updated_at: "2024-01-04",
+            created_at: "2023-09-06",
+            topics: [
+                "basic",
+                "class",
+                "course",
+                "data",
+                "finance",
+                "matplotlib",
+                "python",
+                "science",
+                "stock",
+                "workshop",
+            ],
+            html_url: "https://github.com/AlgoETS/Workshop1",
+            homepage: "",
         },
         AINewsTracker: {
             name: "AINewsTracker",
-            description: "Leveraging AI to analyse financial news",
+            description: "AINewsTracker: Leveraging AI to analyse financial news",
             language: "Python",
             forks_count: 10,
-            stargazers_count: 15,
+            stargazers_count: 4,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
+            updated_at: "2023-11-27",
+            created_at: "2023-05-26",
             topics: ["ai", "news", "python", "stock-market"],
             html_url: "https://github.com/AlgoETS/AINewsTracker",
             homepage: "https://example.com/AINewsTrackerDemo",
         },
         BatchBacktesting: {
             name: "BatchBacktesting",
-            description: "BatchBacktesting",
+            description:
+                "BatchBacktesting is a Python tool that allows users to run backtests on a large number of stocks and strategies in parallel. The results are stored in a csv file for easy analysis.",
             language: "Python",
             forks_count: 10,
-            stargazers_count: 15,
+            stargazers_count: 1,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
-            topics: ["ai", "news", "python", "stock-market"],
-            html_url: "https://github.com/AlgoETS/AINewsTracker",
-            homepage: "https://example.com/AINewsTrackerDemo",
+            updated_at: "2023-06-28",
+            created_at: "2023-03-28",
+            topics: ["backtesting", "batch", "finance", "strategy"],
+            html_url: "https://github.com/AlgoETS/BatchBacktesting",
+            homepage: "",
         },
         Salary: {
             name: "Salary",
-            description: "Salary",
-            language: "Python",
+            description: "Salary Exploration 2023",
+            language: "HTML",
             forks_count: 10,
             stargazers_count: 15,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
-            topics: ["ai", "news", "python", "stock-market"],
-            html_url: "https://github.com/AlgoETS/AINewsTracker",
-            homepage: "https://example.com/AINewsTrackerDemo",
+            updated_at: "2023-11-10",
+            created_at: "2023-02-23",
+            topics: ["canada", "salary-research"],
+            html_url: "https://github.com/AlgoETS/Salary",
+            homepage: "",
         },
         Marketwatch: {
             name: "Marketwatch",
-            description: "Marketwatch",
+            description:
+                "Python library to interface with the Market Watch virtual stock market game https://marketwatchapi.vercel.app",
             language: "Python",
             forks_count: 10,
-            stargazers_count: 15,
+            stargazers_count: 5,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
-            topics: ["ai", "news", "python", "stock-market"],
-            html_url: "https://github.com/AlgoETS/AINewsTracker",
-            homepage: "https://example.com/AINewsTrackerDemo",
+            updated_at: "2023-10-11",
+            created_at: "2023-03-23",
+            topics: ["marketwatch", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/Marketwatch",
+            homepage: "https://marketwatchapi.vercel.app",
         },
         BullETS: {
             name: "BullETS",
-            description: "BullETS",
+            description:
+                "BullETS is a Python library designed to help with the development of algorithmic trading strategies.",
             language: "Python",
             forks_count: 10,
-            stargazers_count: 15,
+            stargazers_count: 5,
             open_issues_count: 5,
-            updated_at: "2024-01-01",
-            created_at: "2023-01-01",
-            topics: ["ai", "news", "python", "stock-market"],
-            html_url: "https://github.com/AlgoETS/AINewsTracker",
-            homepage: "https://example.com/AINewsTrackerDemo",
+            updated_at: "2023-05-10",
+            created_at: "2021-05-12",
+            topics: [],
+            html_url: "https://github.com/AlgoETS/BullETS",
+            homepage: "",
         },
     };
 
@@ -355,9 +369,11 @@ Essential Scripts
         const projectCard = document.createElement("div");
         projectCard.className =
             "project-card bg-white shadow-md rounded-lg overflow-hidden p-4 hover:shadow-lg transition-shadow duration-300";
-        let topicsHtml = '';
+        let topicsHtml = "";
         if (projectData !== undefined && Array.isArray(projectData.topics || "")) {
-            topicsHtml = `<div class="project-topics text-blue-500 text-xs mb-4">Tags: ${projectData.topics.join(", ")}</div>`;
+            topicsHtml = `<div class="project-topics text-blue-500 text-xs mb-4">Tags: ${projectData.topics.join(
+                ", "
+            )}</div>`;
         }
 
         projectCard.innerHTML = `
@@ -369,12 +385,10 @@ Essential Scripts
                 <span>Language: ${projectData.language || ""}</span><br>
                 <span>Stars <span class="icon">⭐</span> : ${projectData.stargazers_count || ""
             }</span><br>
-                <span>Last Updated: ${new Date(
-                projectData.updated_at
-            ).toLocaleDateString() || ""}</span>
-                <span>Created At: ${new Date(
-                projectData.created_at
-            ).toLocaleDateString() || ""}</span>
+                <span>Last Updated: ${new Date(projectData.updated_at).toLocaleDateString() || ""
+            }</span>
+                <span>Created At: ${new Date(projectData.created_at).toLocaleDateString() || ""
+            }</span>
             </div>
             ${topicsHtml}
             <a href="${projectData.html_url
@@ -403,7 +417,6 @@ Essential Scripts
             })
             .catch((error) => {
                 console.error(`Error fetching data for ${projectKey}:`, error);
-
             });
     });
 </script>
