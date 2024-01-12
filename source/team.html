@@ -3,7 +3,8 @@
 @@include('blocks/navigation.htm', {"about":"active", "company":"active"})
 
 <!-- Page title section -->
-@@include('blocks/page-title.htm', { "page-name": "Équipe", "title": "Notre Équipe" })
+@@include('blocks/page-title.htm', { "page-name": "Équipe", "title": "Notre Équipe", "background-image-url":
+"images/competition/concentration.jpg" })
 
 
 <!-- Section Équipe Start -->
@@ -21,12 +22,21 @@
         <!-- Team Members -->
         <div class="row justify-content-center">
             <!-- Team Member 1 -->
-            @@include('team-member-template.htm', {"name": "Raphael Leblanc", "position": "Capitaine", "imageUrl": "images/team/team-1.png", "facebookUrl": "https://www.facebook.com/Raphael"})
-            @@include('team-member-template.htm', {"name": "Momhahed Illas", "position": "Co-Capitaine", "imageUrl": "images/team/team-2.png", "facebookUrl": "https://www.facebook.com/Momhahed"})
-            @@include('team-member-template.htm', {"name": "Antoine Boucher", "position": "Co-Capitaine", "imageUrl": "images/team/team-3.png", "facebookUrl": "https://www.facebook.com/antoine"})
-            @@include('team-member-template.htm', {"name": "Salim", "position": "Co-Capitaine", "imageUrl": "images/team/team-4.png", "facebookUrl": "https://www.facebook.com/Salim"})
-            @@include('team-member-template.htm', {"name": "Micheal", "position": "Co-Capitaine", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal"})
-            @@include('team-member-template.htm', {"name": "Souri", "position": "Co-Capitaine", "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri"})
+            @@include('blocks/team/member.htm', {"name": "Raphael Leblanc", "position": "Co-Capitaine Stategie",
+            "year": "2021-2024", "imageUrl": "images/team/team-1.png", "facebookUrl":
+            "https://www.facebook.com/Raphael", githubUrl: "", project1: "Capitaine", project1: "Biotech", project2: "IPOTracker", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Momhahed Illas", "position": "Co-Capitaine Stategie",
+            "year": "2022-2024", "imageUrl": "images/team/team-2.png", "facebookUrl":
+            "https://www.facebook.com/Momhahed", githubUrl: "", project1: "AI News Tracker", project2: "Salary", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Antoine Boucher", "position": "Capitaine Infrastructure",
+            "year": "2023-2024", "imageUrl": "images/team/team-3.png", "facebookUrl":
+            "https://www.facebook.com/antoine", githubUrl: "", project1: "AI News Tracker", project2: "Batch Backtesting", project3: "Salary"})
+            @@include('blocks/team/member.htm', {"name": "Salim", "position": "Membre Stategie", "year": "2022-2024",
+            "imageUrl": "images/team/team-4.png", "facebookUrl": "https://www.facebook.com/Salim", githubUrl: "", project1: "Kelly", project2: " ", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Micheal", "position": "Membre Stategie", "year":
+            "2022-2023", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal", githubUrl: "", project1: " ", project2: " ", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Souri", "position": "Membre Stategie", "year": "2022-2024",
+            "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri", githubUrl: "", project1: " ", project2: " ", project3: " "})
         </div>
     </div>
 </section>

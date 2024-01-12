@@ -16,6 +16,12 @@
 
 AlgoÉTS est le club de trading algorithmique de l'École de Technologie Supérieure (ÉTS). Nous nous concentrons sur l'utilisation des sciences de données et des technologies pour développer des stratégies de trading algorithmique.
 
+```
+npm i
+npm run dev
+```
+
+
 ## Fonctionnalités
 
 - **Stratégies de Trading**: Développement et backtesting de stratégies de trading.
