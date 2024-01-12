@@ -649,6 +649,11 @@ ul.dropdown-menu li {
   background-size: cover;
 }
 
+.team-item {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
 .team-img-hover .team-social li a.facebook {
   background: #6666cc;
 }
@@ -825,7 +830,7 @@ ul.dropdown-menu li {
   align-items: center;
   justify-content: center;
   font-size: 80px;
-  color: rgb(247, 87, 87);
+  color: #ffa500;
   opacity: 0;
   transition: all 0.35s ease;
 }
@@ -834,15 +839,34 @@ ul.dropdown-menu li {
 }
 
 .project-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
-
 .project-card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.project-card .project-link {
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: blue;
+  cursor: pointer;
+}
+.project-card .project-link:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.project-card .icon {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .project-container {
@@ -857,35 +881,44 @@ ul.dropdown-menu li {
   font-weight: bold;
 }
 
-.project-description {
-  color: #555;
-}
-
-.project-link {
-  text-decoration: none;
-  color: blue;
-  cursor: pointer;
-}
-
 .project-stars {
   color: #ffa500;
   font-size: 14px;
 }
 
-.project-card:hover .project-link {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+.project-description {
+  white-space: normal;
+  font-size: 0.875rem;
+  color: #718096;
+  margin-bottom: 1rem;
+  width: 600px;
 }
 
-.project-link {
-  transform: translateY(10px);
-  transition: all 0.3s ease;
+.grid-container {
+  display: flex;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columns */
+  grid-template-rows: repeat(3, 1fr);
+  /* 3 rows */
+  grid-gap: 20px;
+  /* 20px gap between columns */
 }
-
-.icon {
-  display: inline-block;
-  margin-right: 5px;
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+.grid-container .project-image img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .contact-form-wrap .form-group {
@@ -945,7 +978,7 @@ ul.dropdown-menu li {
   transition: all 0.4s ease 0s;
 }
 .blog-item-content h3 a:hover {
-  color: rgb(247, 87, 87) !important;
+  color: #ffa500 !important;
 }
 
 .lh-36 {
@@ -998,7 +1031,7 @@ h3.quote::before {
   content: "";
   width: 55px;
   height: 2px;
-  background: rgb(247, 87, 87);
+  background: #ffa500;
   position: absolute;
   top: 25px;
   left: 0;
@@ -1071,7 +1104,7 @@ h3.quote::before {
   font-weight: 500;
 }
 .post-comments .comment-author a {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
   font-size: 14px;
   text-transform: uppercase;
 }
@@ -1082,7 +1115,7 @@ h3.quote::before {
   font-size: 12px;
 }
 .post-comments .comment-button {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
   display: inline-block;
   margin-left: 5px;
   font-size: 12px;
@@ -1092,7 +1125,7 @@ h3.quote::before {
   display: inline-block;
 }
 .post-comments .comment-button:hover {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
 }
 
 .post-excerpt {
@@ -1110,7 +1143,7 @@ h3.quote::before {
 .post-excerpt blockquote.quote-post p {
   line-height: 30px;
   font-size: 20px;
-  color: rgb(247, 87, 87);
+  color: #ffa500;
 }
 
 .single-blog {
@@ -1137,7 +1170,7 @@ h3.quote::before {
   color: #000;
 }
 .next-prev a:hover {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
 }
 .next-prev .prev-post i {
   margin-right: 10px;
@@ -1156,7 +1189,7 @@ h3.quote::before {
   font-size: 16px;
 }
 .social-profile ul li a i:hover {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
 }
 
 .comments-section {
@@ -1200,7 +1233,7 @@ h3.quote::before {
   margin-bottom: 8px;
 }
 .comment-wrap .media .media-heading a {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
   font-size: 13px;
 }
 .comment-wrap .media .comment-meta {
@@ -1221,7 +1254,7 @@ h3.quote::before {
 }
 .comment-reply-form input:focus, .comment-reply-form textarea:focus {
   box-shadow: none;
-  border: 1px solid rgb(247, 87, 87);
+  border: 1px solid #ffa500;
 }
 .comment-reply-form textarea, .comment-reply-form .btn-main, .comment-reply-form .btn-transparent, .comment-reply-form .btn-small {
   height: auto;
@@ -1262,7 +1295,7 @@ h3.quote::before {
   padding-right: 10px;
 }
 .widget.widget-category ul li a:hover {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
   padding-left: 5px;
 }
 .widget.widget-tag ul li {
@@ -1281,8 +1314,8 @@ h3.quote::before {
 }
 .widget.widget-tag ul li a:hover {
   color: #fff;
-  background: rgb(247, 87, 87);
-  border: 1px solid rgb(247, 87, 87);
+  background: #ffa500;
+  border: 1px solid #ffa500;
 }
 
 .footer {
@@ -1302,7 +1335,7 @@ h3.quote::before {
   letter-spacing: 1px;
 }
 .logo span {
-  color: rgb(247, 87, 87);
+  color: #ffa500;
 }
 
 .sub-form {
@@ -1324,7 +1357,7 @@ h3.quote::before {
   z-index: 999;
   height: 40px;
   width: 40px;
-  background: rgb(247, 87, 87);
+  background: #ffa500;
   border-radius: 50%;
   text-align: center;
   line-height: 43px;

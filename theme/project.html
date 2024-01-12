@@ -171,7 +171,9 @@
         <!-- GitHub Projects -->
         <div class="row mt-8">
             <div id="projects-container" class="project-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid-container">
                 <!-- JavaScript will insert project cards here -->
+                </div>
             </div>
         </div>
     </div>
@@ -323,7 +325,7 @@ Essential Scripts
         },
         Salary: {
             name: "Salary",
-            description: "Salary Exploration 2023",
+            description: "Analyse des salaire canadien entre 2023-2024",
             language: "HTML",
             forks_count: 10,
             stargazers_count: 15,
@@ -377,6 +379,10 @@ Essential Scripts
         }
 
         projectCard.innerHTML = `
+            <div class="grid-item">
+            <div class="project-image">
+                <img src="path_to_image.jpg" alt="${projectData.name}" class="img-fluid">
+            </div>
             <h4 class="project-title font-semibold text-lg mb-2">${projectData.name || ""
             }</h4>
             <p class="project-description text-gray-600 text-sm mb-4">${projectData.description || ""
@@ -397,6 +403,7 @@ Essential Scripts
                 ? `<a href="${projectData.homepage}" target="_blank" class="project-link py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-300 text-sm font-medium inline-block">Live Demo</a>`
                 : ""
             }
+            </div>
         `;
         document.getElementById("projects-container").appendChild(projectCard);
     }
