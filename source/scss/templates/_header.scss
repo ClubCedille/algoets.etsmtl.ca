@@ -1,0 +1,24 @@
+#tickerScroller {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    overflow: hidden;
+    z-index: 9999;
+    border-radius: 0px 0px 10px 10px;
+}
+
+#tickerContainer {
+    display: flex;
+    align-items: center;
+    animation: slide linear infinite;
+    white-space: nowrap;
+    font-family: 'Arial', sans-serif;
+}
+
+.tickerText {
+    margin-right: 50px;
+}
