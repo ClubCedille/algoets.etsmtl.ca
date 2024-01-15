@@ -8,28 +8,23 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 12px 0;
-            pointer-events: none;
-            z-index: 999;
-            background-color: black;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+            overflow: hidden;
+            z-index: 9999;
         }
 
         #tickerContainer {
-            position: relative;
+            display: flex;
+            align-items: center;
+            animation: slide linear infinite;
             white-space: nowrap;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            overflow: hidden;
-            width: 100%;
-            padding: 4px 0;
-            z-index: 1000;
+            font-family: 'Arial', sans-serif;
         }
 
         .tickerText {
-            display: inline-block;
-            margin-right: 20px;
-            color: white;
+            margin-right: 50px;
         }
 
         @keyframes slide {
@@ -42,19 +37,11 @@
             }
         }
 
-        .animate-ticker {
-            animation: slide 120s linear infinite;
-        }
-
-        /* Mobile Responsiveness */
+        /* Responsive Design */
         @media only screen and (max-width: 600px) {
-            #tickerScroller {
-                padding: 12px 0;
-            }
-
             .tickerText {
-                font-size: 12px;
-                /* Smaller font for mobile */
+                font-size: 14px;
+                margin-right: 30px;
             }
         }
     </style>
@@ -146,101 +133,59 @@
             cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
         }
 
+        function calculatePercentagePosition() {
+            const tickerContainer = document.getElementById('tickerContainer');
+            const containerWidth = tickerContainer.offsetWidth;
+            const parentWidth = tickerContainer.parentElement.offsetWidth;
+            const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+            const computedStyle = window.getComputedStyle(tickerContainer);
+            const matrix = new WebKitCSSMatrix(computedStyle.transform);
+            const currentPosition = matrix.m41; // Current X translation
+
+            // Convert position to percentage of total path
+            const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+            return positionPercent;
+        }
+
+        function applySavedPosition(positionPercent) {
+            const tickerContainer = document.getElementById('tickerContainer');
+            // Remove the current animation to reset it
+            tickerContainer.style.animation = 'none';
+
+            // Update the @keyframes rule to start from the saved position
+            const keyframes = `@keyframes slide {
+                from { transform: translateX(${100 - positionPercent}%); }
+                to { transform: translateX(-100%); }
+            }`;
+
+            // Apply the new @keyframes rule
+            let styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerHTML = keyframes;
+            document.head.appendChild(styleSheet);
+
+            // Restart the animation
+            requestAnimationFrame(() => {
+                tickerContainer.style.animation = `slide 120s linear infinite`;
+            });
+        }
+
 
         document.addEventListener("DOMContentLoaded", async () => {
-            const tickerContainer = document.getElementById('tickerContainer');
-            tickerContainer.classList.add('animate-ticker'); // Start CSS animation
+            await updateTicker();
+            setInterval(updateTicker, 120000); // Update every 2 minutes
 
+            // Retrieve saved position or start from 0%
+            const savedPosition = localStorage.getItem('tickerPosition') || 0;
+            applySavedPosition(savedPosition);
 
-
-            let currentPercent = parseInt(localStorage.getItem('animationPercent')) || 0;
-            let totalCurrentPercent = 0;
-            const keyframes = findKeyframesRule('slide');
-            const keyframe = keyframes.cssRules[0].cssText.match(/translateX\((.*?)\)/g);
-            const keyframeString = keyframe.map(function (str) {
-                return parseInt(str.match(/\d+/g));
-            });
-
-            function findKeyframesRule(ruleName) {
-                for (let ss of document.styleSheets) {
-                    for (let rule of ss.cssRules) {
-                        if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === ruleName) {
-                            return rule;
-                        }
-                    }
-                }
-                return null;
-            }
-
-            function changePercent() {
-                const rule = findKeyframesRule('slide');
-                rule.deleteRule('100%');
-                rule.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
-                localStorage.setItem('animationPercent', currentPercent);
-            }
-
-
-            function getClosest(keyframe) {
-                // curr stands for current keyframe
-                var curr = keyframe[0];
-                var diff = Math.abs(totalCurrentPercent - curr);
-                for (var val = 0, j = keyframe.length; val < j; val++) {
-                    var newdiff = Math.abs(totalCurrentPercent - keyframe[val]);
-                    // If the difference between the current percent and the iterated
-                    // keyframe is smaller, take the new difference and keyframe
-                    if (newdiff < diff) {
-                        diff = newdiff;
-                        curr = keyframe[val];
-                    }
-                }
-                return curr;
-            }
-
-            var showPercent = window.setInterval(function () {
-                if (currentPercent < 100) {
-                    currentPercent += 1;
-                } else {
-                    currentPercent = 0;
-                    currentPercent++; // Increment iteration count when animation restarts
-                }
-                localStorage.setItem('animationPercent', currentPercent);
-            }, 40);
-
-            // Get the closest keyframe to the current percent
-            currentPercent = getClosest(keyframeString);
-
-            totalCurrentPercent += currentPercent;
-            // Since it's in percent it shouldn't ever be over 100
-            if (totalCurrentPercent > 100) {
-                totalCurrentPercent -= 100;
-            }
-
-            for (var i = 0, j = keyframeString.length; i < j; i++) {
-                keyframes.deleteRule(keyframeString[i]);
-            }
-
-            keyframes.appendRule(`0% { transform: translateX(${currentPercent}%); }`);
-            keyframes.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
-
-
-
-            await updateTicker(); // Update ticker on page load
-            setInterval(updateTicker, 120000); // Update ticker every 2 minutess
+            // Periodically save the current position
+            setInterval(() => {
+                const positionPercent = calculatePercentagePosition();
+                localStorage.setItem('tickerPosition', positionPercent);
+            }, 1000); // Save position every 1 second
         });
-
-        var browserPrefix;
-        navigator.sayswho = (function () {
-            var N = navigator.appName, ua = navigator.userAgent, tem;
-            var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-            if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
-            M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
-            M = M[0];
-            if (M == "Chrome") { browserPrefix = "webkit"; }
-            if (M == "Firefox") { browserPrefix = "moz"; }
-            if (M == "Safari") { browserPrefix = "webkit"; }
-            if (M == "MSIE") { browserPrefix = "ms"; }
-        })();
-
     </script>
 </body>
 
