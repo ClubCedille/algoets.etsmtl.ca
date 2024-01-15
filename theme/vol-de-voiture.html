@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+  <!-- ** Basic Page Needs ** -->
+  <meta charset="utf-8">
+  <title>AlgoETS</title>
+
+  <!-- ** Mobile Specific Metas ** -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="AlgoETS Club">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="AlgoETS">
+  <meta name="generator" content="AlgoETS
+
+  <!-- theme meta -->
+  <meta name="theme-name" content="AlgoETS">
+
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
+  <!-- Icon Font Css -->
+  <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
+  <link rel="stylesheet" href="plugins/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!--Favicon-->
+  <link rel="icon" href="images/favicon.png" type="image/x-icon">
+
+</head>
+
+<body>
+
+
+<!-- Header Start -->
+<header class="navigation">
+  <div id="tickerScroller">
+    <div id="tickerContainer"></div>
+  </div>
+  <div class="header-top">
+
+    <div id="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg px-0 py-4">
+              <a class="navbar-brand" href="index.html">
+                <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
+              </a>
+
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
+
+              <div class="collapse navbar-collapse text-center" id="navbarsExample09">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item @@home">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                  </li>
+                  <li class="nav-item @@about">
+                    <a class="nav-link" href="about.html">Notre Club</a>
+                  </li>
+                  <li class="nav-item @@team">
+                    <a class="nav-link" href="team.html">Notre Équipe</a>
+                  </li>
+                  <li class="nav-item @@project">
+                    <a class="nav-link" href="project.html">Projets</a>
+                  </li>
+                  <li class="nav-item @@pricing">
+                    <a class="nav-link" href="pricing.html">Partenaires</a>
+                  </li>
+                  <li class="nav-item @@contact">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item dropdown active">
+                    <a class="nav-link" href="blog-grid.html">Blog</a>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function fetchCryptoData() {
+        try {
+          const cache = localStorage.getItem('cryptoDataCache');
+          const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+          if (cache) {
+            const { data, timestamp } = JSON.parse(cache);
+            if (timestamp + cacheDuration > Date.now()) {
+              return data; // Use cached data if still valid
+            }
+          }
+
+          // Define the top 25 cryptocurrency IDs in an array
+          const top25CoinIds = [
+            "bitcoin",
+            "ethereum",
+            "tether",
+            "cardano",
+            "usd-coin",
+            "solana",
+            "polkadot",
+            "dogecoin",
+            "avalanche-2",
+            "terra-luna",
+            "binance-usd",
+            "wrapped-bitcoin",
+            "litecoin",
+            "chainlink",
+            "algorand",
+            "bitcoin-cash",
+            "matic-network",
+            "internet-computer",
+            "stellar",
+            "filecoin",
+            "tron",
+            "ethereum-classic",
+            "vechain",
+          ];
+          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Cache the fetched data with a timestamp
+          localStorage.setItem('cryptoDataCache', JSON.stringify({
+            data: top25CoinIds.map(id => ({
+              name: id.toUpperCase(),
+              value: data[id].usd,
+              change: data[id].usd_24h_change,
+            })), timestamp: Date.now()
+          }));
+
+          return top25CoinIds.map(id => ({
+            name: id.toUpperCase(),
+            value: data[id].usd,
+            change: data[id].usd_24h_change,
+          }));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          return [];
+        }
+      }
+
+      function createTickerItem(item) {
+        const span = document.createElement("span");
+        span.className = "tickerText";
+        const trendSymbol = item.change >= 0 ? "↑" : "↓";
+        const trendColor = item.change >= 0 ? "green" : "red";
+        span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+        <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+        return span;
+      }
+
+      async function updateTicker() {
+        const cryptoData = await fetchCryptoData();
+        const tickerContainer = document.getElementById("tickerContainer");
+        tickerContainer.innerHTML = "";
+        cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+      }
+
+      function calculatePercentagePosition() {
+        const tickerContainer = document.getElementById('tickerContainer');
+        const containerWidth = tickerContainer.offsetWidth;
+        const parentWidth = tickerContainer.parentElement.offsetWidth;
+        const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+        const computedStyle = window.getComputedStyle(tickerContainer);
+        const matrix = new WebKitCSSMatrix(computedStyle.transform);
+        const currentPosition = matrix.m41; // Current X translation
+
+        // Convert position to percentage of total path
+        const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+        return positionPercent;
+      }
+
+      function applySavedPosition(positionPercent) {
+        const tickerContainer = document.getElementById('tickerContainer');
+        // Remove the current animation to reset it
+        tickerContainer.style.animation = 'none';
+
+        // Update the @keyframes rule to start from the saved position
+        const keyframes = `@keyframes slide {
+            from { transform: translateX(${100 - positionPercent}%); }
+            to { transform: translateX(-100%); }
+        }`;
+
+        // Apply the new @keyframes rule
+        let styleSheet = document.createElement('style');
+        styleSheet.type = 'text/css';
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+
+        // Restart the animation
+        requestAnimationFrame(() => {
+          tickerContainer.style.animation = `slide 120s linear infinite`;
+        });
+      }
+
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await updateTicker();
+        setInterval(updateTicker, 120000); // Update every 2 minutes
+
+        const savedPosition = localStorage.getItem('tickerPosition') || 0;
+        applySavedPosition(savedPosition);
+
+        setInterval(() => {
+          const positionPercent = calculatePercentagePosition();
+          localStorage.setItem('tickerPosition', positionPercent);
+        }, 39);
+      });
+    </script>
+</header>
+<!-- Header Close -->
+
+<section class="page-title" style="background-image: url('images/blog/vol/nombre_de_vol_de_vehicule_moteur_par_annee_hua975f8a3d854aa424a332774bd6b821d_25312_1024x0_resize_q75_box.jpg'); background-size: 100%; background-repeat: no-repeat; background-position: right 0% bottom 40%;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Étude des vols de voitures</span>
+          <h1 class="text-capitalize mb-4 text-lg">Montréal</h1>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">/</span></li>
+            <li class="list-inline-item text-white-50">Étude des vols de voitures</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section blog-wrap bg-gray">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="row">
+					<div class="col-lg-12 mb-5">
+						<div class="single-blog-item">
+							<img loading="lazy"
+								src="images/blog/vol/_hu1cded1ad0d3c40c6c28b4c5f3636bd90_61649_5f7300d0170c77a543e527b1d8de27a2.jpg"
+								alt="blog" class="img-fluid rounded">
+							<div class="blog-item-content bg-white p-5">
+
+								<h2 class="mt-3 mb-4">Étude des vols de voitures à Montréal</h2>
+								<p><a
+										href="https://ilias.vercel.app/p/%C3%A9tude-des-vols-de-voitures-%C3%A0-montr%C3%A9al/">Original</a>
+								<p><a
+										href="https://mohamedilias.substack.com/p/etude-des-vols-de-voitures-a-montreal">Substack</a>
+
+								<p class="lead mb-4">Découvrez les tendances de la criminalité liée aux vols de voitures
+									à Montréal à travers les années. Cette étude examine les quartiers les plus touchés,
+									les variations saisonnières, et bien plus encore.</p>
+
+								<p>Un article dans le journal a particulièrement attiré mon attention de manière
+									inattendue, révélant une réalité alarmante : le taux de vols de voitures à Montréal
+									atteignait des sommets déconcertants. Cette révélation m’a laissé perplexe et
+									intrigué à la fois. Mon esprit curieux a été instantanément piqué, et j’ai ressenti
+									le besoin impérieux d’explorer ce phénomène de plus près, de le décortiquer et de
+									comprendre ses origines.</p>
+
+								<p>Dans cet article, je vais vous emmener avec moi dans cette aventure intrigante, alors
+									que nous plongeons dans l’univers des vols de voitures à Montréal. Nous allons
+									dévoiler les données, analyser les statistiques et tenter de démystifier cette
+									réalité complexe. Attachez-vous bien, car nous partons à la découverte de l’envers
+									du décor de la criminalité automobile à Montréal.</p>
+
+								<h3>Récoltes des données</h3>
+
+								<p>J’ai entrepris la collecte de données en récupérant un fichier CSV exhaustif
+									contenant toutes les infractions criminelles à Montréal, mis à disposition par la
+									ville. Mon objectif était de cibler spécifiquement les infractions de type “Vol de
+									véhicule à moteur”. À ma grande surprise, j’ai trouvé pas moins de 53 964 cas
+									enregistrés depuis l’année 2018.</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/datas_hu3a37a876352c120fad8190baa535589b_102199_1024x0_resize_box_3.png"
+									alt="blog" class="img-fluid rounded">
+
+								<small>Données des vols de véhicules à moteur à Montréal</small>
+
+								<br>
+								<br>
+
+								<h3>Le vol en hausse</h3>
+
+								<p>L’un des constats les plus préoccupants réside dans la tendance constante à la hausse
+									du vol de véhicules, qui semble résolument insensible à tout ralentissement, comme
+									en témoigne ce graphique éloquent :</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/nombre_de_vol_de_vehicule_moteur_par_annee_hua975f8a3d854aa424a332774bd6b821d_25312_1024x0_resize_q75_box.jpg"
+									alt="blog" class="img-fluid rounded">
+								<small>Graphique vols de véhicules à moteur par année</small>
+								<br>
+								<br>
+
+								<p>
+								<table border="1" class="styled-table">
+									<thead>
+										<tr>
+											<th>Années</th>
+											<th>Vols de véhicules</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>2015</td>
+											<td>4418</td>
+										</tr>
+										<tr>
+											<td>2016</td>
+											<td>4352</td>
+										</tr>
+										<tr>
+											<td>2017</td>
+											<td>4732</td>
+										</tr>
+										<tr>
+											<td>2018</td>
+											<td>4237</td>
+										</tr>
+										<tr>
+											<td>2019</td>
+											<td>4170</td>
+										</tr>
+										<tr>
+											<td>2020</td>
+											<td>4706</td>
+										</tr>
+										<tr>
+											<td>2021</td>
+											<td>6440</td>
+										</tr>
+										<tr>
+											<td>2022</td>
+											<td>9377</td>
+										</tr>
+										<tr>
+											<td>2023</td>
+											<td>11262</td>
+										</tr>
+									</tbody>
+								</table>
+
+								</p>
+								<br>
+								<br>
+
+								<p>Ces chiffres révèlent une progression alarmante, suscitant des inquiétudes
+									croissantes. </p>
+
+								<h3>Mode Opératoire</h3>
+
+								<p>De manière paradoxale, il s’avère que la majorité des vols de véhicules se produisent
+									en plein jour. En effet, 51% de ces vols ont lieu pendant la journée, lorsque tout
+									semble plus visible et évident. De plus, parmi les jours de la semaine, c’est le
+									mercredi qui détient le triste record du jour où les vols sont les plus fréquents :
+								</p>
+
+								<table border="1" class="styled-table">
+									<thead>
+										<tr>
+											<th>Journée</th>
+											<th>Occurence</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Wednesday</td>
+											<td>8519</td>
+										</tr>
+										<tr>
+											<td>Monday</td>
+											<td>8493</td>
+										</tr>
+										<tr>
+											<td>Thursday</td>
+											<td>8334</td>
+										</tr>
+										<tr>
+											<td>Tuesday</td>
+											<td>8303</td>
+										</tr>
+										<tr>
+											<td>Friday</td>
+											<td>7819</td>
+										</tr>
+										<tr>
+											<td>Saturday</td>
+											<td>6160</td>
+										</tr>
+										<tr>
+											<td>Sunday</td>
+											<td>6066</td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<br>
+
+								<img loading="lazy"
+									src="images/blog/vol/nombre_de_vols_de_voitures_par_jour_de_la_semaine_hu050a3e1aa8cc862be541aeb1ab26a8e0_27041_1024x0_resize_q75_box.jpg"
+									alt="blog" class="img-fluid rounded">
+
+								<small>Graphique vols de véhicules par jour de la semaine</small>
+								<br>
+								<br>
+
+								<img loading="lazy"
+									src="images/blog/vol/_hu6254c031e6b6322a6c9c22760b8f0e7b_41420_0b9835fe76a5905d6537f25e2d31f198.jpg"
+									alt="blog" class="img-fluid rounded">
+								<small>Graphique vols de véhicules par jour de la semaine et quart de la journée</small>
+								<br>
+								<br>
+
+								<p>Cette donnée surprenante met en évidence une réalité intrigante, où les vols de
+									véhicules semblent prospérer en plein jour, défiant ainsi les attentes
+									conventionnelles en matière de criminalité.</p>
+
+								<h3>Lieux</h3>
+
+								<p>Voici une carte thermique (heatmap) des cinq endroits les plus fréquemment ciblés par
+									les voleurs à Montréal. Il est intéressant de noter que les hôtels et les centres
+									commerciaux sont devenus des cibles privilégiées.</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/_hu1cded1ad0d3c40c6c28b4c5f3636bd90_61649_5f7300d0170c77a543e527b1d8de27a2.jpg"
+									alt="blog" class="img-fluid rounded">
+								<small>Carte thermique des vols de véhicules à Montréal</small>
+								<br>
+								<br>
+
+								<h3>Un Vol Sophistiqué</h3>
+
+								<p>Loin sont les jours où un simple trousseau de clés métalliques ou une vitre brisée
+									suffisaient pour voler une voiture. Aujourd’hui, les voleurs ont évolué, devenant
+									plus rusés et équipés de technologies avancées.</p>
+
+								<h4>Relay attack</h4>
+
+								<p>Ils utilisent un dispositif sophistiqué pour amplifier le signal, pratiquant ce que
+									l’on appelle l’attaque par relais.</p>
+
+								<p>Dans ce type de vol, l’objectif des malfaiteurs est de tromper la voiture en lui
+									faisant croire que la clé se trouve à proximité immédiate du véhicule, même si en
+									réalité, la clé se trouve à plusieurs centaines de mètres de distance. Ils utilisent
+									un amplificateur de signal pour induire en erreur la voiture, lui faisant croire que
+									la clé est à l’intérieur du véhicule. </p>
+
+								<p>Voici une vidéo capturant un vol qui ne dure que quelques secondes.</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/S1-thatcham-vol-voiture-technique-du-relais-610114_hub5c0116b95d8273d7a7578c2c04d6e37_169962_1024x0_resize_q75_box.jpg"
+									alt="blog" class="img-fluid rounded">
+
+								<small>Vol Voiture Technique du relai</small>
+
+								<br>
+								<br>
+
+								<h4>PORT OBD</h4>
+
+								<p>Le Port OBD est le port « On-Board Diagnostics » se trouvant généralement au-dessus
+									de la pédale. C’est une interface de communication pour les systèmes de surveillance
+									et de contrôle des véhicules. Il est également utilisé par les garages pour
+									identifier et résoudre les défauts. Problème : Malheureusement, toute personne ayant
+									accès à celui-ci (par exemple, un garage malveillant, un valet ou des employés de
+									lave-auto) peut abuser du Port OBD pour créer une copie du porte-clés électronique
+									de votre voiture ! Parfois, les voleurs utilisent la méthode du Port OBD en y
+									injectant un code malicieux permettant de changer des configurations pour arrêter le
+									système d’alarme et faire un clonage de la clé.</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/odbPort_huf1cce419191bac96c0a5c7bf4c742e6f_381549_1024x0_resize_box_3.png"
+									alt="blog" class="img-fluid rounded">
+
+								<small>Port OBD</small>
+
+								<br>
+								<br>
+
+								<h3>Conséquences</h3>
+
+								<p>L’explosion du nombre de vols de voitures a des conséquences directes sur les
+									propriétaires de véhicules, notamment une augmentation significative du coût de
+									l’assurance automobile. Certaines marques et modèles sont malheureusement devenus
+									les cibles privilégiées des voleurs. Voici le palmarès de 2022 :</p>
+
+								<table class="styled-table">
+									<thead>s
+										<tr>
+											<th>Nº</th>
+											<th>Marque/Modèle</th>
+											<th>Année Modèle Volée le Plus Souvent</th>
+											<th>Nombre de Véhicules Assurés</th>
+											<th>Nombre de Vols</th>
+											<th>Fréquence de Vol (%)</th>
+											<th>Type</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>Honda CR-V</td>
+											<td>2020</td>
+											<td>115,895</td>
+											<td>2,689</td>
+											<td>2.3%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Acura RDX</td>
+											<td>2020</td>
+											<td>15,895</td>
+											<td>653</td>
+											<td>4.1%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>Honda Civic</td>
+											<td>2019</td>
+											<td>224,688</td>
+											<td>506</td>
+											<td>0.2%</td>
+											<td>Sedan</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>Dodge RAM 1500 Series</td>
+											<td>2020</td>
+											<td>79,019</td>
+											<td>504</td>
+											<td>0.6%</td>
+											<td>Truck</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>Jeep Wrangler</td>
+											<td>2021</td>
+											<td>28,048</td>
+											<td>433</td>
+											<td>1.5%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td>Toyota RAV 4</td>
+											<td>2019</td>
+											<td>124,357</td>
+											<td>425</td>
+											<td>0.3%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>7</td>
+											<td>Jeep Grand Cherokee</td>
+											<td>2021</td>
+											<td>22,808</td>
+											<td>420</td>
+											<td>1.8%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>8</td>
+											<td>Toyota Highlander</td>
+											<td>2021</td>
+											<td>17,386</td>
+											<td>344</td>
+											<td>2.0%</td>
+											<td>SUV</td>
+										</tr>
+										<tr>
+											<td>9</td>
+											<td>Ford F150 Series</td>
+											<td>2019</td>
+											<td>91,166</td>
+											<td>256</td>
+											<td>0.3%</td>
+											<td>Truck</td>
+										</tr>
+										<tr>
+											<td>10</td>
+											<td>Hyundai Tucson</td>
+											<td>2021</td>
+											<td>63,450</td>
+											<td>242</td>
+											<td>0.4%</td>
+											<td>SUV</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<br>
+								<br>
+
+								<h3>Se protéger</h3>
+
+								<p>Il est important de noter qu’aucune méthode n’est infaillible, mais l’objectif
+									principal est de rendre la tâche des voleurs aussi difficile que possible, les
+									décourageant ainsi de s’attaquer à votre véhicule.</p>
+
+								<h4>Verrouillez les portes et fermez complètement les fenêtres</h4>
+
+								<p>La première étape essentielle pour vous protéger consiste à verrouiller les portes de
+									votre véhicule et à fermer complètement les fenêtres. Ce geste simple peut
+									considérablement ralentir un voleur.</p>
+
+								<h4>Boite de farraday</h4>
+
+								<p>Pour protéger votre clé électronique (key FOB) contre les attaques par relais, vous
+									pouvez utiliser une boîte de Faraday. Cette boîte bloque le signal de la clé,
+									empêchant ainsi les voleurs d’amplifier son signal. Cette méthode constitue une
+									défense efficace contre les tentatives d’attaque par relais et est disponible à un
+									prix abordable, généralement autour de 25 $.</p>
+
+								<p class="quote">Amazon: $25 Boite de farraday</p>
+
+								<h3>OBD PORT lock</h3>
+
+								<h4>Pourquoi sommes-nous exposés ?</h4>
+
+								<p>Les véhicules équipés de systèmes de démarrage sans clé (“push start”) ou d’entrée
+									sans clé (“keyless entry”) ne disposent pas de clé mécanique pour démarrer le
+									moteur. Ils utilisent des clés électroniques qui s’authentifient avec la voiture via
+									un échange de données (par des signaux radio pour les systèmes sans clé ou par
+									insertion dans le tableau de bord).</p>
+
+								<h4>Comment le port est-il exploité ?</h4>
+
+								<p>Ces véhicules conservent une copie numérique des clés dans l’unité de contrôle du
+									moteur du véhicule (ECU). Le problème réside dans le fait que ces clés numériques
+									peuvent être téléchargées par quiconque a accès au “PORT OBD” du véhicule, puis
+									utilisées pour programmer une clé vierge en moins de 60 secondes.</p>
+
+								<h4>Pourquoi devrais-je m’inquiéter ?</h4>
+
+								<p>Cette clé duplicata est identique à l’originale, ce qui donne au voleur un accès
+									total pour OUVRIR, DÉMARRER et EMPORTER le véhicule à sa convenance, souvent des
+									jours, voire des semaines plus tard.</p>
+
+								<p>Pour vous protéger contre ce type d’attaque, vous pouvez envisager de bloquer,
+									modifier ou cacher votre port OBD. Il ne faut que quelques minutes pour rendre ces
+									véhicules inviolables.</p>
+
+								<img loading="lazy"
+									src="images/blog/vol/odbPortLock_hu7d456c3806a3beac5a7b74dbff41f2f4_131441_1024x0_resize_box_3.png"
+									alt="blog" class="img-fluid rounded">
+
+								<small>Port OBD Lock</small>
+								<br>
+								<br>
+
+								<h3>Système de Repérage par TAG</h3>
+
+								<p>Cette technologie implique de placer plusieurs dispositifs sans fil dans des endroits
+									difficiles d’accès du véhicule. Chaque dispositif est autonome et émet un signal
+									avec un code d’identification unique qui peut être lu à distance par un récepteur.
+								</p>
+
+								<p class="quote">Prix: 400$</p>
+
+								<h3>Barre Antivol</h3>
+
+								<p>Une barre antivol simple mais efficace peut ralentir un voleur et le décourager,
+									agissant comme un moyen dissuasif.</p>
+
+								<p class="quote">Amazon: $69 Barre Antivol</p>
+
+								<h3>Apple tag</h3>
+
+								<img loading="lazy"
+									src="images/blog/vol/appleTag_hud2a548186408fc92c5a56156621a921b_71579_1024x0_resize_q75_box.jpg"
+									alt="blog" class="img-fluid rounded">
+
+								<br>
+								<br>
+
+								<p>L’Apple tag est un relayeur de position, le tag émet des signaux anonymes et toute
+									personnes possédant Un apapreil Apple passant proche du tag envoit un signal au
+									serveur de Apple vous permettant ainsi d’avoir une position geographique du dernier
+									repérage. Il suffit de bien le cacher dans son auto.</p>
+
+								<p>Toutefois, il est recommandé de désactiver le haut-parleur à l’intérieur de l’Apple
+									Tag pour éviter que le voleur ne le découvre et ne le désactive. En effet, Apple a
+									mis en place ce système pour prévenir le suivi indésirable des autres utilisateurs.
+									Imaginez la situation où quelqu’un aurait discrètement placé un Apple Tag sur vous,
+									vous permettant ainsi d’être suivi partout sans votre consentement.</p>
+
+								<p>Dans le contexte des véhicules volés, une fois que le voleur a pris possession de
+									votre voiture et qu’il détecte la présence d’un Apple Tag non associé à son compte
+									Apple, il recevra une notification indiquant que cet Apple Tag le suit. En réaction,
+									il pourrait ouvrir l’application “Find My iPhone” pour tenter de localiser l’Apple
+									Tag.</p>
+
+								<p>Pour plus de détails: https://youtu.be/hiivC_4li8Q?t=62</p>
+
+								<p class="quote">Amazon: $34 Apple Tag</p>
+
+								<div
+									class="tag-option mt-5 d-block d-md-flex justify-content-between align-items-center">
+									<ul class="list-inline">
+										<li>Tags:</li>
+										<li class="list-inline-item"><a href="#" rel="tag">Données Publique</a></li>
+										<li class="list-inline-item"><a href="#" rel="tag">Montréal</a></li>
+										<li class="list-inline-item"><a href="#" rel="tag">Vol</a></li>
+									</ul>
+
+									<ul class="list-inline">
+										<li class="list-inline-item"> Share: </li>
+										<li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"
+													aria-hidden="true"></i></a></li>
+										<li class="list-inline-item"><a href="#"><i class="fab fa-twitter"
+													aria-hidden="true"></i></a></li>
+										<li class="list-inline-item"><a href="#"><i class="fab fa-pinterest-p"
+													aria-hidden="true"></i></a></li>
+										<li class="list-inline-item"><a href="#"><i class="fab fa-google-plus"
+													aria-hidden="true"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-lg-12 mb-5">
+					</div>
+
+					<div class="col-lg-12 mb-5">
+					</div>
+
+					<div class="col-lg-12">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 mt-5 mt-lg-0">
+				<div class="sidebar-wrap">
+
+					<div class="sidebar-widget card border-0 mb-3">
+						<img loading="lazy"
+							src="images/blog/vol/me_hu1b4c362e4f00f76c1e33ae13569faa4b_9876_300x0_resize_q75_box.jpg"
+							alt="blog-author" class="img-fluid">
+						<div class="card-body p-4 text-center">
+							<h5 class="mb-0 mt-4">Mohamed Ilias</h5>
+							<p>Co-Capitaine</p>
+							<p>Artisan de la donnée.</p>
+
+							<ul class="list-inline author-socials">
+								<li class="list-inline-item mr-3">
+									<a href="#"><i class="fab fa-facebook-f text-muted"></i></a>
+								</li>
+								<li class="list-inline-item mr-3">
+									<a href="#"><i class="fab fa-twitter text-muted"></i></a>
+								</li>
+								<li class="list-inline-item mr-3">
+									<a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<footer class="footer section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <img src="/images/logo.png" width="200" height="240" alt="logoAlgoEts">
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="widget">
+          <h4 class="text-capitalize mb-4">Liens rapides</h4>
+
+          <ul class="list-unstyled footer-menu lh-35">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="pro.html">Projets</a></li>
+            <li><a href="blog-grid.html">Équipe</a></li>
+            <li><a href="contact.html">Blogs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end">
+        <div class="widget">
+          <div class="logo mb-4">
+            <h3>Algo<span>ÉTS</span></h3>
+          </div>
+          <h6><a href="mailto:algoets@ens.etsmtl.ca" target="_blank">algoets@ens.etsmtl.ca</a></h6>
+          <ul class="list-inline footer-socials mt-4">
+            <li class="list-inline-item"><a href="https://www.facebook.com/ClubAlgoETS" target="_blank"><i class="fab fa-facebook-f mr-2"></i></a></li>
+            <li class="list-inline-item"><a href="https://ca.linkedin.com/company/algoets" target="_blank"><i class="fab fa-linkedin mr-2"></i></a></li>
+            <li class="list-inline-item"><a href="https://github.com/AlgoETS" target="_blank"><i class="fab fa-github mr-2 "></i></a></li>
+            <li class="list-inline-item"><a href="https://discord.com/invite/PbWxX7B6dx" target="_blank"><i class="fab fa-discord mr-2 "></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-btm pt-4">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="copyright">
+            Copyright &copy; 2024, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--Scroll to top-->
+<div id="scroll-to-top" class="scroll-to-top">
+  <span class="icon fa fa-angle-up"></span>
+</div>
+
+
+
+<!-- 
+Essential Scripts
+=====================================-->
+<!-- Main jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4.3.1 -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<!--  Magnific Popup-->
+<script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+<!-- Slick Slider -->
+<script src="plugins/slick/slick.min.js"></script>
+<!-- Counterup -->
+<script src="plugins/counterup/jquery.waypoints.min.js"></script>
+<script src="plugins/counterup/jquery.counterup.min.js"></script>
+
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACAa1Q8BRZ-qHKCwA2vaJ0w7IOnRCmq6g" defer></script>
+<script src="plugins/google-map/map.js" defer></script>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>

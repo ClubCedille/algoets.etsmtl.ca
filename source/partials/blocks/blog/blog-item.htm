@@ -1,0 +1,16 @@
+<!-- Start of Blog Item -->
+<div class="blog-item">
+    <img loading="lazy" src="{{ image_src }}" alt="blog" class="img-fluid rounded">
+
+    <div class="blog-item-content bg-white p-5">
+        <div class="blog-item-meta bg-gray pt-2 pb-1 px-3">
+            <span class="text-black text-capitalize d-inline-block mr-3"><i class="ti-time mr-1"></i> {{ date }}</span>
+        </div>
+
+        <h3 class="mt-3 mb-3"><a href="{{ link }}">{{ title }}</a></h3>
+        <p class="mb-4">{{ summary }}</p>
+
+        <a href="{{ link }}" class="btn btn-small btn-main btn-round-full">Lire</a>
+    </div>
+</div>
+<!-- End of Blog Item -->
