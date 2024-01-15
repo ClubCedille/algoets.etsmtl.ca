@@ -1,4 +1,251 @@
 <!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #tickerScroller {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 0;
+            pointer-events: none;
+            z-index: 999;
+            background-color: black;
+        }
+
+        #tickerContainer {
+            position: relative;
+            white-space: nowrap;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+            width: 100%;
+            padding: 4px 0;
+            z-index: 1000;
+        }
+
+        .tickerText {
+            display: inline-block;
+            margin-right: 20px;
+            color: white;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-ticker {
+            animation: slide 120s linear infinite;
+        }
+
+        /* Mobile Responsiveness */
+        @media only screen and (max-width: 600px) {
+            #tickerScroller {
+                padding: 12px 0;
+            }
+
+            .tickerText {
+                font-size: 12px;
+                /* Smaller font for mobile */
+            }
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <div id="tickerScroller">
+        <div id="tickerContainer"></div>
+    </div>
+
+    <script>
+        async function fetchCryptoData() {
+            try {
+                const cache = localStorage.getItem('cryptoDataCache');
+                const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+                if (cache) {
+                    const { data, timestamp } = JSON.parse(cache);
+                    if (timestamp + cacheDuration > Date.now()) {
+                        return data; // Use cached data if still valid
+                    }
+                }
+
+                // Define the top 25 cryptocurrency IDs in an array
+                const top25CoinIds = [
+                    "bitcoin",
+                    "ethereum",
+                    "tether",
+                    "cardano",
+                    "usd-coin",
+                    "solana",
+                    "polkadot",
+                    "dogecoin",
+                    "avalanche-2",
+                    "terra-luna",
+                    "binance-usd",
+                    "wrapped-bitcoin",
+                    "litecoin",
+                    "chainlink",
+                    "algorand",
+                    "bitcoin-cash",
+                    "matic-network",
+                    "internet-computer",
+                    "stellar",
+                    "filecoin",
+                    "tron",
+                    "ethereum-classic",
+                    "vechain",
+                ];
+                const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Cache the fetched data with a timestamp
+                localStorage.setItem('cryptoDataCache', JSON.stringify({
+                    data: top25CoinIds.map(id => ({
+                        name: id.toUpperCase(),
+                        value: data[id].usd,
+                        change: data[id].usd_24h_change,
+                    })), timestamp: Date.now()
+                }));
+
+                return top25CoinIds.map(id => ({
+                    name: id.toUpperCase(),
+                    value: data[id].usd,
+                    change: data[id].usd_24h_change,
+                }));
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+                return [];
+            }
+        }
+
+        function createTickerItem(item) {
+            const span = document.createElement("span");
+            span.className = "tickerText";
+            const trendSymbol = item.change >= 0 ? "↑" : "↓";
+            const trendColor = item.change >= 0 ? "green" : "red";
+            span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+            <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+            return span;
+        }
+
+        async function updateTicker() {
+            const cryptoData = await fetchCryptoData();
+            const tickerContainer = document.getElementById("tickerContainer");
+            tickerContainer.innerHTML = "";
+            cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+        }
+
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const tickerContainer = document.getElementById('tickerContainer');
+            tickerContainer.classList.add('animate-ticker'); // Start CSS animation
+
+
+
+            let currentPercent = parseInt(localStorage.getItem('animationPercent')) || 0;
+            let totalCurrentPercent = 0;
+            const keyframes = findKeyframesRule('slide');
+            const keyframe = keyframes.cssRules[0].cssText.match(/translateX\((.*?)\)/g);
+            const keyframeString = keyframe.map(function (str) {
+                return parseInt(str.match(/\d+/g));
+            });
+
+            function findKeyframesRule(ruleName) {
+                for (let ss of document.styleSheets) {
+                    for (let rule of ss.cssRules) {
+                        if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === ruleName) {
+                            return rule;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            function changePercent() {
+                const rule = findKeyframesRule('slide');
+                rule.deleteRule('100%');
+                rule.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
+                localStorage.setItem('animationPercent', currentPercent);
+            }
+
+
+            function getClosest(keyframe) {
+                // curr stands for current keyframe
+                var curr = keyframe[0];
+                var diff = Math.abs(totalCurrentPercent - curr);
+                for (var val = 0, j = keyframe.length; val < j; val++) {
+                    var newdiff = Math.abs(totalCurrentPercent - keyframe[val]);
+                    // If the difference between the current percent and the iterated
+                    // keyframe is smaller, take the new difference and keyframe
+                    if (newdiff < diff) {
+                        diff = newdiff;
+                        curr = keyframe[val];
+                    }
+                }
+                return curr;
+            }
+
+            var showPercent = window.setInterval(function () {
+                if (currentPercent < 100) {
+                    currentPercent += 1;
+                } else {
+                    currentPercent = 0;
+                    currentPercent++; // Increment iteration count when animation restarts
+                }
+                localStorage.setItem('animationPercent', currentPercent);
+            }, 40);
+
+            // Get the closest keyframe to the current percent
+            currentPercent = getClosest(keyframeString);
+
+            totalCurrentPercent += currentPercent;
+            // Since it's in percent it shouldn't ever be over 100
+            if (totalCurrentPercent > 100) {
+                totalCurrentPercent -= 100;
+            }
+
+            for (var i = 0, j = keyframeString.length; i < j; i++) {
+                keyframes.deleteRule(keyframeString[i]);
+            }
+
+            keyframes.appendRule(`0% { transform: translateX(${currentPercent}%); }`);
+            keyframes.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
+
+
+
+            await updateTicker(); // Update ticker on page load
+            setInterval(updateTicker, 120000); // Update ticker every 2 minutess
+        });
+
+        var browserPrefix;
+        navigator.sayswho = (function () {
+            var N = navigator.appName, ua = navigator.userAgent, tem;
+            var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+            if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
+            M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
+            M = M[0];
+            if (M == "Chrome") { browserPrefix = "webkit"; }
+            if (M == "Firefox") { browserPrefix = "moz"; }
+            if (M == "Safari") { browserPrefix = "webkit"; }
+            if (M == "MSIE") { browserPrefix = "ms"; }
+        })();
+
+    </script>
+</body>
+
+</html>
+<!DOCTYPE html>
 <html lang="zxx">
 <head>
 
@@ -39,28 +286,6 @@
  <!-- Header Start -->
 <header class="navigation">
   <div class="header-top">
-    <div class="container">
-      <div class="row justify-content-between align-items-center">
-        <div class="col-lg-2 col-md-4">
-          <div class="header-top-socials text-center text-lg-left text-md-left">
-            <a href="https://www.facebook.com/ClubAlgoETS" aria-label="facebook" target="_blank"><i
-                class="fab fa-facebook-f"></i></a>
-            <a href="https://ca.linkedin.com/company/algoets" aria-label="twitter" target="_blank"><i
-                class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/AlgoETS" aria-label="github" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://discord.com/invite/PbWxX7B6dx" aria-label="github" target="_blank"><i
-                class="fab fa-discord"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-10 col-md-8 text-center text-lg-right text-md-right">
-          <div class="header-top-info mb-2 mb-md-0">
-            <a href="mailto:algoets@ens.etsmtl.ca" target="_blank"><i
-                class="fas fa-envelope mr-2"></i><span>algoets@ens.etsmtl.ca</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div id="navbar">
     <div class="container">
@@ -136,7 +361,7 @@
   </div>
 </header>
 <!-- Header Close -->
-<section class="page-title" style="background-image: url('images/competition/concentration.jpg');">
+<section class="page-title" style="background-image: url('images/competition/concentration.jpg'); background-size: auto;">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -221,7 +446,7 @@
       <div class="row">
         <div class="col-lg-12 text-center">
           <div class="copyright">
-            Copyright &copy; 2023, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
+            Copyright &copy; 2024, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
             <br>
           </div>
         </div>

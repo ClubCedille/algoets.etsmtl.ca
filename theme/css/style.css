@@ -207,10 +207,10 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   letter-spacing: 1px;
 }
 
-.overly, .hero-img, .cta, .slider, .page-title {
+.overly, .cta, .slider, .page-title {
   position: relative;
 }
-.overly:before, .hero-img:before, .cta:before, .slider:before, .page-title:before {
+.overly:before, .cta:before, .slider:before, .page-title:before {
   content: "";
   position: absolute;
   left: 0;
@@ -761,34 +761,123 @@ ul.dropdown-menu li {
   outline: none;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+  padding: 15px;
+}
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+}
+
+.row {
+  margin: 0 -15px;
+}
+
+.col {
+  padding: 0 15px;
+}
+
+.page-title {
+  background: url("images/competition/concentration.jpg") cover;
+  padding: 30px 0;
+  color: white;
+  text-align: center;
+}
+
+.partner-logos .col {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.partner-logos .col img {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .partner-logos .col {
+    flex-basis: 50%;
+  }
+}
+
+.partnership-offers table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.partnership-offers table th, .partnership-offers table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+.partnership-offers table th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+.partnership-offers table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.partnership-offers table tr:hover {
+  background-color: #ddd;
+}
+.partnership-offers table tr ul {
+  list-style: none;
+  padding: 0;
+}
+.partnership-offers table tr ul li {
+  padding: 5px 0;
+}
+
+.text-center {
+  text-align: center;
+  margin: 20px 0;
+}
+.text-center .btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.text-center .btn-primary:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #007bff;
+}
+
 .hero-img {
-  background: url("../images/bg/home-5.jpg");
+  background: url("../images/bg/home-5.jpg") cover;
   position: absolute;
-  content: "";
-  background-size: cover;
   width: 100%;
   height: 100%;
-  top: 0px;
+  top: 0;
 }
-
-.h70 {
-  height: 55%;
-}
-
-.lh-45 {
-  line-height: 45px;
-}
-
-.pricing-header h1 {
-  font-size: 70px;
-  font-weight: 300;
-}
-
-.pricing .btn-solid-border {
-  border-color: #dedede;
-}
-.pricing .btn-solid-border:Hover {
-  border-color: rgb(247, 87, 87);
+.hero-img::before {
+  content: "";
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .portflio-item .portfolio-item-content {
@@ -1009,7 +1098,7 @@ ul.dropdown-menu li {
 .pagination .nav-links span.current,
 .pagination .nav-links a.next,
 .pagination .nav-links a.prev {
-  color: #242424;
+  color: black;
 }
 
 h3.quote {
@@ -1270,14 +1359,14 @@ h3.quote::before {
   font-size: 16px;
   color: #333;
   font-weight: 500;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid #ddd;
 }
 .widget.widget-latest-post .media .media-object {
   width: 100px;
   height: auto;
 }
 .widget.widget-latest-post .media .media-heading a {
-  color: #242424;
+  color: black;
   font-size: 16px;
 }
 .widget.widget-latest-post .media p {
@@ -1330,7 +1419,7 @@ h3.quote::before {
 }
 
 .logo {
-  color: #242424;
+  color: black;
   font-weight: 600;
   letter-spacing: 1px;
 }

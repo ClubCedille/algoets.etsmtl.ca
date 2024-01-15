@@ -1,6 +1,7 @@
 <!-- Include header and navigation -->
+@@include('blocks/scroller.htm')
 @@include('header.htm')
-@@include('blocks/navigation.htm', {"about":"active", "company":"active"})
+@@include('blocks/navigation.html', {"about":"active", "company":"active"})
 
 <!-- Page title section -->
 @@include('blocks/page-title.htm', { "page-name": "Équipe", "title": "Notre Équipe", "background-image-url":
@@ -37,6 +38,8 @@
             "2022-2023", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal", githubUrl: "", project1: " ", project2: " ", project3: " "})
             @@include('blocks/team/member.htm', {"name": "Souri", "position": "Membre Stategie", "year": "2022-2024",
             "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri", githubUrl: "", project1: " ", project2: " ", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Matthieu Hanania", "position": "Membre Stategie", "year": "2022-2024",
+            "imageUrl": "https://media.licdn.com/dms/image/C4D03AQGTySJRU6415Q/profile-displayphoto-shrink_800_800/0/1624962539603?e=1710979200&v=beta&t=io0Zl2yW0KwhysdjBxZarSpz2uyBG1rnspUaxuyWbfA", "facebookUrl": "https://www.facebook.com/MatthieuHanania", githubUrl: "https://github.com/MatthieuHanania", linkedinURL: "https://www.linkedin.com/in/matthieu-hanania-6835ba177/", project1: " ", project2: " ", project3: " "})
         </div>
     </div>
 </section>
