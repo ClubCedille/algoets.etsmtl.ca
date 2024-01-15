@@ -430,6 +430,9 @@ a:focus {
     margin: 15px 0 10px;
   }
 }
+#navbar .row {
+  margin: 0 -15px -42px 0px;
+}
 
 .header-top {
   background: rgb(34, 35, 40);
@@ -580,12 +583,12 @@ ul.dropdown-menu li {
   }
 }
 .bg-1 {
-  background: url("../images/competition/stair-team.jpg") no-repeat 50% 50%;
+  background: url("../images/competition/conference-room.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 
 .bg-2 {
-  background: url("../images/competition/stair-team.jpg");
+  background: url("../images/competition/conference-room.jpg");
   background-size: cover;
 }
 
@@ -786,13 +789,13 @@ hr {
 }
 
 .cta {
-  background: url("../images/competition/conference-room.jpg") fixed 50% 50%;
+  background: url("../images/competition/concentration-head.jpg") fixed 50% 50%;
   background-size: cover;
   padding: 120px 0px;
 }
 
 .cta-block {
-  background: url("../images/competition/conference-room.jpg") no-repeat;
+  background: url("../images/competition/concentration-head.jpg") no-repeat;
   background-size: cover;
 }
 
@@ -839,7 +842,7 @@ body {
 }
 
 .row {
-  margin: 0 -15px -42px 0px;
+  margin: 0 -15px 0px 0px;
 }
 
 .col {
@@ -1221,6 +1224,39 @@ h3.quote::before {
 
 .blog-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
 }
 
 /*=================================================================

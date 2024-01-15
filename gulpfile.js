@@ -15,6 +15,7 @@ const through = require('through2');
 var path = {
   src: {
     html: "source/*.html",
+    blog: "source/blog/*.html",
     others: "source/*.+(php|ico|png)",
     htminc: "source/partials/**/*.htm",
     incdir: "source/partials/",
@@ -33,6 +34,34 @@ var path = {
 gulp.task("html:build", function () {
   return gulp
     .src(path.src.html)
+    .pipe(plumber({
+      errorHandler: function (err) {
+        console.error('Error in plugin "' + err.plugin + '": ' + err.message);
+        this.emit('end');
+      }
+    }))
+    .pipe(through.obj(function (file, enc, cb) {
+      this.push(file);
+      cb();
+    }, function (cb) {
+      if (this._transformState.writechunk) {
+        console.log('Processing file:', this._transformState.writechunk.relative);
+      }
+      cb();
+    }))
+    .pipe(fileinclude({
+      basepath: path.src.incdir,
+    }))
+    .pipe(gulp.dest(path.build.dirDev))
+    .pipe(bs.reload({
+      stream: true,
+    }));
+});
+
+// Blog
+gulp.task("blog:build", function () {
+  return gulp
+    .src(path.src.blog)
     .pipe(plumber({
       errorHandler: function (err) {
         console.error('Error in plugin "' + err.plugin + '": ' + err.message);
@@ -126,6 +155,7 @@ gulp.task("clean", function (cb) {
 // Watch Task
 gulp.task("watch:build", function () {
   gulp.watch(path.src.html, gulp.series("html:build"));
+  gulp.watch(path.src.blog, gulp.series("blog:build"));
   gulp.watch(path.src.htminc, gulp.series("html:build"));
   gulp.watch(path.src.scss, gulp.series("scss:build"));
   gulp.watch(path.src.js, gulp.series("js:build"));
@@ -139,6 +169,7 @@ gulp.task(
   gulp.series(
     "clean",
     "html:build",
+    "blog:build",
     "js:build",
     "scss:build",
     "images:build",
@@ -159,6 +190,7 @@ gulp.task(
   "build",
   gulp.series(
     "html:build",
+    "blog:build",
     "js:build",
     "scss:build",
     "images:build",
