@@ -1,252 +1,5 @@
 <!-- Include header and navigation -->
 <!DOCTYPE html>
-<html>
-
-<head>
-    <style>
-        #tickerScroller {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 12px 0;
-            pointer-events: none;
-            z-index: 999;
-            background-color: black;
-        }
-
-        #tickerContainer {
-            position: relative;
-            white-space: nowrap;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            overflow: hidden;
-            width: 100%;
-            padding: 4px 0;
-            z-index: 1000;
-        }
-
-        .tickerText {
-            display: inline-block;
-            margin-right: 20px;
-            color: white;
-        }
-
-        @keyframes slide {
-            0% {
-                transform: translateX(100%);
-            }
-
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        .animate-ticker {
-            animation: slide 120s linear infinite;
-        }
-
-        /* Mobile Responsiveness */
-        @media only screen and (max-width: 600px) {
-            #tickerScroller {
-                padding: 12px 0;
-            }
-
-            .tickerText {
-                font-size: 12px;
-                /* Smaller font for mobile */
-            }
-        }
-    </style>
-    </style>
-</head>
-
-<body>
-    <div id="tickerScroller">
-        <div id="tickerContainer"></div>
-    </div>
-
-    <script>
-        async function fetchCryptoData() {
-            try {
-                const cache = localStorage.getItem('cryptoDataCache');
-                const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
-
-                if (cache) {
-                    const { data, timestamp } = JSON.parse(cache);
-                    if (timestamp + cacheDuration > Date.now()) {
-                        return data; // Use cached data if still valid
-                    }
-                }
-
-                // Define the top 25 cryptocurrency IDs in an array
-                const top25CoinIds = [
-                    "bitcoin",
-                    "ethereum",
-                    "tether",
-                    "cardano",
-                    "usd-coin",
-                    "solana",
-                    "polkadot",
-                    "dogecoin",
-                    "avalanche-2",
-                    "terra-luna",
-                    "binance-usd",
-                    "wrapped-bitcoin",
-                    "litecoin",
-                    "chainlink",
-                    "algorand",
-                    "bitcoin-cash",
-                    "matic-network",
-                    "internet-computer",
-                    "stellar",
-                    "filecoin",
-                    "tron",
-                    "ethereum-classic",
-                    "vechain",
-                ];
-                const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
-                const response = await fetch(url);
-                const data = await response.json();
-
-                // Cache the fetched data with a timestamp
-                localStorage.setItem('cryptoDataCache', JSON.stringify({
-                    data: top25CoinIds.map(id => ({
-                        name: id.toUpperCase(),
-                        value: data[id].usd,
-                        change: data[id].usd_24h_change,
-                    })), timestamp: Date.now()
-                }));
-
-                return top25CoinIds.map(id => ({
-                    name: id.toUpperCase(),
-                    value: data[id].usd,
-                    change: data[id].usd_24h_change,
-                }));
-            } catch (error) {
-                console.error("Failed to fetch data:", error);
-                return [];
-            }
-        }
-
-        function createTickerItem(item) {
-            const span = document.createElement("span");
-            span.className = "tickerText";
-            const trendSymbol = item.change >= 0 ? "↑" : "↓";
-            const trendColor = item.change >= 0 ? "green" : "red";
-            span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
-            <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
-            return span;
-        }
-
-        async function updateTicker() {
-            const cryptoData = await fetchCryptoData();
-            const tickerContainer = document.getElementById("tickerContainer");
-            tickerContainer.innerHTML = "";
-            cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
-        }
-
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            const tickerContainer = document.getElementById('tickerContainer');
-            tickerContainer.classList.add('animate-ticker'); // Start CSS animation
-
-
-
-            let currentPercent = parseInt(localStorage.getItem('animationPercent')) || 0;
-            let totalCurrentPercent = 0;
-            const keyframes = findKeyframesRule('slide');
-            const keyframe = keyframes.cssRules[0].cssText.match(/translateX\((.*?)\)/g);
-            const keyframeString = keyframe.map(function (str) {
-                return parseInt(str.match(/\d+/g));
-            });
-
-            function findKeyframesRule(ruleName) {
-                for (let ss of document.styleSheets) {
-                    for (let rule of ss.cssRules) {
-                        if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === ruleName) {
-                            return rule;
-                        }
-                    }
-                }
-                return null;
-            }
-
-            function changePercent() {
-                const rule = findKeyframesRule('slide');
-                rule.deleteRule('100%');
-                rule.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
-                localStorage.setItem('animationPercent', currentPercent);
-            }
-
-
-            function getClosest(keyframe) {
-                // curr stands for current keyframe
-                var curr = keyframe[0];
-                var diff = Math.abs(totalCurrentPercent - curr);
-                for (var val = 0, j = keyframe.length; val < j; val++) {
-                    var newdiff = Math.abs(totalCurrentPercent - keyframe[val]);
-                    // If the difference between the current percent and the iterated
-                    // keyframe is smaller, take the new difference and keyframe
-                    if (newdiff < diff) {
-                        diff = newdiff;
-                        curr = keyframe[val];
-                    }
-                }
-                return curr;
-            }
-
-            var showPercent = window.setInterval(function () {
-                if (currentPercent < 100) {
-                    currentPercent += 1;
-                } else {
-                    currentPercent = 0;
-                    currentPercent++; // Increment iteration count when animation restarts
-                }
-                localStorage.setItem('animationPercent', currentPercent);
-            }, 40);
-
-            // Get the closest keyframe to the current percent
-            currentPercent = getClosest(keyframeString);
-
-            totalCurrentPercent += currentPercent;
-            // Since it's in percent it shouldn't ever be over 100
-            if (totalCurrentPercent > 100) {
-                totalCurrentPercent -= 100;
-            }
-
-            for (var i = 0, j = keyframeString.length; i < j; i++) {
-                keyframes.deleteRule(keyframeString[i]);
-            }
-
-            keyframes.appendRule(`0% { transform: translateX(${currentPercent}%); }`);
-            keyframes.appendRule(`100% { transform: translateX(-${currentPercent}%); }`);
-
-
-
-            await updateTicker(); // Update ticker on page load
-            setInterval(updateTicker, 120000); // Update ticker every 2 minutess
-        });
-
-        var browserPrefix;
-        navigator.sayswho = (function () {
-            var N = navigator.appName, ua = navigator.userAgent, tem;
-            var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-            if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
-            M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
-            M = M[0];
-            if (M == "Chrome") { browserPrefix = "webkit"; }
-            if (M == "Firefox") { browserPrefix = "moz"; }
-            if (M == "Safari") { browserPrefix = "webkit"; }
-            if (M == "MSIE") { browserPrefix = "ms"; }
-        })();
-
-    </script>
-</body>
-
-</html>
-<!DOCTYPE html>
 <html lang="zxx">
 <head>
 
@@ -287,85 +40,220 @@
 
 <!-- Header Start -->
 <header class="navigation">
+  <div id="tickerScroller">
+    <div id="tickerContainer"></div>
+  </div>
   <div class="header-top">
 
-  <div id="navbar">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <nav class="navbar navbar-expand-lg px-0 py-4">
-            <a class="navbar-brand" href="index.html">
-              <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
-            </a>
+    <div id="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg px-0 py-4">
+              <a class="navbar-brand" href="index.html">
+                <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
+              </a>
 
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-              data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <span class="fa fa-bars"></span>
-            </button>
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
 
-            <div class="collapse navbar-collapse text-center" id="navbarsExample09">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item @@home">
-                  <a class="nav-link" href="index.html">Accueil</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="about.html">Notre Club</a>
-                </li>
-                <li class="nav-item @@team">
-                  <a class="nav-link" href="team.html">Notre Équipe</a>
-                </li>
-                <li class="nav-item @@project">
-                  <a class="nav-link" href="project.html">Projets</a>
-                </li>
-                <li class="nav-item @@pricing">
-                  <a class="nav-link" href="pricing.html">Partenaires</a>
-                </li>
-                <li class="nav-item @@contact">
-                  <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item dropdown @@blog">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Blog <i class="fas fa-chevron-down small"></i></a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                    <li>
-                      <a class="dropdown-item @@blogGrid" href="blog-grid.html">Blog Grid</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item @@blogSidebar" href="blog-sidebar.html">Blog with Sidebar</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item @@blogSingle" href="blog-single.html">Blog Single</a>
-                    </li>
+              <div class="collapse navbar-collapse text-center" id="navbarsExample09">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item @@home">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                  </li>
+                  <li class="nav-item @@about">
+                    <a class="nav-link" href="about.html">Notre Club</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="team.html">Notre Équipe</a>
+                  </li>
+                  <li class="nav-item @@project">
+                    <a class="nav-link" href="project.html">Projets</a>
+                  </li>
+                  <li class="nav-item @@pricing">
+                    <a class="nav-link" href="pricing.html">Partenaires</a>
+                  </li>
+                  <li class="nav-item @@contact">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item dropdown @@blog">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">Blog <i class="fas fa-chevron-down small"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                      <li>
+                        <a class="dropdown-item @@blogGrid" href="blog-grid.html">Blog Grid</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item @@blogSidebar" href="blog-sidebar.html">Blog with Sidebar</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item @@blogSingle" href="blog-single.html">Blog Single</a>
+                      </li>
 
-                    <li class="dropdown dropdown-submenu dropleft">
-                      <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
+                      <li class="dropdown dropdown-submenu dropleft">
+                        <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
 
-                      <ul class="dropdown-menu" aria-labelledby="dropdown0501">
-                        <li>
-                          <a class="dropdown-item" href="index.html">01</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="index.html">02</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-              </ul>
-            </div>
-          </nav>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown0501">
+                          <li>
+                            <a class="dropdown-item" href="index.html">01</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="index.html">02</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                </ul>
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <script>
+      async function fetchCryptoData() {
+        try {
+          const cache = localStorage.getItem('cryptoDataCache');
+          const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+          if (cache) {
+            const { data, timestamp } = JSON.parse(cache);
+            if (timestamp + cacheDuration > Date.now()) {
+              return data; // Use cached data if still valid
+            }
+          }
+
+          // Define the top 25 cryptocurrency IDs in an array
+          const top25CoinIds = [
+            "bitcoin",
+            "ethereum",
+            "tether",
+            "cardano",
+            "usd-coin",
+            "solana",
+            "polkadot",
+            "dogecoin",
+            "avalanche-2",
+            "terra-luna",
+            "binance-usd",
+            "wrapped-bitcoin",
+            "litecoin",
+            "chainlink",
+            "algorand",
+            "bitcoin-cash",
+            "matic-network",
+            "internet-computer",
+            "stellar",
+            "filecoin",
+            "tron",
+            "ethereum-classic",
+            "vechain",
+          ];
+          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Cache the fetched data with a timestamp
+          localStorage.setItem('cryptoDataCache', JSON.stringify({
+            data: top25CoinIds.map(id => ({
+              name: id.toUpperCase(),
+              value: data[id].usd,
+              change: data[id].usd_24h_change,
+            })), timestamp: Date.now()
+          }));
+
+          return top25CoinIds.map(id => ({
+            name: id.toUpperCase(),
+            value: data[id].usd,
+            change: data[id].usd_24h_change,
+          }));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          return [];
+        }
+      }
+
+      function createTickerItem(item) {
+        const span = document.createElement("span");
+        span.className = "tickerText";
+        const trendSymbol = item.change >= 0 ? "↑" : "↓";
+        const trendColor = item.change >= 0 ? "green" : "red";
+        span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+        <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+        return span;
+      }
+
+      async function updateTicker() {
+        const cryptoData = await fetchCryptoData();
+        const tickerContainer = document.getElementById("tickerContainer");
+        tickerContainer.innerHTML = "";
+        cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+      }
+
+      function calculatePercentagePosition() {
+        const tickerContainer = document.getElementById('tickerContainer');
+        const containerWidth = tickerContainer.offsetWidth;
+        const parentWidth = tickerContainer.parentElement.offsetWidth;
+        const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+        const computedStyle = window.getComputedStyle(tickerContainer);
+        const matrix = new WebKitCSSMatrix(computedStyle.transform);
+        const currentPosition = matrix.m41; // Current X translation
+
+        // Convert position to percentage of total path
+        const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+        return positionPercent;
+      }
+
+      function applySavedPosition(positionPercent) {
+        const tickerContainer = document.getElementById('tickerContainer');
+        // Remove the current animation to reset it
+        tickerContainer.style.animation = 'none';
+
+        // Update the @keyframes rule to start from the saved position
+        const keyframes = `@keyframes slide {
+            from { transform: translateX(${100 - positionPercent}%); }
+            to { transform: translateX(-100%); }
+        }`;
+
+        // Apply the new @keyframes rule
+        let styleSheet = document.createElement('style');
+        styleSheet.type = 'text/css';
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+
+        // Restart the animation
+        requestAnimationFrame(() => {
+          tickerContainer.style.animation = `slide 120s linear infinite`;
+        });
+      }
+
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await updateTicker();
+        setInterval(updateTicker, 120000); // Update every 2 minutes
+
+        const savedPosition = localStorage.getItem('tickerPosition') || 0;
+        applySavedPosition(savedPosition);
+
+        setInterval(() => {
+          const positionPercent = calculatePercentagePosition();
+          localStorage.setItem('tickerPosition', positionPercent);
+        }, 39);
+      });
+    </script>
 </header>
 <!-- Header Close -->
 
 <!-- Page title section -->
-<section class="page-title" style="background-image: url('images/competition/concentration.jpg'); background-size: auto;">
+<section class="page-title" style="background-image: url('images/competition/concentration.jpg'); background-size: 100%; background-repeat: no-repeat; background-position: right 0% bottom 40%;">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -396,9 +284,19 @@
             </div>
         </div>
 
-        <!-- Team Members -->
+
+        <section class="section team-administration">
+            <div class="container">
+                <h3 class="section-title">Administration</h3>
+                <p class="section-description">L'équipe administrative gère la stratégie globale, les opérations, et la direction du club. Ils sont responsables de :</p>
+                <ul class="role-points">
+                    <li>Définir les orientations stratégiques</li>
+                    <li>Superviser les projets et initiatives</li>
+                    <li>Gérer les relations internes et externes</li>
+                </ul>
+                <hr>
+        <!-- Team Members - Administration -->
         <div class="row justify-content-center">
-            <!-- Team Member 1 -->
             <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="team-item-wrap mb-5">
         <div class="team-item position-relative">
@@ -409,7 +307,7 @@
                         <a href="https://www.facebook.com/Raphael" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -428,9 +326,9 @@
             <div class="team-project-participation">
                 <h5>Project Participation</h5>
                 <ul>
+                    <li>Capitaine</li>
                     <li>Biotech</li>
                     <li>IPOTracker</li>
-                    <li> </li>
                 </ul>
             </div>
         </div>
@@ -446,7 +344,7 @@
                         <a href="https://www.facebook.com/Momhahed" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -483,13 +381,13 @@
                         <a href="https://www.facebook.com/antoine" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="" class="github"><i class="fab fa-github"
+                        <a href=" " class="github"><i class="fab fa-github"
                                 style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
                     </li>
                 </ul>
@@ -513,6 +411,264 @@
             <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="team-item-wrap mb-5">
         <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/SamLafrance-Jones.jpg" alt="Sam Lafrance-Jones" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Sam Lafrance-Jones</h4>
+            <p>Trésorier, vice-président stratégie et co-fondateur <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/SabrinaSt-Pierre.jpg" alt="Sabrina St-Pierre" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Sabrina St-Pierre</h4>
+            <p>Vice-présidente marketing <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/PhilippeGeukers.jpg" alt="Philippe Geukers" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href=" " class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Philippe Geukers</h4>
+            <p>Co-fondateur <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Section Infrastructure -->
+    <section class="section team-infrastructure">
+        <div class="container">
+            <h3 class="section-title">Infrastructure</h3>
+            <p class="section-description">L'équipe d'infrastructure assure le bon fonctionnement technique et la sécurité des systèmes. Leurs rôles comprennent :</p>
+            <ul class="role-points">
+                <li>Maintenir et améliorer l'infrastructure technique</li>
+                <li>Assurer la sécurité des données et systèmes</li>
+                <li>Optimiser la performance des solutions technologiques</li>
+            </ul>
+            <hr>
+            <!-- Team Members - Infrastructure -->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/SamiMammouche.jpg" alt="Sami Mammouche" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Sami Mammouche</h4>
+            <p>Vice-président infrastructure <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/JérômeDemers.jpg" alt="Jérôme Demers" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Jérôme Demers</h4>
+            <p>Assistant vice-président infrastructure <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Nicolas Descotaux" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Nicolas Descotaux</h4>
+            <p>Développeur infrastructure <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Section Strategy -->
+    <section class="section team-strategy">
+        <div class="container">
+            <h3 class="section-title">Stratégie</h3>
+            <p class="section-description">L'équipe de stratégie développe et teste des modèles algorithmiques de trading. Leurs principales tâches incluent :</p>
+            <ul class="role-points">
+                <li>Analyser les données financières</li>
+                <li>Concevoir des algorithmes de trading</li>
+                <li>Effectuer des backtests et optimisations</li>
+            </ul>
+            <hr>
+            <!-- Team Members - Strategy -->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
             <img loading="lazy" src="images/team/team-4.png" alt="Salim" class="img-fluid w-100">
             <div class="team-img-hover">
                 <ul class="team-social list-inline">
@@ -520,7 +676,7 @@
                         <a href="https://www.facebook.com/Salim" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -540,14 +696,14 @@
                 <h5>Project Participation</h5>
                 <ul>
                     <li>Kelly</li>
-                    <li> </li>
-                    <li> </li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="team-item-wrap mb-5">
         <div class="team-item position-relative">
             <img loading="lazy" src="images/team/team-5.png" alt="Micheal" class="img-fluid w-100">
@@ -557,7 +713,7 @@
                         <a href="https://www.facebook.com/Micheal" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -584,7 +740,7 @@
         </div>
     </div>
 </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="team-item-wrap mb-5">
         <div class="team-item position-relative">
             <img loading="lazy" src="images/team/team-6.png" alt="Souri" class="img-fluid w-100">
@@ -594,7 +750,7 @@
                         <a href="https://www.facebook.com/Souri" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -621,7 +777,7 @@
         </div>
     </div>
 </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="team-item-wrap mb-5">
         <div class="team-item position-relative">
             <img loading="lazy" src="https://media.licdn.com/dms/image/C4D03AQGTySJRU6415Q/profile-displayphoto-shrink_800_800/0/1624962539603?e=1710979200&v=beta&t=io0Zl2yW0KwhysdjBxZarSpz2uyBG1rnspUaxuyWbfA" alt="Matthieu Hanania" class="img-fluid w-100">
@@ -631,7 +787,7 @@
                         <a href="https://www.facebook.com/MatthieuHanania" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="@@twitterUrl" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
                         <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
@@ -658,8 +814,269 @@
         </div>
     </div>
 </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/ArielSashcov.jpg" alt="Ariel Sashcov" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Ariel Sashcov</h4>
+            <p>Développeur stratégie <br> 2021-2024</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
         </div>
     </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Sayed Abouzar" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Sayed Abouzar</h4>
+            <p>Développeur stratégie <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Ryan Tordjman" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Ryan Tordjman</h4>
+            <p>Développeur stratégie <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Sébastien Veyssiere" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Sébastien Veyssiere</h4>
+            <p>Développeur stratégie <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Alexis Macagno" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Alexis Macagno</h4>
+            <p>Développeur stratégie <br> 2021-2022</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Gabriel Demers" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Gabriel Demers</h4>
+            <p>Développeur stratégie <br> 2023-2024</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="team-item-wrap mb-5">
+        <div class="team-item position-relative">
+            <img loading="lazy" src="images/team/nouser.jpg" alt="Emeric Loriot" class="img-fluid w-100">
+            <div class="team-img-hover">
+                <ul class="team-social list-inline">
+                    <li class="list-inline-item">
+                        <a href="" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="twitter"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="@@linkedinUrl" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="" class="github"><i class="fab fa-github"
+                                style="position:relative;top: 8px;font-size:32px;color:black;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="team-item-content">
+            <h4 class="mt-3 mb-0 text-capitalize">Emeric Loriot</h4>
+            <p>Développeur stratégie <br> 2023-2024</p>
+            <!-- Project Participation Section -->
+            <div class="team-project-participation">
+                <h5>Project Participation</h5>
+                <ul>
+                    <li> </li>
+                    <li> </li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+
+        </div>
+    </section>
 </section>
 <!-- Section Équipe End -->
 

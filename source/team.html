@@ -1,7 +1,6 @@
 <!-- Include header and navigation -->
-@@include('blocks/scroller.htm')
 @@include('header.htm')
-@@include('blocks/navigation.html', {"about":"active", "company":"active"})
+@@include('blocks/navigation.html', {"team":"active"})
 
 <!-- Page title section -->
 @@include('blocks/page-title.htm', { "page-name": "Équipe", "title": "Notre Équipe", "background-image-url":
@@ -20,28 +19,79 @@
             </div>
         </div>
 
-        <!-- Team Members -->
+
+        <section class="section team-administration">
+            <div class="container">
+                <h3 class="section-title">Administration</h3>
+                <p class="section-description">L'équipe administrative gère la stratégie globale, les opérations, et la direction du club. Ils sont responsables de :</p>
+                <ul class="role-points">
+                    <li>Définir les orientations stratégiques</li>
+                    <li>Superviser les projets et initiatives</li>
+                    <li>Gérer les relations internes et externes</li>
+                </ul>
+                <hr>
+        <!-- Team Members - Administration -->
         <div class="row justify-content-center">
-            <!-- Team Member 1 -->
-            @@include('blocks/team/member.htm', {"name": "Raphael Leblanc", "position": "Co-Capitaine Stategie",
-            "year": "2021-2024", "imageUrl": "images/team/team-1.png", "facebookUrl":
-            "https://www.facebook.com/Raphael", githubUrl: "", project1: "Capitaine", project1: "Biotech", project2: "IPOTracker", project3: " "})
-            @@include('blocks/team/member.htm', {"name": "Momhahed Illas", "position": "Co-Capitaine Stategie",
-            "year": "2022-2024", "imageUrl": "images/team/team-2.png", "facebookUrl":
-            "https://www.facebook.com/Momhahed", githubUrl: "", project1: "AI News Tracker", project2: "Salary", project3: " "})
-            @@include('blocks/team/member.htm', {"name": "Antoine Boucher", "position": "Capitaine Infrastructure",
-            "year": "2023-2024", "imageUrl": "images/team/team-3.png", "facebookUrl":
-            "https://www.facebook.com/antoine", githubUrl: "", project1: "AI News Tracker", project2: "Batch Backtesting", project3: "Salary"})
-            @@include('blocks/team/member.htm', {"name": "Salim", "position": "Membre Stategie", "year": "2022-2024",
-            "imageUrl": "images/team/team-4.png", "facebookUrl": "https://www.facebook.com/Salim", githubUrl: "", project1: "Kelly", project2: " ", project3: " "})
-            @@include('blocks/team/member.htm', {"name": "Micheal", "position": "Membre Stategie", "year":
-            "2022-2023", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal", githubUrl: "", project1: " ", project2: " ", project3: " "})
-            @@include('blocks/team/member.htm', {"name": "Souri", "position": "Membre Stategie", "year": "2022-2024",
-            "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri", githubUrl: "", project1: " ", project2: " ", project3: " "})
-            @@include('blocks/team/member.htm', {"name": "Matthieu Hanania", "position": "Membre Stategie", "year": "2022-2024",
-            "imageUrl": "https://media.licdn.com/dms/image/C4D03AQGTySJRU6415Q/profile-displayphoto-shrink_800_800/0/1624962539603?e=1710979200&v=beta&t=io0Zl2yW0KwhysdjBxZarSpz2uyBG1rnspUaxuyWbfA", "facebookUrl": "https://www.facebook.com/MatthieuHanania", githubUrl: "https://github.com/MatthieuHanania", linkedinURL: "https://www.linkedin.com/in/matthieu-hanania-6835ba177/", project1: " ", project2: " ", project3: " "})
+            @@include('blocks/team/member.htm', {"name": "Raphael Leblanc", "position": "Co-Capitaine Stategie", "year": "2021-2024", "imageUrl": "images/team/team-1.png", "facebookUrl": "https://www.facebook.com/Raphael", "twitterUrl" : "", "linkedinURL": "", "githubUrl": "", "project1": "Capitaine", "project2": "Biotech", "project3": "IPOTracker"})
+            @@include('blocks/team/member.htm', {"name": "Momhahed Illas", "position": "Co-Capitaine Stategie", "year": "2022-2024", "imageUrl": "images/team/team-2.png", "facebookUrl": "https://www.facebook.com/Momhahed", "twitterUrl" : "","linkedinURL": "", "githubUrl": "", "project1": "AI News Tracker", "project2": "Salary", "project3": " "})
+            @@include('blocks/team/member.htm', {"name": "Antoine Boucher", "position": "Capitaine Infrastructure", "year": "2023-2024", "imageUrl": "images/team/team-3.png", "facebookUrl": "https://www.facebook.com/antoine", "twitterUrl" : "", "githubUrl": " ", "project1": "AI News Tracker", "project2": "Batch Backtesting", "project3": "Salary"})
+            @@include('blocks/team/member.htm', {"name": "Sam Lafrance-Jones", "position": "Trésorier, vice-président stratégie et co-fondateur", "year": "2021-2022", "imageUrl": "images/team/SamLafrance-Jones.jpg","facebookUrl": "", "twitterUrl" : "", "linkedinURL": "https://www.linkedin.com/in/philippe-geukers/", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+            @@include('blocks/team/member.htm', {"name": "Sabrina St-Pierre", "position": "Vice-présidente marketing", "year": "2021-2022", "imageUrl": "images/team/SabrinaSt-Pierre.jpg","facebookUrl": "", "twitterUrl" : "", "linkedinURL": "https://www.linkedin.com/in/sabrina-st-pierre-256aa8182/", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+            @@include('blocks/team/member.htm', {"name": "Philippe Geukers", "position": "Co-fondateur", "year": "2021-2022", "imageUrl": "images/team/PhilippeGeukers.jpg", "facebookUrl": "", "linkedinURL": "https://www.linkedin.com/in/philippe-geukers/", "twitterUrl" : "", "githubUrl": " ", "project1": " ", "project2": " ", "project3": " "})
         </div>
     </div>
+    </section>
+
+    <!-- Section Infrastructure -->
+    <section class="section team-infrastructure">
+        <div class="container">
+            <h3 class="section-title">Infrastructure</h3>
+            <p class="section-description">L'équipe d'infrastructure assure le bon fonctionnement technique et la sécurité des systèmes. Leurs rôles comprennent :</p>
+            <ul class="role-points">
+                <li>Maintenir et améliorer l'infrastructure technique</li>
+                <li>Assurer la sécurité des données et systèmes</li>
+                <li>Optimiser la performance des solutions technologiques</li>
+            </ul>
+            <hr>
+            <!-- Team Members - Infrastructure -->
+            <div class="row justify-content-center">
+                @@include('blocks/team/member.htm', {"name": "Sami Mammouche", "position": "Vice-président infrastructure", "year": "2021-2022", "imageUrl": "images/team/SamiMammouche.jpg","facebookUrl": "", "linkedinURL": "https://www.linkedin.com/in/samimammouche/", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Jérôme Demers", "position": "Assistant vice-président infrastructure", "year": "2021-2022", "imageUrl": "images/team/JérômeDemers.jpg","facebookUrl": "", "linkedinURL": "https://www.linkedin.com/in/j%C3%A9r%C3%B4me-demers-21a16a14b/", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Nicolas Descotaux", "position": "Développeur infrastructure", "year": "2021-2022", "imageUrl": "images/team/nouser.jpg","facebookUrl": "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Section Strategy -->
+    <section class="section team-strategy">
+        <div class="container">
+            <h3 class="section-title">Stratégie</h3>
+            <p class="section-description">L'équipe de stratégie développe et teste des modèles algorithmiques de trading. Leurs principales tâches incluent :</p>
+            <ul class="role-points">
+                <li>Analyser les données financières</li>
+                <li>Concevoir des algorithmes de trading</li>
+                <li>Effectuer des backtests et optimisations</li>
+            </ul>
+            <hr>
+            <!-- Team Members - Strategy -->
+            <div class="row justify-content-center">
+                @@include('blocks/team/member.htm', {"name": "Salim", "position": "Membre Stategie", "year": "2022-2024", "imageUrl": "images/team/team-4.png", "facebookUrl": "https://www.facebook.com/Salim", "twitterUrl": "", "linkedinURL": "", "githubUrl": "", "project1": "Kelly", "project2": "", "project3": ""})
+                @@include('blocks/team/member.htm', {"name": "Micheal", "position": "Membre Stategie", "year": "2022-2023", "imageUrl": "images/team/team-5.png", "facebookUrl": "https://www.facebook.com/Micheal", "twitterUrl" : "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Souri", "position": "Membre Stategie", "year": "2022-2024", "imageUrl": "images/team/team-6.png", "facebookUrl": "https://www.facebook.com/Souri", "twitterUrl" : "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Matthieu Hanania", "position": "Membre Stategie", "year": "2022-2024", "imageUrl": "https://media.licdn.com/dms/image/C4D03AQGTySJRU6415Q/profile-displayphoto-shrink_800_800/0/1624962539603?e=1710979200&v=beta&t=io0Zl2yW0KwhysdjBxZarSpz2uyBG1rnspUaxuyWbfA", "facebookUrl": "https://www.facebook.com/MatthieuHanania", "githubUrl": "https://github.com/MatthieuHanania", "linkedinURL": "https://www.linkedin.com/in/matthieu-hanania-6835ba177/", "twitterUrl" : "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Ariel Sashcov", "position": "Développeur stratégie", "year": "2021-2024", "imageUrl": "images/team/ArielSashcov.jpg", "twitterUrl" : "","facebookUrl": "", "linkedinURL": " ",   "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Sayed Abouzar", "position": "Développeur stratégie", "year": "2021-2022", "imageUrl": "images/team/nouser.jpg", "twitterUrl" : "","facebookUrl": "", "linkedinURL": " ", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Ryan Tordjman", "position": "Développeur stratégie", "year": "2021-2022", "imageUrl": "images/team/nouser.jpg", "twitterUrl" : "","facebookUrl": "", "linkedinURL": " ", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Sébastien Veyssiere", "position": "Développeur stratégie", "year": "2021-2022", "imageUrl": "images/team/nouser.jpg", "twitterUrl": "", "facebookUrl": "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Alexis Macagno", "position": "Développeur stratégie", "year": "2021-2022", "imageUrl": "images/team/nouser.jpg", "twitterUrl": "", "facebookUrl": "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Gabriel Demers", "position": "Développeur stratégie", "year": "2023-2024", "imageUrl": "images/team/nouser.jpg", "twitterUrl": "", "facebookUrl": "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+                @@include('blocks/team/member.htm', {"name": "Emeric Loriot", "position": "Développeur stratégie", "year": "2023-2024", "imageUrl": "images/team/nouser.jpg", "twitterUrl": "", "facebookUrl": "", "linkedinURL": "", "githubUrl": "", "project1": " ", "project2": " ", "project3": " "})
+            </div>
+
+        </div>
+    </section>
 </section>
 <!-- Section Équipe End -->
 

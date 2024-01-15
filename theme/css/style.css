@@ -1,5 +1,13 @@
-/*=== MEDIA QUERY ===*/
 @import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap");
+@keyframes slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+/*=== MEDIA QUERY ===*/
 html {
   overflow-x: hidden;
 }
@@ -49,11 +57,8 @@ p {
   line-height: 30px;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 .navbar-toggle .icon-bar {
-  background: rgb(247, 87, 87);
+  background: #ff0000;
 }
 
 input[type=email], input[type=password], input[type=text], input[type=tel] {
@@ -64,7 +69,7 @@ input[type=email], input[type=password], input[type=text], input[type=tel] {
 }
 input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, input[type=tel]:focus {
   box-shadow: none;
-  border: 1px solid rgb(247, 87, 87);
+  border: 1px solid #ff0000;
 }
 
 .form-control {
@@ -73,7 +78,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 .form-control:focus {
   box-shadow: none;
-  border: 1px solid rgb(247, 87, 87);
+  border: 1px solid #ff0000;
 }
 
 .py-7 {
@@ -101,33 +106,33 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .btn-main, .btn-small, .btn-transparent {
-  background: rgb(247, 87, 87);
+  background: #ff0000;
   color: #fff;
   transition: all 0.2s ease;
 }
 .btn-main:hover, .btn-small:hover, .btn-transparent:hover {
-  background: #f52626;
+  background: #cc0000;
   color: #fff;
 }
 
 .btn-solid-border {
-  border: 2px solid rgb(247, 87, 87);
+  border: 2px solid #ff0000;
   background: transparent;
   color: #242424;
 }
 .btn-solid-border:hover {
-  border: 2px solid rgb(247, 87, 87);
-  background: rgb(247, 87, 87);
+  border: 2px solid #ff0000;
+  background: #ff0000;
 }
 
 .btn-transparent {
   background: transparent;
   padding: 0;
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 .btn-transparent:hover {
   background: transparent;
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 
 .btn-large {
@@ -161,15 +166,15 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .bg-primary {
-  background: rgb(247, 87, 87);
+  background: #ff0000;
 }
 
 .bg-primary-dark {
-  background: #f52626;
+  background: #cc0000;
 }
 
 .bg-primary-darker {
-  background: #dd0b0b;
+  background: #990000;
 }
 
 .bg-dark {
@@ -202,7 +207,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .subtitle {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
   font-size: 14px;
   letter-spacing: 1px;
 }
@@ -239,7 +244,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .text-color {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 
 .text-black {
@@ -277,7 +282,7 @@ a {
 }
 
 a:focus, a:hover {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
   text-decoration: none;
 }
 
@@ -366,6 +371,31 @@ a:focus {
   padding: 40px 0px;
 }
 
+#tickerScroller {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  z-index: 9999;
+  border-radius: 0px 0px 10px 10px;
+}
+
+#tickerContainer {
+  display: flex;
+  align-items: center;
+  animation: slide linear infinite;
+  white-space: nowrap;
+  font-family: "Arial", sans-serif;
+}
+
+.tickerText {
+  margin-right: 50px;
+}
+
 #navbar {
   background: rgb(34, 35, 40);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -389,7 +419,7 @@ a:focus {
 }
 #navbar .nav-link:hover, #navbar .nav-link:focus,
 #navbar .active .nav-link {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 #navbar .btn {
   padding: 0.7rem 1.5rem 0.5rem;
@@ -420,7 +450,7 @@ a:focus {
   padding: 0 8px;
 }
 .header-top .header-top-socials a:hover {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 .header-top .header-top-info {
   color: #919194;
@@ -449,7 +479,7 @@ a:focus {
   letter-spacing: 1px;
 }
 .navbar-brand span {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 
 .dropdown-menu {
@@ -516,7 +546,7 @@ a:focus {
 .dropdown-submenu:hover > .dropdown-item,
 .dropdown-item.active,
 .dropdown-item:hover {
-  background: rgb(247, 87, 87);
+  background: #ff0000;
   color: #fff;
 }
 
@@ -550,25 +580,30 @@ ul.dropdown-menu li {
   }
 }
 .bg-1 {
-  background: url("../images/bg/home-2.jpg") no-repeat 50% 50%;
+  background: url("../images/competition/stair-team.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 
 .bg-2 {
-  background: url("../images/bg/home-5.jpg");
+  background: url("../images/competition/stair-team.jpg");
   background-size: cover;
 }
 
 .slider {
-  background: url("../../images/competition/20230309_160858_D7B0CF82.jpg") no-repeat;
+  background: url("../../images/competition/good-team.jpg") no-repeat;
   background-size: cover;
-  background-position: 0% 0%;
-  padding: 200px 0;
+  background-position: right 0% bottom 80%;
+  background-repeat: no-repeat;
+  padding: 500px 0;
   position: relative;
 }
 @media (max-width: 768px) {
   .slider {
-    padding: 150px 0;
+    padding: 300px 0;
+  }
+  .slider .tickerText {
+    font-size: 14px;
+    margin-right: 30px;
   }
 }
 .slider .block h1 {
@@ -594,7 +629,7 @@ ul.dropdown-menu li {
 }
 
 .color-one {
-  color: rgb(247, 87, 87);
+  color: #ff0000;
 }
 
 .color-two {
@@ -616,8 +651,10 @@ ul.dropdown-menu li {
   top: 0px;
   width: 45%;
   min-height: 650px;
-  background: url("../../images/competition/20230309_160858_D7B0CF82.jpg") no-repeat;
+  background: url("../../images/competition/concentration.jpg") no-repeat;
   background-size: cover;
+  background-position: center;
+  border-radius: 1000px;
 }
 
 .about-content {
@@ -713,6 +750,29 @@ ul.dropdown-menu li {
   bottom: 0px;
 }
 
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.role-points {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+hr {
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 .service-item {
   position: relative;
   padding-left: 80px;
@@ -726,13 +786,13 @@ ul.dropdown-menu li {
 }
 
 .cta {
-  background: url("../images/bg/home-3.jpg") fixed 50% 50%;
+  background: url("../images/competition/conference-room.jpg") fixed 50% 50%;
   background-size: cover;
   padding: 120px 0px;
 }
 
 .cta-block {
-  background: url("../images/bg/home-3.jpg") no-repeat;
+  background: url("../images/competition/conference-room.jpg") no-repeat;
   background-size: cover;
 }
 
@@ -779,7 +839,7 @@ body {
 }
 
 .row {
-  margin: 0 -15px;
+  margin: 0 -15px -42px 0px;
 }
 
 .col {
@@ -919,7 +979,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 80px;
-  color: #ffa500;
+  color: #ff0000;
   opacity: 0;
   transition: all 0.35s ease;
 }
@@ -971,7 +1031,7 @@ body {
 }
 
 .project-stars {
-  color: #ffa500;
+  color: #ff0000;
   font-size: 14px;
 }
 
@@ -1067,7 +1127,7 @@ body {
   transition: all 0.4s ease 0s;
 }
 .blog-item-content h3 a:hover {
-  color: #ffa500 !important;
+  color: #ff0000 !important;
 }
 
 .lh-36 {
@@ -1114,13 +1174,17 @@ h3.quote {
     padding: 0;
     padding-left: 20px;
   }
+  h3.quote .tickerText {
+    font-size: 14px;
+    margin-right: 30px;
+  }
 }
 
 h3.quote::before {
   content: "";
   width: 55px;
   height: 2px;
-  background: #ffa500;
+  background: #ff0000;
   position: absolute;
   top: 25px;
   left: 0;
@@ -1130,6 +1194,10 @@ h3.quote::before {
     top: 5px;
     width: 2px;
     height: 35px;
+  }
+  h3.quote::before .tickerText {
+    font-size: 14px;
+    margin-right: 30px;
   }
 }
 
@@ -1193,7 +1261,7 @@ h3.quote::before {
   font-weight: 500;
 }
 .post-comments .comment-author a {
-  color: #ffa500;
+  color: #ff0000;
   font-size: 14px;
   text-transform: uppercase;
 }
@@ -1204,7 +1272,7 @@ h3.quote::before {
   font-size: 12px;
 }
 .post-comments .comment-button {
-  color: #ffa500;
+  color: #ff0000;
   display: inline-block;
   margin-left: 5px;
   font-size: 12px;
@@ -1214,7 +1282,7 @@ h3.quote::before {
   display: inline-block;
 }
 .post-comments .comment-button:hover {
-  color: #ffa500;
+  color: #ff0000;
 }
 
 .post-excerpt {
@@ -1232,7 +1300,7 @@ h3.quote::before {
 .post-excerpt blockquote.quote-post p {
   line-height: 30px;
   font-size: 20px;
-  color: #ffa500;
+  color: #ff0000;
 }
 
 .single-blog {
@@ -1259,7 +1327,7 @@ h3.quote::before {
   color: #000;
 }
 .next-prev a:hover {
-  color: #ffa500;
+  color: #ff0000;
 }
 .next-prev .prev-post i {
   margin-right: 10px;
@@ -1278,7 +1346,7 @@ h3.quote::before {
   font-size: 16px;
 }
 .social-profile ul li a i:hover {
-  color: #ffa500;
+  color: #ff0000;
 }
 
 .comments-section {
@@ -1322,7 +1390,7 @@ h3.quote::before {
   margin-bottom: 8px;
 }
 .comment-wrap .media .media-heading a {
-  color: #ffa500;
+  color: #ff0000;
   font-size: 13px;
 }
 .comment-wrap .media .comment-meta {
@@ -1343,7 +1411,7 @@ h3.quote::before {
 }
 .comment-reply-form input:focus, .comment-reply-form textarea:focus {
   box-shadow: none;
-  border: 1px solid #ffa500;
+  border: 1px solid #ff0000;
 }
 .comment-reply-form textarea, .comment-reply-form .btn-main, .comment-reply-form .btn-transparent, .comment-reply-form .btn-small {
   height: auto;
@@ -1384,7 +1452,7 @@ h3.quote::before {
   padding-right: 10px;
 }
 .widget.widget-category ul li a:hover {
-  color: #ffa500;
+  color: #ff0000;
   padding-left: 5px;
 }
 .widget.widget-tag ul li {
@@ -1403,8 +1471,95 @@ h3.quote::before {
 }
 .widget.widget-tag ul li a:hover {
   color: #fff;
-  background: #ffa500;
-  border: 1px solid #ffa500;
+  background: #ff0000;
+  border: 1px solid #ff0000;
+}
+
+.team-item {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.team-img-hover .team-social li a.facebook {
+  background: #6666cc;
+}
+
+.team-img-hover .team-social li a.twitter {
+  background: #3399cc;
+}
+
+.team-img-hover .team-social li a.instagram {
+  background: #cc66cc;
+}
+
+.team-img-hover .team-social li a.linkedin {
+  background: #3399cc;
+}
+
+.team-img-hover {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+  transform: scale(0.8);
+}
+
+.team-img-hover li a {
+  display: inline-block;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  text-align: center;
+  transform: translateY(0);
+  backface-visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.team-img-hover:hover li a:hover {
+  transform: translateY(4px);
+}
+
+.team-item:hover .team-img-hover {
+  opacity: 1;
+  transform: scale(1);
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.role-points {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+hr {
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .footer {
@@ -1424,7 +1579,7 @@ h3.quote::before {
   letter-spacing: 1px;
 }
 .logo span {
-  color: #ffa500;
+  color: #ff0000;
 }
 
 .sub-form {
@@ -1446,7 +1601,7 @@ h3.quote::before {
   z-index: 999;
   height: 40px;
   width: 40px;
-  background: #ffa500;
+  background: #ff0000;
   border-radius: 50%;
   text-align: center;
   line-height: 43px;
@@ -1503,6 +1658,10 @@ h3.quote::before {
   .widget {
     margin-bottom: 30px;
     padding-bottom: 0px;
+  }
+  .tickerText {
+    font-size: 14px;
+    margin-right: 30px;
   }
 }
 @media (max-width: 480px) {
@@ -1572,4 +1731,7 @@ h3.quote::before {
     padding-bottom: 0px;
   }
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /*# sourceMappingURL=style.css.map */

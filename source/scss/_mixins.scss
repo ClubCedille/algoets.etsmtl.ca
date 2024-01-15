@@ -40,3 +40,14 @@
 	-webkit-transform-origin: $origin;
           transform-origin: $origin;
 }
+
+
+@keyframes slide {
+  0% {
+      transform: translateX(100%);
+  }
+
+  100% {
+      transform: translateX(-100%);
+  }
+}

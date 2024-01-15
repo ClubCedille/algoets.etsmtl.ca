@@ -8,6 +8,9 @@ const autoprefixer = require("gulp-autoprefixer");
 const bs = require("browser-sync").create();
 const rimraf = require("rimraf");
 const comments = require("gulp-header-comment");
+const plumber = require('gulp-plumber');
+const through = require('through2');
+
 
 var path = {
   src: {
@@ -30,17 +33,28 @@ var path = {
 gulp.task("html:build", function () {
   return gulp
     .src(path.src.html)
-    .pipe(
-      fileinclude({
-        basepath: path.src.incdir,
-      })
-    )
+    .pipe(plumber({
+      errorHandler: function (err) {
+        console.error('Error in plugin "' + err.plugin + '": ' + err.message);
+        this.emit('end');
+      }
+    }))
+    .pipe(through.obj(function (file, enc, cb) {
+      this.push(file);
+      cb();
+    }, function (cb) {
+      if (this._transformState.writechunk) {
+        console.log('Processing file:', this._transformState.writechunk.relative);
+      }
+      cb();
+    }))
+    .pipe(fileinclude({
+      basepath: path.src.incdir,
+    }))
     .pipe(gulp.dest(path.build.dirDev))
-    .pipe(
-      bs.reload({
-        stream: true,
-      })
-    );
+    .pipe(bs.reload({
+      stream: true,
+    }));
 });
 
 // SCSS
