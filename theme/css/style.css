@@ -647,6 +647,10 @@ ul.dropdown-menu li {
   color: #088ed3;
 }
 
+.intro .container .row {
+  margin: 0 -32px 32px 0px;
+}
+
 .bg-about {
   position: absolute;
   content: "";

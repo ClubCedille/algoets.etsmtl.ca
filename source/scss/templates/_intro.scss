@@ -1,23 +1,34 @@
 // Intro Section
 
-.intro-item{
+.intro-item {
 
-	i{
-		font-size:60px;
+	i {
+		font-size: 60px;
 		line-height: 60px;
 	}
-	
+
 }
 
-.color-one{
+.color-one {
 	color: $primary-color;
 }
-.color-two{
+
+.color-two {
 	color: #00d747;
 }
-.color-three{
-	color:#9262ff;
+
+.color-three {
+	color: #9262ff;
 }
-.color-four{
-	color:#088ed3;
+
+.color-four {
+	color: #088ed3;
+}
+
+.intro {
+	.container {
+		.row {
+			margin: 0 -32px 32px 0px;
+		}
+	}
 }
