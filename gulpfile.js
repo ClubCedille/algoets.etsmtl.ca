@@ -141,6 +141,9 @@ gulp.task("html:build", function () {
     }));
 });
 
+gulp.task("blog-and-html:build", gulp.series("blog:build", "html:build"));
+
+
 // SCSS
 gulp.task("scss:build", function () {
   return gulp
@@ -211,6 +214,7 @@ gulp.task("clean", function (cb) {
 gulp.task("watch:build", function () {
   gulp.watch(path.src.html, gulp.series("html:build"));
   gulp.watch(path.src.blog, gulp.series("blog:build"));
+  gulp.watch(path.src.blog, gulp.series("blog-and-html:build"));
   gulp.watch(path.src.htminc, gulp.series("html:build"));
   gulp.watch(path.src.scss, gulp.series("scss:build"));
   gulp.watch(path.src.js, gulp.series("js:build"));
@@ -223,8 +227,7 @@ gulp.task(
   "default",
   gulp.series(
     "clean",
-    "html:build",
-    "blog:build",
+    "blog-and-html:build",
     "js:build",
     "scss:build",
     "images:build",
@@ -244,8 +247,7 @@ gulp.task(
 gulp.task(
   "build",
   gulp.series(
-    "html:build",
-    "blog:build",
+    "blog-and-html:build",
     "js:build",
     "scss:build",
     "images:build",
