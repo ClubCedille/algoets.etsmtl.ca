@@ -7,15 +7,21 @@ const fileinclude = require("gulp-file-include");
 const autoprefixer = require("gulp-autoprefixer");
 const bs = require("browser-sync").create();
 const rimraf = require("rimraf");
-const comments = require("gulp-header-comment");
 const plumber = require('gulp-plumber');
+const fs = require('fs');
+const tap = require('gulp-tap');
 const through = require('through2');
+const frontMatter = require('gulp-front-matter');
 
+async function getMarkdown() {
+  const markdown = await import('gulp-markdown');
+  return markdown.default;
+}
 
 var path = {
   src: {
     html: "source/*.html",
-    blog: "source/blog/*.html",
+    blog: "source/blog/*.md",
     others: "source/*.+(php|ico|png)",
     htminc: "source/partials/**/*.htm",
     incdir: "source/partials/",
@@ -30,6 +36,75 @@ var path = {
   },
 };
 
+let blogItemsIncludes = '';
+// Blog
+gulp.task("blog:build", async function () {
+  const markdown = await getMarkdown();
+  return gulp.src(path.src.blog)
+    .pipe(plumber())
+    .pipe(frontMatter())
+    .pipe(markdown())
+    .pipe(through.obj(function (file, enc, cb) {
+      this.push(file);
+      cb();
+    }, function (cb) {
+      if (this._transformState.writechunk) {
+        console.log('Processing Markdown file:', this._transformState.writechunk.relative);
+      }
+      cb();
+    }))
+    .pipe(tap(function (file) {
+      // Read the template
+      const template = fs.readFileSync('source/blog/blog_template.html', 'utf8');
+
+      const frontMatterData = file.frontMatter;
+      const title = frontMatterData.title || 'Default Title';
+      const pageName = frontMatterData['page-name'] || 'Default Page Name';
+      const bgImageUrl = frontMatterData['background-image-url'] || 'default-image.jpg';
+      const author = frontMatterData['author'] || 'AlgoÉTS';
+      const authorTitle = frontMatterData['author-title'] || 'Club';
+      const authorRole = frontMatterData['author-role'] || '.';
+      const authorImg = frontMatterData['author-img'] || 'default-image.jpg';
+      const facebookLink = frontMatterData['facebook-link'] || 'https://www.facebook.com/';
+      const twitterLink = frontMatterData['twitter-link'] || 'https://twitter.com/';
+      const linkedinLink = frontMatterData['linkedin-link'] || 'https://www.linkedin.com/';
+      const date = frontMatterData['date'];
+      const tagsHtml = frontMatterData['tags'].map(tag =>
+        `<li class="list-inline-item"><a href="#" rel="tag">${tag}</a></li>`
+      ).join('\n');
+      const link = file.basename;
+
+
+      blogItemsIncludes += `
+      @@include('blocks/blog/blog-item.htm', {"image_src": "${bgImageUrl}", "date": "${date}", "title": "${title}", "summary": "${pageName}", "link": "${link}"})
+    `;
+
+      // Replace placeholders in the template
+      const htmlContent = template
+        .replace(/{{ title }}/g, title)
+        .replace(/{{ page-name }}/g, pageName)
+        .replace(/{{ background-image-url }}/g, bgImageUrl)
+        .replace(/{{ author }}/g, author)
+        .replace(/{{ author-title }}/g, authorTitle)
+        .replace(/{{ author-role }}/g, authorRole)
+        .replace(/{{ author-img }}/g, authorImg)
+        .replace(/{{ facebook-link }}/g, facebookLink)
+        .replace(/{{ twitter-link }}/g, twitterLink)
+        .replace(/{{ linkedin-link }}/g, linkedinLink)
+        .replace(/{{ tags }}/g, `<ul class="list-inline">${tagsHtml}</ul>`)
+        .replace(/{{ content }}/g, file.contents.toString());
+
+      // Update the file content
+      file.contents = Buffer.from(htmlContent);
+    }))
+    .pipe(fileinclude({
+      basepath: path.src.incdir,
+    }))
+    .pipe(gulp.dest(path.build.dirDev))
+    .pipe(bs.reload({
+      stream: true,
+    }));
+});
 // HTML
 gulp.task("html:build", function () {
   return gulp
@@ -41,6 +116,14 @@ gulp.task("html:build", function () {
       }
     }))
     .pipe(through.obj(function (file, enc, cb) {
+      // Check if the file is blog-grid.html
+      if (file.basename === 'blog-grid.html') {
+        // Replace {{ blogList }} with blogItemsIncludes
+        let fileContent = file.contents.toString();
+        fileContent = fileContent.replace('{{ blogList }}', blogItemsIncludes);
+        file.contents = Buffer.from(fileContent);
+      }
+
       this.push(file);
       cb();
     }, function (cb) {
@@ -58,33 +141,8 @@ gulp.task("html:build", function () {
     }));
 });
 
-// Blog
-gulp.task("blog:build", function () {
-  return gulp
-    .src(path.src.blog)
-    .pipe(plumber({
-      errorHandler: function (err) {
-        console.error('Error in plugin "' + err.plugin + '": ' + err.message);
-        this.emit('end');
-      }
-    }))
-    .pipe(through.obj(function (file, enc, cb) {
-      this.push(file);
-      cb();
-    }, function (cb) {
-      if (this._transformState.writechunk) {
-        console.log('Processing file:', this._transformState.writechunk.relative);
-      }
-      cb();
-    }))
-    .pipe(fileinclude({
-      basepath: path.src.incdir,
-    }))
-    .pipe(gulp.dest(path.build.dirDev))
-    .pipe(bs.reload({
-      stream: true,
-    }));
-});
+gulp.task("blog-and-html:build", gulp.series("blog:build", "html:build"));
+
 
 // SCSS
 gulp.task("scss:build", function () {
@@ -156,6 +214,7 @@ gulp.task("clean", function (cb) {
 gulp.task("watch:build", function () {
   gulp.watch(path.src.html, gulp.series("html:build"));
   gulp.watch(path.src.blog, gulp.series("blog:build"));
+  gulp.watch(path.src.blog, gulp.series("blog-and-html:build"));
   gulp.watch(path.src.htminc, gulp.series("html:build"));
   gulp.watch(path.src.scss, gulp.series("scss:build"));
   gulp.watch(path.src.js, gulp.series("js:build"));
@@ -168,8 +227,7 @@ gulp.task(
   "default",
   gulp.series(
     "clean",
-    "html:build",
-    "blog:build",
+    "blog-and-html:build",
     "js:build",
     "scss:build",
     "images:build",
@@ -189,8 +247,7 @@ gulp.task(
 gulp.task(
   "build",
   gulp.series(
-    "html:build",
-    "blog:build",
+    "blog-and-html:build",
     "js:build",
     "scss:build",
     "images:build",
