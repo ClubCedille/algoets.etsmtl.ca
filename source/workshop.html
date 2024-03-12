@@ -121,6 +121,17 @@
             /* Full width on smaller screens */
         }
     }
+
+    .workshop-link {
+        color: inherit !important;
+        text-decoration: none !important;
+        transition: none !important;
+    }
+
+    .workshop-link:hover, .workshop-link:focus, .workshop-link:active {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
 </style>
 
 @@include('header.htm') @@include('blocks/navigation.html', {"workshop":"active"})
@@ -155,7 +166,7 @@
             prerequis: "Curiosité.",
             programme: ["Céli", "REER", "REEE", "CELIAPP", "Taxes & Crédits d’impôts", "Investissement Stratégies (ETF)"],
             image: "images/workshop/epargne.png",
-            link: "/files/Workshop%20Régimes%20enregistrés%20d’épargne.pdf"
+            link: "/files/Workshop Régimes enregistrés d’épargne.pdf"
         },
         PythonFinance: {
             name: "Workshop Python pour la finance et la data science",
@@ -182,7 +193,7 @@
             programme: ["Sentiment Analysis", "NLP", "Python", "Machine Learning", "Deep Learning"],
             image: "images/workshop/sentiment.png",
             link: "/files/Introduction%20à%20l'analyse%20de%20sentiment.pdf",
-            github: "https://github.com/AlgoETS/Workshop-SentimentsAnalysis/tree/main"
+            github: "https://github.com/AlgoETS/Workshop-SentimentsAnalysis"
         }
     };
 
@@ -192,22 +203,24 @@
         workshopCard.className = "workshop-card bg-white rounded overflow-hidden shadow-md transition duration-300 ease-in-out max-w-xs";
 
         let programmeHtml = workshopData.programme.map(item => `<li>${item}</li>`).join("");
-        let githubLinkHtml = workshopData.github ? `<a href="${workshopData.github}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>` : '';
+        let githubLinkHtml = workshopData.github ? `<a href="${workshopData.github}" class="inline-block bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>` : '';
 
         workshopCard.innerHTML = `
-    <div class="workshop-image-container">
-        <img src="${workshopData.image}" alt="${workshopData.name}" class="workshop-image">
-    </div>
-    <div class="workshop-content px-6 py-4">
-        <h4 class="workshop-title font-semibold">${workshopData.name}</h4>
-        <p class="workshop-description text-sm">${workshopData.description}</p>
-        <div class="workshop-details text-xs mt-4">
-            <span><strong>Pré-requis:</strong> ${workshopData.prerequis}</span><br>
-            <span><strong>Programme:</strong></span>
-            <ul class="list-disc pl-8">${programmeHtml}</ul>
-        </div>
-        ${githubLinkHtml ? `<div class="mt-4">${githubLinkHtml}</div>` : ''}
-    </div>
+        <a href="${workshopData.link}" target="_blank" class="workshop-link">
+            <div class="workshop-image-container">
+                <img src="${workshopData.image}" alt="${workshopData.name}" class="workshop-image">
+            </div>
+            <div class="workshop-content px-6 py-4">
+                <h4 class="workshop-title font-semibold">${workshopData.name}</h4>
+                <p class="workshop-description text-sm">${workshopData.description}</p>
+                <div class="workshop-details text-xs mt-4">
+                    <span><strong>Pré-requis:</strong> ${workshopData.prerequis}</span><br>
+                    <span><strong>Programme:</strong></span>
+                    <ul class="list-disc pl-8">${programmeHtml}</ul>
+                    ${githubLinkHtml ? `<div class="mt-4">${githubLinkHtml}</div>` : ''}
+                </div>
+            </div>
+        </a>
     `;
         document.getElementById("workshops-container").appendChild(workshopCard);
     }

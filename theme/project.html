@@ -347,38 +347,12 @@ Essential Scripts
     };
 
     const cachedProjectInfo = {
-        Workshop1: {
-            name: "Workshop1",
-            description:
-                "Bienvenue dans le dépôt de l'Atelier Python AlgoETS ! Ici, vous trouverez une collection de cahiers Jupyter et de guides en Markdown conçus pour améliorer vos compétences en Python, notamment en science des données et en génie logiciel.",
-            language: "Jupyter Notebook",
-            forks_count: 10,
-            stargazers_count: 2,
-            open_issues_count: 5,
-            updated_at: "2024-01-04",
-            created_at: "2023-09-06",
-            topics: [
-                "basic",
-                "class",
-                "course",
-                "data",
-                "finance",
-                "matplotlib",
-                "python",
-                "science",
-                "stock",
-                "workshop",
-            ],
-            html_url: "https://github.com/AlgoETS/Workshop1",
-            homepage: "/files/Workshop%201.pdf",
-            image: "images/workshop/python101.png"
-        },
         AINewsTracker: {
             name: "AINewsTracker",
             description: "AINewsTracker: Leveraging AI to analyse financial news",
             language: "Python",
             forks_count: 10,
-            stargazers_count: 4,
+            stargazers_count: 6,
             open_issues_count: 5,
             updated_at: "2023-11-27",
             created_at: "2023-05-26",
@@ -459,23 +433,25 @@ Essential Scripts
         }
 
         projectCard.innerHTML = `
-        <div class="project-image-container">
-            <img src="${projectData.image}" alt="${projectData.name}" class="project-image">
-        </div>
-        <div class="project-content px-6 py-4">
-            <h4 class="project-title">${projectData.name}</h4>
-            <p class="project-description">${projectData.description}</p>
-            <div class="project-details">
-                <span>Language: ${projectData.language}</span><br>
-                <span>Stars: ${projectData.stargazers_count}</span><br>
-                <span>Last Updated: ${new Date(projectData.updated_at).toLocaleDateString()}</span>
-                <div class="project-topics px-6 pt-4 pb-2">Tags: ${topicsHtml}</div>
+        <a href="${projectData.html_url}" target="_blank" class="project-link-main">
+            <div class="project-image-container">
+                <img src="${projectData.image}" alt="${projectData.name}" class="project-image">
             </div>
-            <div class="px-6 py-4 flex justify-between items-center space-x-2">
-                <a href="${projectData.html_url}" class="project-link inline-block bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>
-                ${projectData.homepage ? `<a href="${projectData.homepage}" class="project-link inline-block bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">Live Demo</a>` : ''}
+            <div class="project-content px-6 py-4">
+                <h4 class="project-title">${projectData.name}</h4>
+                <p class="project-description">${projectData.description}</p>
+                <div class="project-details">
+                    <span>Language: ${projectData.language}</span><br>
+                    <span>Stars: ${projectData.stargazers_count}</span><br>
+                    <span>Last Updated: ${new Date(projectData.updated_at).toLocaleDateString()}</span>
+                    <div class="project-topics px-6 pt-4 pb-2">Tags: ${topicsHtml}</div>
+                </div>
+                <div class="px-6 py-4 flex justify-between items-center space-x-2">
+                    <a href="${projectData.html_url}" class="project-link inline-block bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>
+                    ${projectData.homepage ? `<a href="${projectData.homepage}" class="project-link inline-block bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">Live Demo</a>` : ''}
+                </div>
             </div>
-        </div>
+        </a>
     `;
         document.getElementById("projects-container").appendChild(projectCard);
     }

@@ -155,3 +155,15 @@ $shadow-dark: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 		object-fit: cover;
 	}
 }
+
+.project-link-main {
+	color: inherit !important;
+	text-decoration: none !important;
+	transition: none !important;
+
+}
+
+.project-link-main:hover, .project-link-main:focus, .project-link-main:active {
+	color: inherit !important;
+	text-decoration: none !important;
+}
