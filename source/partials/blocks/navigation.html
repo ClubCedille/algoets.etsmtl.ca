@@ -1,0 +1,185 @@
+<!-- Header Start -->
+<header class="navigation">
+  <div id="tickerScroller">
+    <div id="tickerContainer"></div>
+  </div>
+  <div class="header-top">
+
+    <div id="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg px-0 py-4">
+              <a class="navbar-brand" href="index.html">
+                <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
+              </a>
+
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
+
+              <div class="collapse navbar-collapse text-center" id="navbarsExample09">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item @@home">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                  </li>
+                  <li class="nav-item @@about">
+                    <a class="nav-link" href="about.html">Notre Club</a>
+                  </li>
+                  <li class="nav-item @@team">
+                    <a class="nav-link" href="team.html">Notre Équipe</a>
+                  </li>
+                  <li class="nav-item @@project">
+                    <a class="nav-link" href="project.html">Projets</a>
+                  </li>
+                  <li class="nav-item @@pricing">
+                    <a class="nav-link" href="pricing.html">Partenaires</a>
+                  </li>
+                  <li class="nav-item @@contact">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item dropdown @@blog">
+                    <a class="nav-link" href="blog-grid.html">Blog</a>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function fetchCryptoData() {
+        try {
+          const cache = localStorage.getItem('cryptoDataCache');
+          const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+          if (cache) {
+            const { data, timestamp } = JSON.parse(cache);
+            if (timestamp + cacheDuration > Date.now()) {
+              return data; // Use cached data if still valid
+            }
+          }
+
+          // Define the top 25 cryptocurrency IDs in an array
+          const top25CoinIds = [
+            "bitcoin",
+            "ethereum",
+            "tether",
+            "cardano",
+            "usd-coin",
+            "solana",
+            "polkadot",
+            "dogecoin",
+            "avalanche-2",
+            "terra-luna",
+            "binance-usd",
+            "wrapped-bitcoin",
+            "litecoin",
+            "chainlink",
+            "algorand",
+            "bitcoin-cash",
+            "matic-network",
+            "internet-computer",
+            "stellar",
+            "filecoin",
+            "tron",
+            "ethereum-classic",
+            "vechain",
+          ];
+          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Cache the fetched data with a timestamp
+          localStorage.setItem('cryptoDataCache', JSON.stringify({
+            data: top25CoinIds.map(id => ({
+              name: id.toUpperCase(),
+              value: data[id].usd,
+              change: data[id].usd_24h_change,
+            })), timestamp: Date.now()
+          }));
+
+          return top25CoinIds.map(id => ({
+            name: id.toUpperCase(),
+            value: data[id].usd,
+            change: data[id].usd_24h_change,
+          }));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          return [];
+        }
+      }
+
+      function createTickerItem(item) {
+        const span = document.createElement("span");
+        span.className = "tickerText";
+        const trendSymbol = item.change >= 0 ? "↑" : "↓";
+        const trendColor = item.change >= 0 ? "green" : "red";
+        span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+        <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+        return span;
+      }
+
+      async function updateTicker() {
+        const cryptoData = await fetchCryptoData();
+        const tickerContainer = document.getElementById("tickerContainer");
+        tickerContainer.innerHTML = "";
+        cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+      }
+
+      function calculatePercentagePosition() {
+        const tickerContainer = document.getElementById('tickerContainer');
+        const containerWidth = tickerContainer.offsetWidth;
+        const parentWidth = tickerContainer.parentElement.offsetWidth;
+        const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+        const computedStyle = window.getComputedStyle(tickerContainer);
+        const matrix = new WebKitCSSMatrix(computedStyle.transform);
+        const currentPosition = matrix.m41; // Current X translation
+
+        // Convert position to percentage of total path
+        const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+        return positionPercent;
+      }
+
+      function applySavedPosition(positionPercent) {
+        const tickerContainer = document.getElementById('tickerContainer');
+        // Remove the current animation to reset it
+        tickerContainer.style.animation = 'none';
+
+        // Update the @keyframes rule to start from the saved position
+        const keyframes = `@keyframes slide {
+            from { transform: translateX(${100 - positionPercent}%); }
+            to { transform: translateX(-100%); }
+        }`;
+
+        // Apply the new @keyframes rule
+        let styleSheet = document.createElement('style');
+        styleSheet.type = 'text/css';
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+
+        // Restart the animation
+        requestAnimationFrame(() => {
+          tickerContainer.style.animation = `slide 120s linear infinite`;
+        });
+      }
+
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await updateTicker();
+        setInterval(updateTicker, 120000); // Update every 2 minutes
+
+        const savedPosition = localStorage.getItem('tickerPosition') || 0;
+        applySavedPosition(savedPosition);
+
+        setInterval(() => {
+          const positionPercent = calculatePercentagePosition();
+          localStorage.setItem('tickerPosition', positionPercent);
+        }, 39);
+      });
+    </script>
+</header>
+<!-- Header Close -->

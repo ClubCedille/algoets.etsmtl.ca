@@ -1,11 +1,12 @@
 .slider{
-  background: url("../images/bg/home-1.jpg") no-repeat;
+  background: url("../../images/competition/good-team.jpg") no-repeat;
   background-size: cover;
-  background-position: 10% 0%;
-  padding:200px 0;
+  background-position: right 0% bottom 80%;
+  background-repeat: no-repeat;
+  padding:500px 0;
   position: relative;
   @include tablet {
-    padding:150px 0;
+    padding:300px 0;
   }
   @extend .overly;
   .block{
