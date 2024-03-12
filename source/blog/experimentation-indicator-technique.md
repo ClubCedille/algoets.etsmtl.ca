@@ -3,8 +3,8 @@ title: Expérimentation des indicateurs technique
 page-name: "Backtesting"
 background-image-url: "images/blog/vol/nombre_de_vol_de_vehicule_moteur_par_annee_hua975f8a3d854aa424a332774bd6b821d_25312_1024x0_resize_q75_box.jpg"
 facebook-link :
-twitter-link : 
-linkedin-link : 
+twitter-link :
+linkedin-link : https://www.linkedin.com/in/antoineboucher12
 tags : [ "Données publique", "Indicateurs Technique", "Python"]
 author : Antoine Boucher
 author-title : Co-Capitaine

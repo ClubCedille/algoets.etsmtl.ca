@@ -29,3 +29,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.team-item-wrap').forEach(function(teamMember) {
+            // Handling social links
+            const socialLinksContainer = teamMember.querySelector('.team-social');
+            let hasVisibleLinks = false;
+            socialLinksContainer.querySelectorAll('a').forEach(function(link) {
+                // Extend the condition to check for effectively empty links
+                if (link.href.trim() && !link.href.includes('@@') && link.href !== 'http://example.com' && link.href !== 'https://example.com') {
+                    hasVisibleLinks = true; // Valid link found
+                } else {
+                    link.parentElement.style.display = 'none'; // Hide if placeholder, empty, or example link
+                }
+            });
+            if (!hasVisibleLinks) {
+                socialLinksContainer.style.display = 'none'; // Hide container if no valid links
+            }
+
+            // Handling project participation
+            const projectsList = teamMember.querySelector('.team-project-participation ul');
+            let hasVisibleProjects = false;
+            projectsList.querySelectorAll('li').forEach(function(project) {
+                if (project.textContent.trim() && !project.textContent.includes('@@')) {
+                    hasVisibleProjects = true; // Valid project found
+                } else {
+                    project.style.display = 'none'; // Hide if placeholder or empty
+                }
+            });
+            if (!hasVisibleProjects) {
+                teamMember.querySelector('.team-project-participation').style.display = 'none'; // Hide section if no valid projects
+            }
+        });
+    });
+</script>

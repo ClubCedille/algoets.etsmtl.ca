@@ -3,8 +3,8 @@ title: Montréal
 page-name: "Étude des vols de voitures"
 background-image-url: "images/blog/vol/nombre_de_vol_de_vehicule_moteur_par_annee_hua975f8a3d854aa424a332774bd6b821d_25312_1024x0_resize_q75_box.jpg"
 facebook-link :
-twitter-link : 
-linkedin-link : 
+twitter-link :
+linkedin-link : https://www.linkedin.com/in/mohamed-ilias/
 tags : [ "Données publique", "Montréal", "Vol"]
 author : Mohamed Ilias
 author-title : Co-Capitaine

@@ -1,72 +1,126 @@
 <style>
-/* General Style for Workshop Container */
-.workshops-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Style for Individual Workshop Card */
-.workshop-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    width: 300px; /* Fixed width, you can also use max-width for responsiveness */
-    overflow: hidden; /* Ensures no content spills out */
-}
-
-/* Style for Workshop Image */
-.workshop-image img {
-    width: 100%;
-    display: block; /* Removes any extra space below the image */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-/* Style for Workshop Content */
-.workshop-content {
-    padding: 15px;
-}
-
-.workshop-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.workshop-description {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-/* Style for Workshop Details */
-.workshop-details {
-    font-size: 12px;
-    color: #666;
-}
-
-.workshop-details strong {
-    color: #333;
-}
-
-/* List style */
-ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin: 0;
-}
-
-/* Media Query for Responsiveness */
-@media (max-width: 768px) {
-    .workshop-card {
-        width: 100%; /* Full width on smaller screens */
+    /* General Styles */
+    .bg-primary {
+        background-color: #ff0000;
     }
-}
+
+    /* Primary color background */
+    .text-primary {
+        color: #ff0000;
+    }
+
+    /* Primary color text */
+    .rounded-lg {
+        border-radius: 0.5rem;
+    }
+
+    /* Rounded corners */
+    .shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Light shadow */
+    .hover:shadow-lg {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Dark shadow on hover */
+    .transition {
+        transition: all 0.3s ease;
+    }
+
+    /* Smooth transition for hover effects */
+
+    /* Workshop Card Specific */
+    .workshop-card {
+        background: rgba(255, 255, 255, 0.9);
+        /* Semi-transparent white */
+        backdrop-filter: blur(10px);
+        /* Blur effect for background */
+        border: 1px solid #ccc;
+        /* Border */
+        overflow: hidden;
+        /* Hide overflow */
+        margin-bottom: 20px;
+        /* Bottom margin */
+        display: flex;
+        flex-direction: column;
+        /* Stack children vertically */
+        transition: transform 0.3s ease;
+        /* Smooth scale transition */
+    }
+
+    .workshop-card:hover {
+        transform: scale(1.05);
+        /* Scale up on hover */
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        /* Darker shadow on hover */
+    }
+
+    .workshop-image-container {
+        width: 100%;
+        padding-top: 56.25%;
+        /* 16:9 aspect ratio */
+        position: relative;
+        /* Position relative to place the image absolutely inside */
+    }
+
+    .workshop-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Cover the area nicely without distortion */
+    }
+
+    .workshop-content {
+        padding: 15px;
+        /* Padding around content */
+    }
+
+    .workshop-title,
+    .workshop-description,
+    .workshop-details {
+        margin-bottom: 10px;
+        /* Spacing between elements */
+    }
+
+    /* GitHub Link Styling */
+    .github-link {
+        display: inline-block;
+        background-color: #007bff;
+        /* Blue background */
+        color: white;
+        /* White text */
+        padding: 10px 15px;
+        /* Padding */
+        border-radius: 5px;
+        /* Rounded corners */
+        text-decoration: none;
+        /* Remove underline */
+        text-align: center;
+        /* Center text */
+        width: 100%;
+        /* Full width for better visibility */
+        margin-top: 10px;
+        /* Margin top */
+        transition: background-color 0.3s;
+        /* Background color transition */
+    }
+
+    .github-link:hover {
+        background-color: #0056b3;
+        /* Darker blue on hover */
+    }
+
+    @media (max-width: 768px) {
+        .workshop-card {
+            max-width: 100%;
+            /* Full width on smaller screens */
+        }
+    }
 </style>
 
 @@include('header.htm') @@include('blocks/navigation.html', {"workshop":"active"})
@@ -75,21 +129,14 @@ ul {
 
 <!-- section workshop start -->
 <main>
-    <section class="section service border-top pb-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-7 text-center">
-                    <div class="section-title">
-                        <span class="h6 text-color text-sm font-medium">Nos Ateliers</span>
-                        <h2 class="mt-3 content-title text-2xl font-semibold">Workshop récents</h2>
-                    </div>
-                </div>
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-sm font-semibold text-blue-500">Nos Ateliers</span>
+                <h2 class="text-3xl font-bold text-gray-800 mt-4">Workshop récents</h2>
             </div>
-
-            <div class="row mt-8">
-                <div id="workshops-container" class="workshops-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Workshop cards will be inserted here -->
-                </div>
+            <div id="workshops-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Workshop cards will be inserted here by JavaScript -->
             </div>
         </div>
     </section>
@@ -102,48 +149,70 @@ ul {
 
 <script>
     const workshopsInfo = {
-    EpargneInvestissement: {
-        name: "Atelier sur l'épargne et l'investissement",
-        description: "Découvrez les principes de l'épargne et de l'investissement pour prendre des décisions financières éclairées.",
-        prerequis: "Curiosité.",
-        programme: ["Céli", "REER", "REEE", "CELIAPP", "Taxes & Crédits d’impôts", "Investissement Stratégies (ETF)"],
-        image: "images/workshop/epargne.png",
-    },
-    PythonFinance: {
-        name: "Workshop Python pour la finance et la data science",
-        description: "Plongez dans Python, le langage incontournable de la finance et de la data science.",
-        prerequis: "Passion pour la finance et curiosité.",
-        programme: ["Environnement de développement", "Python & Jupyter", "Programmation", "APIs", "Pandas & Data Science", "Projets achevés"],
-        image: "images/workshop/python101.png",
-    },
-};
+        EpargneInvestissement: {
+            name: "Atelier sur l'épargne et l'investissement",
+            description: "Découvrez les principes de l'épargne et de l'investissement pour prendre des décisions financières éclairées.",
+            prerequis: "Curiosité.",
+            programme: ["Céli", "REER", "REEE", "CELIAPP", "Taxes & Crédits d’impôts", "Investissement Stratégies (ETF)"],
+            image: "images/workshop/epargne.png",
+            link: "/files/Workshop%20Régimes%20enregistrés%20d’épargne.pdf"
+        },
+        PythonFinance: {
+            name: "Workshop Python pour la finance et la data science",
+            description: "Plongez dans Python, le langage incontournable de la finance et de la data science.",
+            prerequis: "Passion pour la finance et curiosité.",
+            programme: ["Environnement de développement", "Python & Jupyter", "Programmation", "APIs", "Pandas & Data Science", "Projets achevés"],
+            image: "images/workshop/python101.png",
+            link: "/files/Workshop%201.pdf",
+            github: "https://github.com/AlgoETS/Workshop1"
+        },
+        MonteCarlo: {
+            name: "Workshop MonteCarlo simulation pour la finance",
+            description: "Plongez dans le fascinant univers des chaînes de Markov et leur application dans la science des données et l'interaction avec les API.",
+            prerequis: "Ce cours est destiné aux personnes ayant un niveau intermédiaire en programmation jusqu'aux développeurs chevronnés désireux d'approfondir leurs connaissances en modélisation stochastique.",
+            programme: ["Monte Carlo", "AI", "Prediction"],
+            image: "images/workshop/montecarlo.png",
+            link: "/files/Algo%20Markov%20Chain%20Monte%20Carlo%20(MCMC)_.pdf",
+            github: "https://github.com/AlgoETS/MarkokChainMonteCarlo"
+        },
+        SentimentAnalysis: {
+            name: "Workshop Sentiment Analysis",
+            description: "Découvrez les principes de l'analyse de sentiment pour prendre des décisions financières éclairées.",
+            prerequis: "Curiosité.",
+            programme: ["Sentiment Analysis", "NLP", "Python", "Machine Learning", "Deep Learning"],
+            image: "images/workshop/sentiment.png",
+            link: "/files/Introduction%20à%20l'analyse%20de%20sentiment.pdf",
+            github: "https://github.com/AlgoETS/Workshop-SentimentsAnalysis/tree/main"
+        }
+    };
 
-function createProjectCard(workshopData) {
+    function createWorkshopCard(workshopData) {
         if (!workshopData) return;
-
         const workshopCard = document.createElement("div");
-        workshopCard.className = "workshop-card bg-white shadow-md rounded-lg overflow-hidden p-4 hover:shadow-lg transition-shadow duration-300";
+        workshopCard.className = "workshop-card bg-white rounded overflow-hidden shadow-md transition duration-300 ease-in-out max-w-xs";
 
         let programmeHtml = workshopData.programme.map(item => `<li>${item}</li>`).join("");
+        let githubLinkHtml = workshopData.github ? `<a href="${workshopData.github}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>` : '';
 
         workshopCard.innerHTML = `
-            <div class="workshop-image">
-                <img src="${workshopData.image}" alt="${workshopData.name}" class="img-fluid">
-            </div>
-            <div class="workshop-content">
-                <h4 class="workshop-title font-semibold text-md mb-2">${workshopData.name}</h4>
-                <p class="workshop-description text-gray-600 text-sm mb-4">${workshopData.description}</p>
-                <div class="workshop-details text-sm text-gray-500 mb-4">
-                    <strong>Pré-requis:</strong> ${workshopData.prerequis}<br>
-                    <strong>Programme:</strong>
-                    <ul>${programmeHtml}</ul>
-                </div>
-            </div>
-        `;
+    <div class="workshop-image-container">
+        <img src="${workshopData.image}" alt="${workshopData.name}" class="workshop-image">
+    </div>
+    <div class="workshop-content px-6 py-4">
+        <h4 class="workshop-title font-semibold">${workshopData.name}</h4>
+        <p class="workshop-description text-sm">${workshopData.description}</p>
+        <div class="workshop-details text-xs mt-4">
+            <span><strong>Pré-requis:</strong> ${workshopData.prerequis}</span><br>
+            <span><strong>Programme:</strong></span>
+            <ul class="list-disc pl-8">${programmeHtml}</ul>
+        </div>
+        ${githubLinkHtml ? `<div class="mt-4">${githubLinkHtml}</div>` : ''}
+    </div>
+    `;
         document.getElementById("workshops-container").appendChild(workshopCard);
     }
 
     Object.keys(workshopsInfo).forEach(workshopKey => {
-        createProjectCard(workshopsInfo[workshopKey]);
+        createWorkshopCard(workshopsInfo[workshopKey]);
     });
 </script>
