@@ -64,7 +64,7 @@
                 "workshop",
             ],
             html_url: "https://github.com/AlgoETS/Workshop1",
-            homepage: "",
+            homepage: "/files/Workshop%201.pdf",
         },
         AINewsTracker: {
             name: "AINewsTracker",
@@ -182,10 +182,11 @@
         fetch(projectsInfo[projectKey])
             .then((response) => {
                 if (response.ok) {
-                    return response.json();
+                    // return response.json();
+                    return createProjectCard(cachedProjectInfo[projectKey]);
                 } else {
                     if (cachedProjectInfo[projectKey] !== undefined) {
-                        createProjectCard(cachedProjectInfo[projectKey]);
+                        return createProjectCard(cachedProjectInfo[projectKey]);
                     }
                 }
             })
