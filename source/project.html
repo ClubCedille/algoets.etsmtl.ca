@@ -1,42 +1,160 @@
-@@include('header.htm')
-
-@@include('blocks/navigation.htm',{"project":"active"})
-
-@@include('blocks/page-title.htm', { "page-name": "Latest works", "title": "Portfolio" })
+@@include('header.htm') @@include('blocks/navigation.html', {"project":"active"})
+@@include('blocks/page-title.htm', { "page-name": "Projets", "title":
+"Portfolio", "background-image-url": "images/competition/server-building.jpg" })
 
 <!-- section portfolio start -->
-<section class="section portfolio pb-0">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-7 text-center">
-				<div class="section-title">
-					<span class="h6 text-color">Our works</span>
-					<h2 class="mt-3 content-title">We have done lots of works, let's check some</h2>
-				</div>
-			</div>
-		</div>
-
-		<!-- GitHub Projects -->
-		<div class="row">
-			<h3>Our GitHub Projects</h3>
-			<ul>
-				<li><a href="https://github.com/AlgoETS/AINewsTracker">AINewsTracker</a>: Leveraging AI to analyze financial news.</li>
-				<li><a href="https://github.com/AlgoETS/BatchBacktesting">BatchBacktesting</a>: A Python tool for running backtests on multiple stocks and strategies.</li>
-				<li>Salary_2023: Salary Exploration for 2023</li>
-				<li>MovingAverage Private: Moving-Average-Strategy</li>
-				<li><a href="https://github.com/AlgoETS/BullETS">BullETS</a>: A Python library for developing algorithmic trading strategies.</li>
-			</ul>
-		</div>
-
-		<!-- Image Portfolio -->
-		<div class="container-fluid">
-			<div class="row portfolio-gallery">
-				<!-- [Place your image portfolio items here] -->
-			</div>
-		</div>
-	</section>
+<section class="py-5 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-semibold">Projets récents</h2>
+            <p class="text-sm text-gray-600">Nos résultats</p>
+        </div>
+        <div id="projects-container" class="grid grid-cols-3 gap-4">
+            <!-- Project cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+</section>
 <!-- section portfolio END -->
 
 @@include('blocks/footer.htm')
 
-@@include('footer.htm')
+<script>
+    const projectsInfo = {
+        Workshop1: "https://api.github.com/repos/AlgoETS/Workshop1",
+        AINewsTracker: "https://api.github.com/repos/AlgoETS/AINewsTracker",
+        BatchBacktesting: "https://api.github.com/repos/AlgoETS/BatchBacktesting",
+        Salary: "https://api.github.com/repos/AlgoETS/Salary",
+        Marketwatch: "https://api.github.com/repos/antoinebou12/Marketwatch",
+        BullETS: "https://api.github.com/repos/AlgoETS/BullETS",
+    };
+
+    const cachedProjectInfo = {
+        AINewsTracker: {
+            name: "AINewsTracker",
+            description: "AINewsTracker: Leveraging AI to analyse financial news",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 6,
+            open_issues_count: 5,
+            updated_at: "2023-11-27",
+            created_at: "2023-05-26",
+            topics: ["ai", "news", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/AINewsTracker",
+            homepage: "https://github.com/AlgoETS/AINewsTracker",
+            image: "images/project/AINewsTracker.svg"
+        },
+        BatchBacktesting: {
+            name: "BatchBacktesting",
+            description:
+                "BatchBacktesting is a Python tool that allows users to run backtests on a large number of stocks and strategies in parallel. The results are stored in a csv file for easy analysis.",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 1,
+            open_issues_count: 5,
+            updated_at: "2023-06-28",
+            created_at: "2023-03-28",
+            topics: ["backtesting", "batch", "finance", "strategy"],
+            html_url: "https://github.com/AlgoETS/BatchBacktesting",
+            homepage: "ttps://algoets.github.io/BatchBacktesting/search.html",
+            image: "images/project/backtest.png"
+        },
+        Salary: {
+            name: "Salary",
+            description: "Analyse des salaire canadien entre 2023-2024",
+            language: "HTML",
+            forks_count: 10,
+            stargazers_count: 15,
+            open_issues_count: 5,
+            updated_at: "2023-11-10",
+            created_at: "2023-02-23",
+            topics: ["canada", "salary-research"],
+            html_url: "https://github.com/AlgoETS/Salary",
+            homepage: "https://github.com/AlgoETS/Salary",
+            image: "images/project/salary.png"
+        },
+        Marketwatch: {
+            name: "Marketwatch",
+            description:
+                "Python library to interface with the Market Watch virtual stock market game https://marketwatchapi.vercel.app",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 5,
+            open_issues_count: 5,
+            updated_at: "2023-10-11",
+            created_at: "2023-03-23",
+            topics: ["marketwatch", "python", "stock-market"],
+            html_url: "https://github.com/AlgoETS/Marketwatch",
+            homepage: "https://marketwatchapi.vercel.app",
+            image: "images/project/marketwatch.png"
+        },
+        BullETS: {
+            name: "BullETS",
+            description:
+                "BullETS is a Python library designed to help with the development of algorithmic trading strategies.",
+            language: "Python",
+            forks_count: 10,
+            stargazers_count: 5,
+            open_issues_count: 5,
+            updated_at: "2023-05-10",
+            created_at: "2021-05-12",
+            topics: ["backtesting"],
+            html_url: "https://github.com/AlgoETS/BullETS",
+            homepage: "https://github.com/AlgoETS/BullETS",
+            image: "images/project/bullets.png"
+        },
+    };
+
+    function createProjectCard(projectData) {
+        if (!projectData) return;
+        const projectCard = document.createElement("div");
+        projectCard.className = "project-card bg-white rounded overflow-hidden shadow-md transition duration-300 ease-in-out max-w-xs";
+
+        let topicsHtml = "";
+        if (projectData !== undefined && Array.isArray(projectData.topics || "")) {
+            topicsHtml = projectData.topics.join(", ");
+        }
+
+        projectCard.innerHTML = `
+        <a href="${projectData.html_url}" target="_blank" class="project-link-main">
+            <div class="project-image-container">
+                <img src="${projectData.image}" alt="${projectData.name}" class="project-image">
+            </div>
+            <div class="project-content px-6 py-4">
+                <h4 class="project-title">${projectData.name}</h4>
+                <p class="project-description">${projectData.description}</p>
+                <div class="project-details">
+                    <span>Language: ${projectData.language}</span><br>
+                    <span>Stars: ${projectData.stargazers_count}</span><br>
+                    <span>Last Updated: ${new Date(projectData.updated_at).toLocaleDateString()}</span>
+                    <div class="project-topics px-6 pt-4 pb-2">Tags: ${topicsHtml}</div>
+                </div>
+                <div class="px-6 py-4 flex justify-between items-center space-x-2">
+                    <a href="${projectData.html_url}" class="project-link inline-block bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>
+                    ${projectData.homepage ? `<a href="${projectData.homepage}" class="project-link inline-block bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">Live Demo</a>` : ''}
+                </div>
+            </div>
+        </a>
+    `;
+        document.getElementById("projects-container").appendChild(projectCard);
+    }
+
+    Object.keys(projectsInfo).forEach((projectKey) => {
+        fetch(projectsInfo[projectKey])
+            .then((response) => {
+                if (response.ok) {
+                    // return response.json();
+                    return createProjectCard(cachedProjectInfo[projectKey]);
+                } else {
+                    if (cachedProjectInfo[projectKey] !== undefined) {
+                        return createProjectCard(cachedProjectInfo[projectKey]);
+                    }
+                }
+            })
+            .then((projectData) => {
+                createProjectCard(projectData);
+            })
+            .catch((error) => {
+                console.error(`Error fetching data for ${projectKey}:`, error);
+            });
+    });
+</script>

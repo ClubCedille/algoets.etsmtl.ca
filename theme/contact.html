@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="zxx">
 <head>
 
@@ -16,16 +8,17 @@
 
   <!-- ** Mobile Specific Metas ** -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Agency HTML Template">
+  <meta name="description" content="AlgoETS Club">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="author" content="Themefisher">
-  <meta name="generator" content="Themefisher Html5 Agency Template v1.0">
-  
+  <meta name="author" content="AlgoETS">
+  <meta name="generator" content="AlgoETS
+
   <!-- theme meta -->
-  <meta name="theme-name" content="megakit" />
+  <meta name="theme-name" content="AlgoETS">
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
   <!-- Icon Font Css -->
   <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
   <link rel="stylesheet" href="plugins/fontawesome/css/all.min.css">
@@ -36,7 +29,7 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
-  
+
   <!--Favicon-->
   <link rel="icon" href="images/favicon.png" type="image/x-icon">
 
@@ -44,102 +37,202 @@
 
 <body>
 
-
 <!-- Header Start -->
 <header class="navigation">
-  <div class="header-top ">
-    <div class="container">
-      <div class="row justify-content-between align-items-center">
-        <div class="col-lg-2 col-md-4">
-          <div class="header-top-socials text-center text-lg-left text-md-left">
-            <a href="https://www.facebook.com/ClubAlgoETS" aria-label="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://ca.linkedin.com/company/algoets" aria-label="twitter" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/AlgoETS" aria-label="github" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://discord.com/invite/PbWxX7B6dx" aria-label="github" target="_blank"><i class="fab fa-discord"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-10 col-md-8 text-center text-lg-right text-md-right">
-          <div class="header-top-info mb-2 mb-md-0">
-            <a href="mailto:algoets@ens.etsmtl.ca" target="_blank"><i class="fas fa-envelope mr-2"></i><span>algoets@ens.etsmtl.ca</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div id="tickerScroller">
+    <div id="tickerContainer"></div>
   </div>
+  <div class="header-top">
 
-  <div id="navbar">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <nav class="navbar navbar-expand-lg px-0 py-4">
-            <a class="navbar-brand" href="index.html">
-              <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="">
-            </a>
-      
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09"
-              aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="fa fa-bars"></span>
-            </button>
-      
-            <div class="collapse navbar-collapse text-center" id="navbarsExample09">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item @@home">
-                  <a class="nav-link" href="index.html">Accueil</a>
-                </li>
-                <li class="nav-item dropdown @@about">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projets <i class="fas fa-chevron-down small"></i></a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                    <li><a class="dropdown-item @@company" href="about.html">Notre Club</a></li>
-                    <li><a class="dropdown-item @@pricing" href="pricing.html">Partenaires</a></li>
-                    
-                    <li class="dropdown dropdown-submenu dropright">
-                      <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0301" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
-            
-                      <ul class="dropdown-menu" aria-labelledby="dropdown0301">
-                        <li><a class="dropdown-item" href="index.html">01</a></li>
-                        <li><a class="dropdown-item" href="index.html">02</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item @@service"><a class="nav-link" href="service.html">Équipe</a></li>
-                <li class="nav-item @@project"><a class="nav-link" href="project.html">Portfolio</a></li>
-                <li class="nav-item dropdown @@blog">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="fas fa-chevron-down small"></i></a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                    <li><a class="dropdown-item @@blogGrid" href="blog-grid.html">Blog Grid</a></li>
-                    <li><a class="dropdown-item @@blogSidebar" href="blog-sidebar.html">Blog with Sidebar</a></li>
-                    <li><a class="dropdown-item @@blogSingle" href="blog-single.html">Blog Single</a></li>
-      
-                    <li class="dropdown dropdown-submenu dropleft">
-                      <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
-            
-                      <ul class="dropdown-menu" aria-labelledby="dropdown0501">
-                        <li><a class="dropdown-item" href="index.html">01</a></li>
-                        <li><a class="dropdown-item" href="index.html">02</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item active"><a class="nav-link" href="contact.html">Contact</a></li>
-              </ul>
-            </div>
-          </nav>
+    <div id="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg px-0 py-4">
+              <a class="navbar-brand" href="index.html">
+                <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
+              </a>
+
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
+
+              <div class="collapse navbar-collapse text-center" id="navbarsExample09">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item @@home">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                  </li>
+                  <li class="nav-item @@about">
+                    <a class="nav-link" href="about.html">Notre Club</a>
+                  </li>
+                  <li class="nav-item @@team">
+                    <a class="nav-link" href="team.html">Notre Équipe</a>
+                  </li>
+                  <li class="nav-item @@project">
+                    <a class="nav-link" href="project.html">Projets</a>
+                  </li>
+                  <li class="nav-item @@workshop">
+                    <a class="nav-link" href="workshop.html">Workshop</a>
+                  </li>
+                  <li class="nav-item @@pricing">
+                    <a class="nav-link" href="pricing.html">Partenaires</a>
+                  </li>
+                  <li class="nav-item dropdown @@blog">
+                    <a class="nav-link" href="blog-grid.html">Blog</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <script>
+      async function fetchCryptoData() {
+        try {
+          const cache = localStorage.getItem('cryptoDataCache');
+          const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+          if (cache) {
+            const { data, timestamp } = JSON.parse(cache);
+            if (timestamp + cacheDuration > Date.now()) {
+              return data; // Use cached data if still valid
+            }
+          }
+
+          // Define the top 25 cryptocurrency IDs in an array
+          const top25CoinIds = [
+            "bitcoin",
+            "ethereum",
+            "tether",
+            "cardano",
+            "usd-coin",
+            "solana",
+            "polkadot",
+            "dogecoin",
+            "avalanche-2",
+            "terra-luna",
+            "binance-usd",
+            "wrapped-bitcoin",
+            "litecoin",
+            "chainlink",
+            "algorand",
+            "bitcoin-cash",
+            "matic-network",
+            "internet-computer",
+            "stellar",
+            "filecoin",
+            "tron",
+            "ethereum-classic",
+            "vechain",
+          ];
+          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Cache the fetched data with a timestamp
+          localStorage.setItem('cryptoDataCache', JSON.stringify({
+            data: top25CoinIds.map(id => ({
+              name: id.toUpperCase(),
+              value: data[id].usd,
+              change: data[id].usd_24h_change,
+            })), timestamp: Date.now()
+          }));
+
+          return top25CoinIds.map(id => ({
+            name: id.toUpperCase(),
+            value: data[id].usd,
+            change: data[id].usd_24h_change,
+          }));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          return [];
+        }
+      }
+
+      function createTickerItem(item) {
+        const span = document.createElement("span");
+        span.className = "tickerText";
+        const trendSymbol = item.change >= 0 ? "↑" : "↓";
+        const trendColor = item.change >= 0 ? "green" : "red";
+        span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+        <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+        return span;
+      }
+
+      async function updateTicker() {
+        const cryptoData = await fetchCryptoData();
+        const tickerContainer = document.getElementById("tickerContainer");
+        tickerContainer.innerHTML = "";
+        cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+      }
+
+      function calculatePercentagePosition() {
+        const tickerContainer = document.getElementById('tickerContainer');
+        const containerWidth = tickerContainer.offsetWidth;
+        const parentWidth = tickerContainer.parentElement.offsetWidth;
+        const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+        const computedStyle = window.getComputedStyle(tickerContainer);
+        const matrix = new WebKitCSSMatrix(computedStyle.transform);
+        const currentPosition = matrix.m41; // Current X translation
+
+        // Convert position to percentage of total path
+        const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+        return positionPercent;
+      }
+
+      function applySavedPosition(positionPercent) {
+        const tickerContainer = document.getElementById('tickerContainer');
+        // Remove the current animation to reset it
+        tickerContainer.style.animation = 'none';
+
+        // Update the @keyframes rule to start from the saved position
+        const keyframes = `@keyframes slide {
+            from { transform: translateX(${100 - positionPercent}%); }
+            to { transform: translateX(-100%); }
+        }`;
+
+        // Apply the new @keyframes rule
+        let styleSheet = document.createElement('style');
+        styleSheet.type = 'text/css';
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+
+        // Restart the animation
+        requestAnimationFrame(() => {
+          tickerContainer.style.animation = `slide 120s linear infinite`;
+        });
+      }
+
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await updateTicker();
+        setInterval(updateTicker, 120000); // Update every 2 minutes
+
+        const savedPosition = localStorage.getItem('tickerPosition') || 0;
+        applySavedPosition(savedPosition);
+
+        setInterval(() => {
+          const positionPercent = calculatePercentagePosition();
+          localStorage.setItem('tickerPosition', positionPercent);
+        }, 39);
+      });
+    </script>
 </header>
 <!-- Header Close -->
 
-
-<section class="page-title bg-1">
+<section class="page-title" style="background-image: url('images/competition/concentration.jpg'); background-size: 100%; background-repeat: no-repeat; background-position: right 0% bottom 40%;">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block text-center">
           <span class="text-white">Contact</span>
-          <h1 class="text-capitalize mb-4 text-lg">Entrez en Contact avec AlgoÉTS</h1>
+          <h1 class="text-capitalize mb-4 text-lg">Contacter nous</h1>
           <ul class="list-inline">
             <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
             <li class="list-inline-item"><span class="text-white">/</span></li>
@@ -156,49 +249,42 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 col-md-12 col-sm-12">
-				<form id="contact-form" class="contact__form" method="post" action="index.html">
-					<h3 class="text-md mb-4">Contactez-nous</h3>
-					<div class="form-group">
-						<input name="name" type="text" class="form-control" placeholder="Votre nom" required>
-					</div>
-					<div class="form-group">
-						<input name="email" type="email" class="form-control" placeholder="Votre courriel" required>
-					</div>
-					<div class="form-group-2 mb-4">
-						<textarea name="message" class="form-control" rows="4" placeholder="Votre message" required></textarea>
-					</div>
-					<button class="btn btn-main" name="submit" type="submit">Envoyez message</button>
-				</form>
-			</div>
+    <form action="mailto:algoets@ens.etsmtl.ca" method="post" enctype="text/plain">
+        <h3 class="text-md mb-4">Contactez-nous</h3>
+        <div class="form-group">
+            <input name="name" type="text" class="form-control" placeholder="Votre nom" required>
+        </div>
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Votre courriel" required>
+        </div>
+        <div class="form-group-2 mb-4">
+            <textarea name="message" class="form-control" rows="4" placeholder="Votre message" required></textarea>
+        </div>
+        <button class="btn btn-main" type="submit">Envoyez message</button>
+    </form>
+</div>
 
 			<div class="col-lg-5 col-sm-12">
 				<div class="contact-content pl-lg-5 mt-5 mt-lg-0">
-					<span class="text-muted">We are Algorithmic Trading Enthusiasts</span>
+					<span class="text-muted">On est des enthusiasts de la finance et de la technologie</span>
 					<h2 class="mb-5 mt-2">N'hésitez pas à nous contacter pour toute information</h2>
 
 					<ul class="address-block list-unstyled">
 						<li>
-							<i class="ti-direction mr-3"></i>ÉTS, Local D-2023, Montréal, Qc
+							<i class="ti-direction mr-3"></i> ÉTS, Local D-2023, Montréal, Qc
 						</li>
 						<li>
-							<i class="ti-email mr-3"></i>Email: algoets@ens.etsmtl.ca
+							<i class="ti-email mr-3"></i> Email: algoets@ens.etsmtl.ca
 						</li>
 					</ul>
-
 					<ul class="social-icons list-inline mt-5">
-						<li class="list-inline-item">
-							<a href="https://www.facebook.com/AlgoETS" target="_blank"><i class="fab fa-facebook-f"></i></a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://twitter.com/AlgoETS" target="_blank"><i class="fab fa-twitter"></i></a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://www.linkedin.com/company/algoets/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-						</li>
-						<li class="list-inline-item">
-							<a href="https://discord.gg/5aPcUrvA" target="_blank"><i class="fab fa-discord"></i></a>
-						</li>
-					</ul>
+    <li class="list-inline-item">
+        <a href="https://www.linkedin.com/company/algoets/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </li>
+    <li class="list-inline-item">
+        <a href="https://discord.gg/5aPcUrvA" target="_blank"><i class="fab fa-discord"></i></a>
+    </li>
+</ul>
 				</div>
 			</div>
 		</div>
@@ -213,7 +299,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-6">
-        <img src="/images/logo-transparent.png" width="200" height="240" alt="logoAlgoEts">
+        <img src="/images/logo.png" width="200" height="240" alt="logoAlgoEts">
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-6">
@@ -250,9 +336,8 @@
       <div class="row">
         <div class="col-lg-12 text-center">
           <div class="copyright">
-            Copyright &copy; 2023, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
+            Copyright &copy; 2024, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
             <br>
-            Copyright &copy; 2020, Conçue et développée par <a href="https://themefisher.com/">Themefisher</a>
           </div>
         </div>
       </div>
@@ -266,8 +351,7 @@
 </div>
 
 
-
-<!-- 
+<!--
 Essential Scripts
 =====================================-->
 <!-- Main jQuery -->

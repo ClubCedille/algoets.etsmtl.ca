@@ -1,11 +1,11 @@
-FROM node:14 AS build
+FROM node:20 AS build
 WORKDIR /app
 
 COPY . .
 RUN npm install
 RUN npm run build
 
-FROM nginx:1.25.2-alpine
+FROM nginx:1.25.4-alpine
 
 COPY --from=build /app/theme /usr/share/nginx/html
 

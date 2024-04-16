@@ -7,34 +7,43 @@
 	border-right: 100vw solid #fff;
 }
 
-.diagonalEdge-objectives{
+.diagonalEdge-objectives {
 	@extend .diagonalEdge;
 	border-top: 50px solid #fff;
-	border-left: 100vw solid #C1BFB3;
+	border-left: 100vw solid #c1bfb3;
 }
 
-.objectives{
-	background-color: #C1BFB3;
+.objectives {
+	background-color: #c1bfb3;
 }
 
-.intro-item{
-
-	i{
-		font-size:60px;
+.intro-item {
+	i {
+		font-size: 60px;
 		line-height: 60px;
 	}
-	
 }
 
-.color-one{
+.color-one {
 	color: $primary-color;
 }
-.color-two{
+
+.color-two {
 	color: #00d747;
 }
-.color-three{
-	color:#9262ff;
+
+.color-three {
+	color: #9262ff;
 }
-.color-four{
-	color:#088ed3;
+
+.color-four {
+	color: #088ed3;
+}
+
+.intro {
+	.container {
+		.row {
+			margin: 0 -32px 32px 0px;
+		}
+	}
 }

@@ -1,0 +1,547 @@
+<style>
+    /* General Styles */
+    .bg-primary {
+        background-color: #ff0000;
+    }
+
+    /* Primary color background */
+    .text-primary {
+        color: #ff0000;
+    }
+
+    /* Primary color text */
+    .rounded-lg {
+        border-radius: 0.5rem;
+    }
+
+    /* Rounded corners */
+    .shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Light shadow */
+    .hover:shadow-lg {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Dark shadow on hover */
+    .transition {
+        transition: all 0.3s ease;
+    }
+
+    /* Smooth transition for hover effects */
+
+    /* Workshop Card Specific */
+    .workshop-card {
+        background: rgba(255, 255, 255, 0.9);
+        /* Semi-transparent white */
+        backdrop-filter: blur(10px);
+        /* Blur effect for background */
+        border: 1px solid #ccc;
+        /* Border */
+        overflow: hidden;
+        /* Hide overflow */
+        margin-bottom: 20px;
+        /* Bottom margin */
+        display: flex;
+        flex-direction: column;
+        /* Stack children vertically */
+        transition: transform 0.3s ease;
+        /* Smooth scale transition */
+    }
+
+    .workshop-card:hover {
+        transform: scale(1.05);
+        /* Scale up on hover */
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        /* Darker shadow on hover */
+    }
+
+    .workshop-image-container {
+        width: 100%;
+        padding-top: 56.25%;
+        /* 16:9 aspect ratio */
+        position: relative;
+        /* Position relative to place the image absolutely inside */
+    }
+
+    .workshop-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Cover the area nicely without distortion */
+    }
+
+    .workshop-content {
+        padding: 15px;
+        /* Padding around content */
+    }
+
+    .workshop-title,
+    .workshop-description,
+    .workshop-details {
+        margin-bottom: 10px;
+        /* Spacing between elements */
+    }
+
+    /* GitHub Link Styling */
+    .github-link {
+        display: inline-block;
+        background-color: #007bff;
+        /* Blue background */
+        color: white;
+        /* White text */
+        padding: 10px 15px;
+        /* Padding */
+        border-radius: 5px;
+        /* Rounded corners */
+        text-decoration: none;
+        /* Remove underline */
+        text-align: center;
+        /* Center text */
+        width: 100%;
+        /* Full width for better visibility */
+        margin-top: 10px;
+        /* Margin top */
+        transition: background-color 0.3s;
+        /* Background color transition */
+    }
+
+    .github-link:hover {
+        background-color: #0056b3;
+        /* Darker blue on hover */
+    }
+
+    @media (max-width: 768px) {
+        .workshop-card {
+            max-width: 100%;
+            /* Full width on smaller screens */
+        }
+    }
+
+    .workshop-link {
+        color: inherit !important;
+        text-decoration: none !important;
+        transition: none !important;
+    }
+
+    .workshop-link:hover, .workshop-link:focus, .workshop-link:active {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+  <!-- ** Basic Page Needs ** -->
+  <meta charset="utf-8">
+  <title>AlgoETS</title>
+
+  <!-- ** Mobile Specific Metas ** -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="AlgoETS Club">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="AlgoETS">
+  <meta name="generator" content="AlgoETS
+
+  <!-- theme meta -->
+  <meta name="theme-name" content="AlgoETS">
+
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
+  <!-- Icon Font Css -->
+  <link rel="stylesheet" href="plugins/themify/css/themify-icons.css">
+  <link rel="stylesheet" href="plugins/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!--Favicon-->
+  <link rel="icon" href="images/favicon.png" type="image/x-icon">
+
+</head>
+
+<body> <!-- Header Start -->
+<header class="navigation">
+  <div id="tickerScroller">
+    <div id="tickerContainer"></div>
+  </div>
+  <div class="header-top">
+
+    <div id="navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg px-0 py-4">
+              <a class="navbar-brand" href="index.html">
+                <img src="/images/logoHeader.png" width="200" height="100" class="d-inline-block align-top" alt="" />
+              </a>
+
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+              </button>
+
+              <div class="collapse navbar-collapse text-center" id="navbarsExample09">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item @@home">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                  </li>
+                  <li class="nav-item @@about">
+                    <a class="nav-link" href="about.html">Notre Club</a>
+                  </li>
+                  <li class="nav-item @@team">
+                    <a class="nav-link" href="team.html">Notre Équipe</a>
+                  </li>
+                  <li class="nav-item @@project">
+                    <a class="nav-link" href="project.html">Projets</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="workshop.html">Workshop</a>
+                  </li>
+                  <li class="nav-item @@pricing">
+                    <a class="nav-link" href="pricing.html">Partenaires</a>
+                  </li>
+                  <li class="nav-item dropdown @@blog">
+                    <a class="nav-link" href="blog-grid.html">Blog</a>
+                  </li>
+                  <li class="nav-item @@contact">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function fetchCryptoData() {
+        try {
+          const cache = localStorage.getItem('cryptoDataCache');
+          const cacheDuration = 120000; // Cache duration in milliseconds, e.g., 120000ms for 2 minutes
+
+          if (cache) {
+            const { data, timestamp } = JSON.parse(cache);
+            if (timestamp + cacheDuration > Date.now()) {
+              return data; // Use cached data if still valid
+            }
+          }
+
+          // Define the top 25 cryptocurrency IDs in an array
+          const top25CoinIds = [
+            "bitcoin",
+            "ethereum",
+            "tether",
+            "cardano",
+            "usd-coin",
+            "solana",
+            "polkadot",
+            "dogecoin",
+            "avalanche-2",
+            "terra-luna",
+            "binance-usd",
+            "wrapped-bitcoin",
+            "litecoin",
+            "chainlink",
+            "algorand",
+            "bitcoin-cash",
+            "matic-network",
+            "internet-computer",
+            "stellar",
+            "filecoin",
+            "tron",
+            "ethereum-classic",
+            "vechain",
+          ];
+          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${top25CoinIds.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Cache the fetched data with a timestamp
+          localStorage.setItem('cryptoDataCache', JSON.stringify({
+            data: top25CoinIds.map(id => ({
+              name: id.toUpperCase(),
+              value: data[id].usd,
+              change: data[id].usd_24h_change,
+            })), timestamp: Date.now()
+          }));
+
+          return top25CoinIds.map(id => ({
+            name: id.toUpperCase(),
+            value: data[id].usd,
+            change: data[id].usd_24h_change,
+          }));
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          return [];
+        }
+      }
+
+      function createTickerItem(item) {
+        const span = document.createElement("span");
+        span.className = "tickerText";
+        const trendSymbol = item.change >= 0 ? "↑" : "↓";
+        const trendColor = item.change >= 0 ? "green" : "red";
+        span.innerHTML = `<span style='color: ${trendColor};'>${trendSymbol}</span>
+        <span style='color: ${trendColor};'> ${item.name}: </span> <span style='color: ${trendColor};'> ${item.value} $ </span>`;
+        return span;
+      }
+
+      async function updateTicker() {
+        const cryptoData = await fetchCryptoData();
+        const tickerContainer = document.getElementById("tickerContainer");
+        tickerContainer.innerHTML = "";
+        cryptoData.forEach(item => tickerContainer.appendChild(createTickerItem(item)));
+      }
+
+      function calculatePercentagePosition() {
+        const tickerContainer = document.getElementById('tickerContainer');
+        const containerWidth = tickerContainer.offsetWidth;
+        const parentWidth = tickerContainer.parentElement.offsetWidth;
+        const totalWidth = containerWidth + parentWidth; // Total path of the animation
+
+        const computedStyle = window.getComputedStyle(tickerContainer);
+        const matrix = new WebKitCSSMatrix(computedStyle.transform);
+        const currentPosition = matrix.m41; // Current X translation
+
+        // Convert position to percentage of total path
+        const positionPercent = (currentPosition + containerWidth) / totalWidth * 100;
+        return positionPercent;
+      }
+
+      function applySavedPosition(positionPercent) {
+        const tickerContainer = document.getElementById('tickerContainer');
+        // Remove the current animation to reset it
+        tickerContainer.style.animation = 'none';
+
+        // Update the @keyframes rule to start from the saved position
+        const keyframes = `@keyframes slide {
+            from { transform: translateX(${100 - positionPercent}%); }
+            to { transform: translateX(-100%); }
+        }`;
+
+        // Apply the new @keyframes rule
+        let styleSheet = document.createElement('style');
+        styleSheet.type = 'text/css';
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+
+        // Restart the animation
+        requestAnimationFrame(() => {
+          tickerContainer.style.animation = `slide 120s linear infinite`;
+        });
+      }
+
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await updateTicker();
+        setInterval(updateTicker, 120000); // Update every 2 minutes
+
+        const savedPosition = localStorage.getItem('tickerPosition') || 0;
+        applySavedPosition(savedPosition);
+
+        setInterval(() => {
+          const positionPercent = calculatePercentagePosition();
+          localStorage.setItem('tickerPosition', positionPercent);
+        }, 39);
+      });
+    </script>
+</header>
+<!-- Header Close -->
+<section class="page-title" style="background-image: url('images/competition/server-building.jpg'); background-size: 100%; background-repeat: no-repeat; background-position: right 0% bottom 40%;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block text-center">
+          <span class="text-white">Workshop</span>
+          <h1 class="text-capitalize mb-4 text-lg">Workshop</h1>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+            <li class="list-inline-item"><span class="text-white">/</span></li>
+            <li class="list-inline-item text-white-50">Workshop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- section workshop start -->
+<main>
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-sm font-semibold text-blue-500">Nos Ateliers</span>
+                <h2 class="text-3xl font-bold text-gray-800 mt-4">Workshop récents</h2>
+            </div>
+            <div id="workshops-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Workshop cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+</main>
+<!-- section portfolio END -->
+
+<footer class="footer section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <img src="/images/logo.png" width="200" height="240" alt="logoAlgoEts">
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="widget">
+          <h4 class="text-capitalize mb-4">Liens rapides</h4>
+
+          <ul class="list-unstyled footer-menu lh-35">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="pro.html">Projets</a></li>
+            <li><a href="blog-grid.html">Équipe</a></li>
+            <li><a href="contact.html">Blogs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end">
+        <div class="widget">
+          <div class="logo mb-4">
+            <h3>Algo<span>ÉTS</span></h3>
+          </div>
+          <h6><a href="mailto:algoets@ens.etsmtl.ca" target="_blank">algoets@ens.etsmtl.ca</a></h6>
+          <ul class="list-inline footer-socials mt-4">
+            <li class="list-inline-item"><a href="https://www.facebook.com/ClubAlgoETS" target="_blank"><i class="fab fa-facebook-f mr-2"></i></a></li>
+            <li class="list-inline-item"><a href="https://ca.linkedin.com/company/algoets" target="_blank"><i class="fab fa-linkedin mr-2"></i></a></li>
+            <li class="list-inline-item"><a href="https://github.com/AlgoETS" target="_blank"><i class="fab fa-github mr-2 "></i></a></li>
+            <li class="list-inline-item"><a href="https://discord.com/invite/PbWxX7B6dx" target="_blank"><i class="fab fa-discord mr-2 "></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-btm pt-4">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="copyright">
+            Copyright &copy; 2024, Personnalisée et déployée par <a href="https://cedille.etsmtl.ca/">Club Cédille</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--Scroll to top-->
+<div id="scroll-to-top" class="scroll-to-top">
+  <span class="icon fa fa-angle-up"></span>
+</div> 
+<!--
+Essential Scripts
+=====================================-->
+<!-- Main jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4.3.1 -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<!--  Magnific Popup-->
+<script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+<!-- Slick Slider -->
+<script src="plugins/slick/slick.min.js"></script>
+<!-- Counterup -->
+<script src="plugins/counterup/jquery.waypoints.min.js"></script>
+<script src="plugins/counterup/jquery.counterup.min.js"></script>
+
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACAa1Q8BRZ-qHKCwA2vaJ0w7IOnRCmq6g" defer></script>
+<script src="plugins/google-map/map.js" defer></script>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
+
+
+
+<script>
+    const workshopsInfo = {
+        EpargneInvestissement: {
+            name: "Atelier sur l'épargne et l'investissement",
+            description: "Découvrez les principes de l'épargne et de l'investissement pour prendre des décisions financières éclairées.",
+            prerequis: "Curiosité.",
+            programme: ["Céli", "REER", "REEE", "CELIAPP", "Taxes & Crédits d’impôts", "Investissement Stratégies (ETF)"],
+            image: "images/workshop/epargne.png",
+            link: "/files/Workshop Régimes enregistrés d’épargne.pdf"
+        },
+        PythonFinance: {
+            name: "Workshop Python pour la finance et la data science",
+            description: "Plongez dans Python, le langage incontournable de la finance et de la data science.",
+            prerequis: "Passion pour la finance et curiosité.",
+            programme: ["Environnement de développement", "Python & Jupyter", "Programmation", "APIs", "Pandas & Data Science", "Projets achevés"],
+            image: "images/workshop/python101.png",
+            link: "/files/Workshop%201.pdf",
+            github: "https://github.com/AlgoETS/Workshop1"
+        },
+        MonteCarlo: {
+            name: "Workshop MonteCarlo simulation pour la finance",
+            description: "Plongez dans le fascinant univers des chaînes de Markov et leur application dans la science des données et l'interaction avec les API.",
+            prerequis: "Ce cours est destiné aux personnes ayant un niveau intermédiaire en programmation jusqu'aux développeurs chevronnés désireux d'approfondir leurs connaissances en modélisation stochastique.",
+            programme: ["Monte Carlo", "AI", "Prediction"],
+            image: "images/workshop/montecarlo.png",
+            link: "/files/Algo%20Markov%20Chain%20Monte%20Carlo%20(MCMC)_.pdf",
+            github: "https://github.com/AlgoETS/MarkokChainMonteCarlo"
+        },
+        SentimentAnalysis: {
+            name: "Workshop Sentiment Analysis",
+            description: "Découvrez les principes de l'analyse de sentiment pour prendre des décisions financières éclairées.",
+            prerequis: "Curiosité.",
+            programme: ["Sentiment Analysis", "NLP", "Python", "Machine Learning", "Deep Learning"],
+            image: "images/workshop/sentiment.png",
+            link: "/files/Introduction%20à%20l'analyse%20de%20sentiment.pdf",
+            github: "https://github.com/AlgoETS/Workshop-SentimentsAnalysis"
+        }
+    };
+
+    function createWorkshopCard(workshopData) {
+        if (!workshopData) return;
+        const workshopCard = document.createElement("div");
+        workshopCard.className = "workshop-card bg-white rounded overflow-hidden shadow-md transition duration-300 ease-in-out max-w-xs";
+
+        let programmeHtml = workshopData.programme.map(item => `<li>${item}</li>`).join("");
+        let githubLinkHtml = workshopData.github ? `<a href="${workshopData.github}" class="inline-block bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded transition ease-in-out duration-300">View on GitHub</a>` : '';
+
+        workshopCard.innerHTML = `
+        <a href="${workshopData.link}" target="_blank" class="workshop-link">
+            <div class="workshop-image-container">
+                <img src="${workshopData.image}" alt="${workshopData.name}" class="workshop-image">
+            </div>
+            <div class="workshop-content px-6 py-4">
+                <h4 class="workshop-title font-semibold">${workshopData.name}</h4>
+                <p class="workshop-description text-sm">${workshopData.description}</p>
+                <div class="workshop-details text-xs mt-4">
+                    <span><strong>Pré-requis:</strong> ${workshopData.prerequis}</span><br>
+                    <span><strong>Programme:</strong></span>
+                    <ul class="list-disc pl-8">${programmeHtml}</ul>
+                    ${githubLinkHtml ? `<div class="mt-4">${githubLinkHtml}</div>` : ''}
+                </div>
+            </div>
+        </a>
+    `;
+        document.getElementById("workshops-container").appendChild(workshopCard);
+    }
+
+    Object.keys(workshopsInfo).forEach(workshopKey => {
+        createWorkshopCard(workshopsInfo[workshopKey]);
+    });
+</script>
