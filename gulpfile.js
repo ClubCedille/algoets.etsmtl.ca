@@ -1,7 +1,7 @@
 "use strict";
 
-const sass = require("gulp-sass")(require("sass"));
 const gulp = require("gulp");
+const sass = require("gulp-sass")(require("sass"));
 const sourcemaps = require("gulp-sourcemaps");
 const fileinclude = require("gulp-file-include");
 const autoprefixer = require("gulp-autoprefixer");
@@ -12,11 +12,28 @@ const fs = require('fs');
 const tap = require('gulp-tap');
 const through = require('through2');
 const frontMatter = require('gulp-front-matter');
+const gulpIf = require("gulp-if");
+
+let imagemin, imageminJpegtran, imageminPngquant, imageminSvgo, imageminGifsicle, imageminMozjpeg;
 
 async function getMarkdown() {
   const markdown = await import('gulp-markdown');
   return markdown.default;
 }
+
+const loadPlugins = async () => {
+  imagemin = (await import('gulp-imagemin')).default;
+  imageminJpegtran = (await import('imagemin-jpegtran')).default;
+  imageminPngquant = (await import('imagemin-pngquant')).default;
+  imageminSvgo = (await import('imagemin-svgo')).default;
+  imageminMozjpeg = (await import('imagemin-mozjpeg')).default;
+  imageminGifsicle = (await import('imagemin-gifsicle')).default;
+};
+
+
+gulp.task("load-plugins", async function () {
+  await loadPlugins();
+});
 
 
 const path = {
@@ -180,16 +197,49 @@ gulp.task("js:build", function () {
 });
 
 // Images
-gulp.task("images:build", function () {
-  return gulp
-    .src(path.src.images)
+function isJPEG(file) {
+  return file.extname === ".jpg" || file.extname === ".jpeg";
+}
+
+function isPNG(file) {
+  return file.extname === ".png";
+}
+
+function isGIF(file) {
+  return file.extname === ".gif";
+}
+
+function isSVG(file) {
+  return file.extname === ".svg";
+}
+
+// Task to move images without processing
+gulp.task("images:move", function () {
+  return gulp.src(path.src.images, { since: gulp.lastRun('images:move') })
     .pipe(gulp.dest(path.build.dirDev + "images/"))
-    .pipe(
-      bs.reload({
-        stream: true,
-      })
-    );
+    .pipe(bs.stream());
 });
+
+// Task to optimize images
+gulp.task("images:optimize", function () {
+  return gulp.src(path.build.dirDev + "images/**/*.{png,jpg,jpeg,gif,svg}", { since: gulp.lastRun('images:optimize') })
+    .pipe(imagemin([
+      imagemin.gifsicle({ interlaced: true }),
+      imagemin.mozjpeg({ progressive: true, quality: 75 }),
+      imagemin.optipng({ optimizationLevel: 5 }),
+      imagemin.svgo({
+        plugins: [
+          { removeViewBox: true },
+          { cleanupIDs: false }
+        ]
+      })
+    ]))
+    .pipe(gulp.dest(path.build.dirDev + "images/"))
+    .pipe(bs.stream());
+});
+
+gulp.task("images:build", gulp.series("images:move", "images:optimize"));
+
 
 // Plugins
 gulp.task("plugins:build", function () {
@@ -210,14 +260,14 @@ gulp.task("others:build", function () {
 
 // PDF Files
 gulp.task("files:build", function () {
-    return gulp
-        .src(path.src.files)
-        .pipe(gulp.dest(path.build.dirDev + "files/"))
-        .pipe(
-            bs.reload({
-                stream: true,
-            })
-        );
+  return gulp
+    .src(path.src.files)
+    .pipe(gulp.dest(path.build.dirDev + "files/"))
+    .pipe(
+      bs.reload({
+        stream: true,
+      })
+    );
 });
 
 // Clean Build Folder
@@ -233,15 +283,17 @@ gulp.task("watch:build", function () {
   gulp.watch(path.src.htminc, gulp.series("html:build"));
   gulp.watch(path.src.scss, gulp.series("scss:build"));
   gulp.watch(path.src.js, gulp.series("js:build"));
-  gulp.watch(path.src.images, gulp.series("images:build"));
+  gulp.watch(path.src.images, gulp.series("images:build", bs.reload));
   gulp.watch(path.src.plugins, gulp.series("plugins:build"));
   gulp.watch(path.src.files, gulp.series("files:build"));
 });
+
 
 // Dev Task
 gulp.task(
   "default",
   gulp.series(
+    "load-plugins",
     "clean",
     "blog-and-html:build",
     "js:build",

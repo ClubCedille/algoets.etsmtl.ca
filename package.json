@@ -1,7 +1,7 @@
 {
   "name": "algoets",
-  "version": "1.0.1",
-  "description": "AlgoETS",
+  "version": "1.0.2",
+  "description": "AlgoETS Website",
   "author": "AlgoETS",
   "license": "MIT",
   "scripts": {
@@ -17,10 +17,21 @@
     "gulp-autoprefixer": "^8.0.0",
     "gulp-file-include": "^2.3.0",
     "gulp-foreach": "^0.1.0",
+    "gulp-front-matter": "^1.3.0",
     "gulp-header-comment": "^0.10.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-markdown": "^8.0.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-rimraf": "^1.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-tap": "^2.0.0",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^10.0.1",
     "particles.js": "^2.0.0",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
@@ -31,10 +42,7 @@
   },
   "devDependencies": {
     "fs": "^0.0.1-security",
-    "gulp-front-matter": "^1.3.0",
-    "gulp-markdown": "^8.0.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-tap": "^2.0.0",
+    "gulp-if": "^3.0.0",
     "through2": "^4.0.2"
   }
 }
