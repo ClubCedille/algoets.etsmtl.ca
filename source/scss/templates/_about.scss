@@ -1,4 +1,10 @@
-// About Setcion
+// About Section
+
+.diagonalEdge-about{
+	@extend .diagonalEdge;
+	border-top: 50px solid #C1BFB3;
+	border-right: 100vw solid #fff;
+}
 
 .bg-about{
   	position: absolute;
@@ -13,13 +19,22 @@
 	border-radius: 1000px;
 }
 
+.about {
+	.section-title {
+		display: flex;
+		align-items: center;
+		.title {
+			color: rgb(247, 87, 87);
+		}
+	}		
+}
 
 .about-content{
-	padding: 20px 0px 0px 80px;
+	// padding: 20px 0px 0px 80px;
 	h4{
 		font-weight: 600;
-
-		&:before{
+		color: rgb(247, 87, 87);
+		/* &:before{
 			position: absolute;
 			content:"\f576";
 			font-family: "Font Awesome 5 Free";
@@ -28,7 +43,7 @@
 			top: 8px;
 			left: -65px;
 			font-weight: 700;
-		}
+		} */
 	}
 
 }

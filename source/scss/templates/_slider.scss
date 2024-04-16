@@ -1,31 +1,38 @@
-.slider{
-  background: url("../../images/competition/good-team.jpg") no-repeat;
+.slider {
   background-size: cover;
   background-position: right 0% bottom 80%;
   background-repeat: no-repeat;
-  padding:500px 0;
+  padding: 500px 0;
+  background-size: cover;
+  background-position: 10% 0%;
+  background-attachment: fixed;
+  padding: 100px 0 125px 0;
   position: relative;
+
   @include tablet {
-    padding:300px 0;
+    padding: 300px 0;
   }
+
   @extend .overly;
-  .block{
-    h1{
+
+  .block {
+    h1 {
       font-size: 70px;
       line-height: 80px;
       font-weight: 600;
       color: $light;
 
     }
-    p{
-      margin-bottom:30px;
-      color:#b9b9b9;
+
+    p {
+      margin-bottom: 30px;
+      color: #b9b9b9;
       font-size: 18px;
       line-height: 27px;
       font-weight: 300;
     }
 
-    span{
+    span {
       letter-spacing: 1px;
     }
   }
