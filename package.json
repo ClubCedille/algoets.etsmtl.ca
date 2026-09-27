@@ -11,7 +11,7 @@
     "start": "gulp serve"
   },
   "dependencies": {
-    "axios": "^1.6.5",
+    "axios": "^1.7.4",
     "browser-sync": "^3.0.2",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^8.0.0",
